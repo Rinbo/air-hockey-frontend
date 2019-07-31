@@ -8,17 +8,13 @@ import { createBrowserHistory } from "history";
 
 const routes = () => (
   <Switch>
-    <Route path={`${process.env.PUBLIC_URL}/`} exact render={props => <LandingPage props={props} />} />
+    <Route path={"/"} exact render={props => <LandingPage props={props} />} />
     <Route
-      path={`${process.env.PUBLIC_URL}/game`}
+      path={"/game"}
       exact
       render={props => <GameContainer props={props} />}
     />
-    <Route
-      path={`${process.env.PUBLIC_URL}/game/:id`}
-      exact
-      render={props => <Game props={props} />}
-    />
+    <Route path={"/game/:id"} exact render={props => <Game props={props} />} />
   </Switch>
 );
 
