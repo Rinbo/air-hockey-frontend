@@ -1,0 +1,10 @@
+body {
+  font-family: monospace;
+}
+
+.nav-container {
+  margin: 20px 15%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
