@@ -1,10 +1,99 @@
 body {
   font-family: monospace;
+  font-size: 1.25rem;
 }
 
-.nav-container {
-  margin: 20px 15%;
+input {
+  width: 200px;
+}
+
+a,
+:visited {
+  color: green;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a:hover {
+  color: darkgreen;
+}
+
+.container {
+  transition: 1s;
+  margin: 0px 25%;
+  padding-bottom: 10px;
+  min-height: 100vh;
+}
+
+@media only screen and (max-width: 1200px) {
+  .container {
+    transition: 1s;
+    margin: 0px 20%;
+    padding-bottom: 10px;
+    min-height: 100vh;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    transition: 1s;
+    margin: 0px 10%;
+    padding-bottom: 10px;
+    min-height: 100vh;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    transition: 1s;
+    margin: 0px 8%;
+    padding-bottom: 10px;
+    min-height: 100vh;
+  }
+}
+
+@media only screen and (max-width: 415px) {
+  .container {
+    transition: 1s;
+    margin: 0px 4%;
+    padding-bottom: 10px;
+    min-height: 100vh;
+  }
+}
+
+.m-n {
+  margin: 10px;
+}
+
+.m-m {
+  margin: 15px;
+}
+
+.m-l {
+  margin: 20px;
+}
+
+.bson-button {
+  background-color: white;
+  border: 1.5px solid black;
+  border-radius: 5px;
+  padding: 3px 8px;
+  color: black;
+}
+
+.btn-large {
+  font-size: 22px !important;
+  padding: 6px 12px !important;
+}
+
+.bson-button:hover {
+  background-color: black;
+  color: white;
+}
+
+.bson-flex {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
 }
