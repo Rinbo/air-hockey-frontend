@@ -3,7 +3,7 @@ import Navbar from "./navigation/Navbar";
 import LandingPage from "./LandingPage";
 import GameContainer from "./game/GameContainer";
 import Game from "./game/Game";
-import { Route, Router, Switch } from "react-router-dom";
+import { Route, BrowserRouter, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
 /**
@@ -37,10 +37,10 @@ const App = () => {
 
   return (
     <div style={{ paddingBottom: 10 }}>
-      <Router history={history} basename="/air-hockey-frontend">
+      <BrowserRouter history={history} basename="/air-hockey-frontend">
         <Navbar />
         {routes()}
-      </Router>
+      </BrowserRouter>
     </div>
   );
 };
