@@ -5,10 +5,10 @@ const Navbar = () => {
   return (
     <div className="nav-container">
       <div>
-        <Link to="/">Home</Link>
+        <Link to={`${process.env.PUBLIC_URL}/`}>Home</Link>
       </div>
       <div>
-        <Link to="/game">Game</Link>
+        <Link to={`${process.env.PUBLIC_URL}/game`}>Game</Link>
       </div>
     </div>
   );
