@@ -8,13 +8,13 @@ import { createBrowserHistory } from "history";
 
 const routes = () => (
   <Switch>
-    <Route path={"/"} exact render={props => <LandingPage props={props} />} />
+    <Route path={`${process.env.PUBLIC_URL}/`} exact render={props => <LandingPage props={props} />} />
     <Route
-      path={"/game"}
+      path={`${process.env.PUBLIC_URL}/game`}
       exact
       render={props => <GameContainer props={props} />}
     />
-    <Route path={"/game/:id"} exact render={props => <Game props={props} />} />
+    <Route path={`${process.env.PUBLIC_URL}/game/:id`} exact render={props => <Game props={props} />} />
   </Switch>
 );
 
@@ -23,7 +23,7 @@ const App = () => {
 
   return (
     <div style={{ paddingBottom: 10 }}>
-      <Router history={history} basename="/air-hockey-frontend">
+      <Router history={history}>
         <Navbar />
         {routes()}
       </Router>
