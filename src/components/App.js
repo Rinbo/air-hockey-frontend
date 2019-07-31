@@ -23,7 +23,7 @@ const App = () => {
 
   return (
     <div style={{ paddingBottom: 10 }}>
-      <Router history={history}>
+      <Router history={history} basename="/air-hockey-frontend">
         <Navbar />
         {routes()}
       </Router>
