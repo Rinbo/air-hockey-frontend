@@ -6,6 +6,11 @@ const Lobby = () => {
   const { name, game, setState } = useContext(UserContext);
   const [error, setError] = useState(false);
 
+  useEffect(() => {
+    if (name === "") history.push(`${process.env.PUBLIC_URL}/`);
+  }, [name]);
+
+
   const onSubmit = () => {
     if (game.length < 3) {
       setError(true);
@@ -18,12 +23,6 @@ const Lobby = () => {
   const onChange = e => {
     setState({ type: "game", payload: e.target.value });
   };
-
-  useEffect(() => {
-    if (name === "") history.push(`${process.env.PUBLIC_URL}/`);
-  }, [name]);
-
-  console.log(game);
 
   return (
     <div className="bson-flex">

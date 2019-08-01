@@ -11,7 +11,7 @@ const reducer = (state, action ) => {
 
   switch (action.type) {
     case "user":
-      return { state, name: action.payload };
+      return { ...state, name: action.payload };
     case "game":
       return { ...state, game: action.payload };
     default:

@@ -3,7 +3,13 @@ body {
   font-size: 1.25rem;
 }
 
-input, select {
+canvas {
+  border: 1px solid black;
+  margin: 20px;
+}
+
+input,
+select {
   width: 100%;
   padding: 6px 16px;
   margin: 5px 0;
