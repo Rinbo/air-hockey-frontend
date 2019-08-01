@@ -5,6 +5,7 @@ import GameContainer from "./game/GameContainer";
 import Game from "./game/Game";
 import { Route, Router, Switch } from "react-router-dom";
 import history from "../history";
+import Lobby from "./game/Lobby";
 
 /**
  * Note to future self:
@@ -19,6 +20,11 @@ const routes = () => (
       path={`${process.env.PUBLIC_URL}/`}
       exact
       render={props => <LandingPage props={props} />}
+    />
+    <Route
+      path={`${process.env.PUBLIC_URL}/lobby`}
+      exact
+      render={props => <Lobby props={props} />}
     />
     <Route
       path={`${process.env.PUBLIC_URL}/game`}

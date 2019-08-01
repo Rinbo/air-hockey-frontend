@@ -5,7 +5,7 @@ const Modal = props => {
   return ReactDOM.createPortal(
     <div onClick={props.onDismiss} className="modal">
       <div onClick={e => e.stopPropagation()} className="modal-content">
-        <span onClick={props.onDismiss} class="close">
+        <span onClick={props.onDismiss} className="close">
           &times;
         </span>
         <div className="modal-flex">
