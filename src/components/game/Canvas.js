@@ -2,15 +2,16 @@ import React, { useState, useRef, useEffect } from "react";
 
 const CANVAS_WIDTH = 300;
 const CANVAS_HEIGHT = 500;
+const STRIKER_RADIUS = 30;
 
 const Canvas = () => {
   const [onStriker, setOnStriker] = useState(false);
-  const [validMove, setValidMove] = useState(true);
   const [striker1, setStriker1] = useState({
     centerX: 150,
     centerY: 50,
-    radius: 30
+    radius: STRIKER_RADIUS
   });
+
   const gameCanvas = useRef(null);
   const ctx = useRef(null);
 
@@ -34,6 +35,15 @@ const Canvas = () => {
     ctx.current.fill();
   };
 
+  const getMousePos = e => {
+    const rect = gameCanvas.current.getBoundingClientRect();
+
+    return {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    };
+  };
+
   const startPosition = e => {
     const pos = getMousePos(e);
     console.log("PosX: ", pos.x);
@@ -54,23 +64,28 @@ const Canvas = () => {
     );
   };
 
-  const checkValidMove = object => {
+  const withinXBounds = x => {
+    if (x > CANVAS_WIDTH - STRIKER_RADIUS) return CANVAS_WIDTH - STRIKER_RADIUS;
+    if (x < STRIKER_RADIUS) return STRIKER_RADIUS;
+    return x;
   };
 
-  const getMousePos = e => {
-    const rect = gameCanvas.current.getBoundingClientRect();
-    return {
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top
-    };
+  const withinYBounds = y => {
+    if (y > CANVAS_HEIGHT/2 - STRIKER_RADIUS)
+      return CANVAS_HEIGHT/2 - STRIKER_RADIUS;
+    if (y < STRIKER_RADIUS) return STRIKER_RADIUS;
+    return y;
   };
 
   const move = e => {
     if (!onStriker) return;
     const pos = getMousePos(e);
-    checkValidMove(striker1);
     setStriker1(prevState => {
-      return { ...prevState, centerX: pos.x, centerY: pos.y };
+      return {
+        ...prevState,
+        centerX: withinXBounds(pos.x),
+        centerY: withinYBounds(pos.y)
+      };
     });
   };
 
