@@ -31,7 +31,7 @@ const Navbar = () => {
           <Link to={`${process.env.PUBLIC_URL}/`}>Home</Link>
         </div>
         <div>
-          <Link to={`${process.env.PUBLIC_URL}/game`}>Game</Link>
+          <Link to={`${process.env.PUBLIC_URL}/lobby`}>Lobby</Link>
         </div>
       </div>
     );
@@ -57,9 +57,9 @@ const Navbar = () => {
           </Link>
           <Link
             className="bson-button m-n"
-            to={`${process.env.PUBLIC_URL}/game`}
+            to={`${process.env.PUBLIC_URL}/lobby`}
           >
-            Game
+            Lobby
           </Link>
         </div>
       </div>

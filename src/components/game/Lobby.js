@@ -16,7 +16,7 @@ const Lobby = () => {
       setError(true);
     } else {
       setError(false);
-      history.push(`${process.env.PUBLIC_URL}/game`);
+      history.push(`${process.env.PUBLIC_URL}/game/${game}`);
     }
   };
 

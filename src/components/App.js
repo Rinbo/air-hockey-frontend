@@ -2,7 +2,6 @@ import React from "react";
 import Navbar from "./navigation/Navbar";
 import LandingPage from "./LandingPage";
 import GameContainer from "./game/GameContainer";
-import Game from "./game/Game";
 import { Route, Router, Switch } from "react-router-dom";
 import history from "../history";
 import Lobby from "./game/Lobby";
@@ -13,6 +12,9 @@ import Lobby from "./game/Lobby";
  * This also applies to using Router Links in the application.
  * Furhermore, if using relative path (ie: https://rinbo.github.io/<relative-path>) change segmentCount to 1 in 404.html
  */
+
+ // @TODO - Create a status log with all server messages that can be popped open for viewing
+ // @TODO - Make a global flash message system
 
 const routes = () => (
   <Switch>
@@ -27,14 +29,9 @@ const routes = () => (
       render={props => <Lobby props={props} />}
     />
     <Route
-      path={`${process.env.PUBLIC_URL}/game`}
-      exact
-      render={props => <GameContainer props={props} />}
-    />
-    <Route
       path={`${process.env.PUBLIC_URL}/game/:id`}
       exact
-      render={props => <Game props={props} />}
+      render={props => <GameContainer props={props} />}
     />
   </Switch>
 );

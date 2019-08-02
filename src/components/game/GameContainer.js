@@ -3,8 +3,7 @@ import UserContext from "../contexts/UserContext";
 import Canvas from "./Canvas";
 import history from "../../history";
 
-const GameContainer = () => { 
-
+const GameContainer = () => {
   const { game, name } = useContext(UserContext);
 
   useEffect(() => {
@@ -13,7 +12,6 @@ const GameContainer = () => {
 
   return (
     <div className="bson-flex">
-      <h3>GameContainer</h3>
       <div>
         This is game: {game}, created by {name}
       </div>

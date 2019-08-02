@@ -3,8 +3,8 @@ import React, { useReducer } from "react";
 const UserContext = React.createContext("user");
 
 const initialState = {
-  name: "",
-  game: ""
+  name: "Robin",
+  game: "Robins Game"
 };
 
 const reducer = (state, action ) => {
