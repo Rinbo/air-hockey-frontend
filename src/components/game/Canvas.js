@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { initBoard } from "./initBoard";
+import GameEngine from "./GameEngine";
 
 import {
   CANVAS_WIDTH,
   CANVAS_HEIGHT,
   RIM_WIDTH,
-  STRIKER_RADIUS
+  STRIKER_RADIUS,
+  PUCK_RADIUS
 } from "./gameConstants";
 
 const Canvas = () => {
@@ -15,6 +17,12 @@ const Canvas = () => {
     centerY: 50,
     radius: STRIKER_RADIUS
   });
+  const [puck, setPuck] = useState({
+    centerX: 150,
+    centerY: 150,
+    radius: PUCK_RADIUS,
+    velocity: {x: 0, y: 0}
+  });
 
   const gameCanvas = useRef(null);
   const ctx = useRef(null);
@@ -23,7 +31,7 @@ const Canvas = () => {
     gameCanvas.current.width = CANVAS_WIDTH;
     gameCanvas.current.height = CANVAS_HEIGHT;
     ctx.current = gameCanvas.current.getContext("2d");
-    initBoard(ctx, striker1);
+    initBoard(ctx, striker1, puck);
   });
 
   const getMousePos = e => {
@@ -81,6 +89,14 @@ const Canvas = () => {
 
   return (
     <div className="flex flex-col justify-center" style={{ height: 240 }}>
+      <div>
+        <GameEngine
+          ctx={ctx}
+          puck={puck}
+          setPuck={setPuck}
+          striker1={striker1}
+        />
+      </div>
       <canvas
         className="myCanvas"
         ref={gameCanvas}
