@@ -4,7 +4,8 @@ body {
 }
 
 canvas {
-  margin: 20px;
+  margin: 0;
+  padding: 0;
 }
 
 input,
