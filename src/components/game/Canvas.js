@@ -7,7 +7,7 @@ import {
   CANVAS_HEIGHT,
   RIM_WIDTH,
   STRIKER_RADIUS,
-  PUCK_RADIUS
+  INITIAL_PUCK_STATE
 } from "./gameConstants";
 
 const Canvas = () => {
@@ -17,12 +17,7 @@ const Canvas = () => {
     centerY: 50,
     radius: STRIKER_RADIUS
   });
-  const [puck, setPuck] = useState({
-    centerX: 150,
-    centerY: 150,
-    radius: PUCK_RADIUS,
-    velocity: {x: 0, y: 0}
-  });
+  const [puck, setPuck] = useState(INITIAL_PUCK_STATE);
 
   const gameCanvas = useRef(null);
   const ctx = useRef(null);
