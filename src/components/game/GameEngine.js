@@ -5,12 +5,14 @@ import {
   CANVAS_HEIGHT,
   PUCK_STD_V,
   PADDING,
-  INITIAL_PUCK_STATE
+  INITIAL_PUCK_STATE,
+  STRIKER_RADIUS,
+  PUCK_RADIUS
 } from "./gameConstants";
 
 const GameEngine = ({ ctx, puck, setPuck, striker1 }) => {
   const [clock, setClock] = useState(0);
-  const [go, setGo] = useState(false);
+  const [active, setActive] = useState(false);
 
   useInterval(() => {
     animatePuck();
@@ -18,18 +20,40 @@ const GameEngine = ({ ctx, puck, setPuck, striker1 }) => {
   }, 20);
 
   const resetPuck = () => {
-    setPuck(INITIAL_PUCK_STATE);
+    setActive(false);
+    setTimeout(() => {
+      // setActive(true) <- uncomment when dynamic striker
+      setPuck(INITIAL_PUCK_STATE);
+    }, 1000);
   };
 
-  const notScoringPuck = puck => {
+  const outsideGoalPosts = puck => {
     return (
       puck.centerX < CANVAS_WIDTH * 0.3 + puck.radius ||
       puck.centerX > CANVAS_WIDTH * 0.7 - puck.radius
     );
   };
 
+  const checkForCollision = (striker, puck) => {
+    if (calculateDistance(striker, puck) <= STRIKER_RADIUS + PUCK_RADIUS) {
+      setPuck(prevState => {
+        return {
+          ...prevState,
+          velocity: { x: -prevState.velocity.x, y: -prevState.velocity.y }
+        };
+      });
+    }
+  };
+
+  const calculateDistance = (striker, puck) => {
+    return Math.sqrt(
+      (striker.centerX - puck.centerX) ** 2 +
+        (striker.centerY - puck.centerY) ** 2
+    );
+  };
+
   const animatePuck = () => {
-    if (!go) return;
+    if (!active) return;
 
     setPuck(prevState => {
       return {
@@ -62,7 +86,7 @@ const GameEngine = ({ ctx, puck, setPuck, striker1 }) => {
 
     if (
       puck.centerY + puck.radius + PADDING >= CANVAS_HEIGHT &&
-      notScoringPuck(puck)
+      outsideGoalPosts(puck)
     ) {
       setPuck(prevState => {
         return {
@@ -72,7 +96,7 @@ const GameEngine = ({ ctx, puck, setPuck, striker1 }) => {
       });
     }
 
-    if (puck.centerY - puck.radius - PADDING <= 0 && notScoringPuck(puck)) {
+    if (puck.centerY - puck.radius - PADDING <= 0 && outsideGoalPosts(puck)) {
       setPuck(prevState => {
         return {
           ...prevState,
@@ -84,11 +108,13 @@ const GameEngine = ({ ctx, puck, setPuck, striker1 }) => {
     if (
       puck.centerY >= CANVAS_HEIGHT + puck.radius ||
       puck.centerY <= -puck.radius * 2
-    )
+    ) {
       resetPuck();
+    }
 
     // Is the puck hit by a striker? What happens
     // Did the puck pass the score line?
+    checkForCollision(striker1, puck);
   };
 
   if (clock % 1000 === 0)
@@ -108,8 +134,8 @@ const GameEngine = ({ ctx, puck, setPuck, striker1 }) => {
         className="bson-button m-n"
         onClick={() =>
           setPuck(prevState => {
-            setGo(true);
-            return { ...prevState, velocity: { x: 2, y: PUCK_STD_V } };
+            setActive(true);
+            return { ...prevState, velocity: { x: PUCK_STD_V, y: PUCK_STD_V } };
           })
         }
       >
@@ -119,7 +145,7 @@ const GameEngine = ({ ctx, puck, setPuck, striker1 }) => {
         className="bson-button"
         onClick={() =>
           setPuck(prevState => {
-            setGo(false);
+            setActive(false);
             return { ...prevState, velocity: { x: 0, y: 0 } };
           })
         }
