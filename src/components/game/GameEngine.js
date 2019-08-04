@@ -13,6 +13,7 @@ import {
 const GameEngine = ({ ctx, puck, setPuck, striker1 }) => {
   const [clock, setClock] = useState(0);
   const [active, setActive] = useState(false);
+  const [sleep, setSleep] = useState(false);
 
   useInterval(() => {
     animatePuck();
@@ -36,12 +37,19 @@ const GameEngine = ({ ctx, puck, setPuck, striker1 }) => {
 
   const checkForCollision = (striker, puck) => {
     if (calculateDistance(striker, puck) <= STRIKER_RADIUS + PUCK_RADIUS) {
+      // Needs improvement:
+      // The speed and direction the striker should directly translate to the puck if it is moving. If the speed of the striker is 0
+      // then fallback to the original logic
       setPuck(prevState => {
         return {
           ...prevState,
           velocity: { x: -prevState.velocity.x, y: -prevState.velocity.y }
         };
       });
+      setSleep(true);
+      setTimeout(() => {
+        setSleep(false);
+      }, 200);
     }
   };
 
@@ -114,7 +122,7 @@ const GameEngine = ({ ctx, puck, setPuck, striker1 }) => {
 
     // Is the puck hit by a striker? What happens
     // Did the puck pass the score line?
-    checkForCollision(striker1, puck);
+    if (!sleep) checkForCollision(striker1, puck);
   };
 
   if (clock % 1000 === 0)
