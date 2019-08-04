@@ -13,6 +13,15 @@ export const INITIAL_PUCK_STATE = {
   velocity: { x: 0, y: 0 }
 };
 
-// Velocity
+export const INITIAL_STRIKER1_STATE = {
+  centerX: 150,
+  centerY: 50,
+  radius: STRIKER_RADIUS,
+  velocity: { x: 0, y: 0 },
+  deltaX: 150,
+  deltaY: 50
+};
+
+export const CLOCK_INTERVAL = 1;
 
 export const PUCK_STD_V = 4;

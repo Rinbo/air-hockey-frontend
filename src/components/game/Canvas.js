@@ -7,16 +7,13 @@ import {
   CANVAS_HEIGHT,
   RIM_WIDTH,
   STRIKER_RADIUS,
-  INITIAL_PUCK_STATE
+  INITIAL_PUCK_STATE,
+  INITIAL_STRIKER1_STATE
 } from "./gameConstants";
 
 const Canvas = () => {
   const [onStriker, setOnStriker] = useState(false);
-  const [striker1, setStriker1] = useState({
-    centerX: 150,
-    centerY: 50,
-    radius: STRIKER_RADIUS
-  });
+  const [striker1, setStriker1] = useState(INITIAL_STRIKER1_STATE);
   const [puck, setPuck] = useState(INITIAL_PUCK_STATE);
 
   const gameCanvas = useRef(null);
@@ -77,7 +74,7 @@ const Canvas = () => {
       return {
         ...prevState,
         centerX: withinXBounds(pos.x),
-        centerY: withinYBounds(pos.y)
+        centerY: withinYBounds(pos.y),        
       };
     });
   };
@@ -86,10 +83,10 @@ const Canvas = () => {
     <div className="flex flex-col justify-center" style={{ height: 240 }}>
       <div>
         <GameEngine
-          ctx={ctx}
           puck={puck}
           setPuck={setPuck}
           striker1={striker1}
+          setStriker1={setStriker1}
         />
       </div>
       <canvas
