@@ -13,7 +13,7 @@ import {
 
 const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
   const [clock, setClock] = useState(0);
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(true);
   const [sleep, setSleep] = useState(false);
 
   useInterval(() => {
@@ -66,15 +66,17 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
         }
       }
 
-      const speedParse = striker => {
-        
-      }
-
       setSleep(true);
       setTimeout(() => {
         setSleep(false);
       }, 400);
     }
+  };
+
+  const capSpeed = velocity => {
+    if (velocity >= 4) return 4;
+    if (velocity < -4) return -4;
+    return velocity;
   };
 
   const calculateDistance = (striker, puck) => {
@@ -91,8 +93,12 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
       return {
         ...prevState,
         velocity: {
-          x: Math.round(prevState.centerX) - Math.round(prevState.deltaX),
-          y: Math.round(prevState.centerY) - Math.round(prevState.deltaY)
+          x: capSpeed(
+            Math.round(prevState.centerX) - Math.round(prevState.deltaX)
+          ),
+          y: capSpeed(
+            Math.round(prevState.centerY) - Math.round(prevState.deltaY)
+          )
         },
         deltaX: prevState.centerX,
         deltaY: prevState.centerY
@@ -175,26 +181,11 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
   };
 
   if (clock % 20 === 0) {
-    console.log(striker1.velocity);
   }
 
   return (
     <div className="bson-flex">
       <h3>Time: {}</h3>
-      <button className="bson-button m-n" onClick={() => setActive(true)}>
-        Start game
-      </button>
-      <button
-        className="bson-button"
-        onClick={() =>
-          setPuck(prevState => {
-            setActive(false);
-            return { ...prevState, velocity: { x: 0, y: 0 } };
-          })
-        }
-      >
-        Stop game
-      </button>
     </div>
   );
 };
