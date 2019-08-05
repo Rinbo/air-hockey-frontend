@@ -49,6 +49,8 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
             }
           };
         });
+        //Resets clock for friction calculation
+        setClock(0);
       } else {
         // When striker is not moving , if puck hits upper and lower quadrant of striker
         // only reverse y-component of velocity
@@ -83,6 +85,9 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
     return velocity;
   };
 
+  const friction = () => {
+    return 1 / ((100000 + clock) / 100000);
+  };
   // Diagonal distance between center of striker and center of puck
   const calculateDistance = (striker, puck) => {
     return Math.sqrt(
@@ -117,10 +122,13 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
       return {
         ...prevState,
         centerX: prevState.centerX + prevState.velocity.x,
-        centerY: prevState.centerY + prevState.velocity.y
+        centerY: prevState.centerY + prevState.velocity.y,
+        velocity: {
+          x: prevState.velocity.x * friction(),
+          y: prevState.velocity.y * friction()
+        }
       };
     });
-
     // Bounce off right wall
     if (puck.centerX + puck.radius + PADDING >= CANVAS_WIDTH) {
       setPuck(prevState => {
@@ -193,10 +201,7 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
     if (!sleep) checkForCollision(striker1, puck);
   };
 
-  return (
-    <div className="bson-flex">
-    </div>
-  );
+  return <div className="bson-flex" />;
 };
 
 export default GameEngine;
