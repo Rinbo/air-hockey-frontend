@@ -38,6 +38,7 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
 
   const checkForCollision = (striker, puck) => {
     if (calculateDistance(striker, puck) <= STRIKER_RADIUS + PUCK_RADIUS) {
+      // If striker is moving -> transfer its velocity to the puck
       if (striker1.velocity.x > 0 || striker1.velocity.y > 0) {
         setPuck(prevState => {
           return {
@@ -49,6 +50,8 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
           };
         });
       } else {
+        // When striker is not moving , if puck hits upper and lower quadrant of striker
+        // only reverse y-component of velocity
         if (Math.abs(striker.centerX - puck.centerX) < striker.radius) {
           setPuck(prevState => {
             return {
@@ -66,6 +69,7 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
         }
       }
 
+      // Prevent puck from getting stuck inside the striker
       setSleep(true);
       setTimeout(() => {
         setSleep(false);
@@ -74,11 +78,12 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
   };
 
   const capSpeed = velocity => {
-    if (velocity >= 4) return 4;
-    if (velocity < -4) return -4;
+    if (velocity >= 3.5) return 3.5;
+    if (velocity < -3.5) return -3.5;
     return velocity;
   };
 
+  // Diagonal distance between center of striker and center of puck
   const calculateDistance = (striker, puck) => {
     return Math.sqrt(
       (striker.centerX - puck.centerX) ** 2 +
@@ -89,6 +94,7 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
   const animatePuck = () => {
     if (!active) return;
 
+    // Dynamically set the velocity of the striker
     setStriker1(prevState => {
       return {
         ...prevState,
@@ -105,6 +111,8 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
       };
     });
 
+    // Render the pucks movement
+    // @TODO add friction to eventually bring the pucks speed down to zero
     setPuck(prevState => {
       return {
         ...prevState,
@@ -113,6 +121,7 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
       };
     });
 
+    // Bounce off right wall
     if (puck.centerX + puck.radius + PADDING >= CANVAS_WIDTH) {
       setPuck(prevState => {
         return {
@@ -128,6 +137,7 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
       });
     }
 
+    // Bounce off left wall
     if (puck.centerX - puck.radius - PADDING <= 0) {
       setPuck(prevState => {
         return {
@@ -140,6 +150,7 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
       });
     }
 
+    // Bounce off bottom wall if not within goal posts
     if (
       puck.centerY + puck.radius + PADDING >= CANVAS_HEIGHT &&
       outsideGoalPosts(puck)
@@ -158,6 +169,7 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
       });
     }
 
+    // Bounce off top wall if not within goal posts
     if (puck.centerY - puck.radius - PADDING <= 0 && outsideGoalPosts(puck)) {
       setPuck(prevState => {
         return {
@@ -170,6 +182,7 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
       });
     }
 
+    // If it passes through goal posts, reset board
     if (
       puck.centerY >= CANVAS_HEIGHT + puck.radius ||
       puck.centerY <= -puck.radius * 2
@@ -180,12 +193,8 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
     if (!sleep) checkForCollision(striker1, puck);
   };
 
-  if (clock % 20 === 0) {
-  }
-
   return (
     <div className="bson-flex">
-      <h3>Time: {}</h3>
     </div>
   );
 };
