@@ -49,13 +49,27 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
           };
         });
       } else {
-        setPuck(prevState => {
-          return {
-            ...prevState,
-            velocity: { x: -prevState.velocity.x, y: -prevState.velocity.y }
-          };
-        });
+        if (Math.abs(striker.centerX - puck.centerX) < striker.radius) {
+          setPuck(prevState => {
+            return {
+              ...prevState,
+              velocity: { x: prevState.velocity.x, y: -prevState.velocity.y }
+            };
+          });
+        } else {
+          setPuck(prevState => {
+            return {
+              ...prevState,
+              velocity: { x: -prevState.velocity.x, y: prevState.velocity.y }
+            };
+          });
+        }
       }
+
+      const speedParse = striker => {
+        
+      }
+
       setSleep(true);
       setTimeout(() => {
         setSleep(false);
@@ -127,7 +141,13 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
       setPuck(prevState => {
         return {
           ...prevState,
-          velocity: { x: prevState.velocity.x, y: prevState.velocity.y > 0 ? -prevState.velocity.y : prevState.velocity.y }
+          velocity: {
+            x: prevState.velocity.x,
+            y:
+              prevState.velocity.y > 0
+                ? -prevState.velocity.y
+                : prevState.velocity.y
+          }
         };
       });
     }
@@ -136,7 +156,10 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
       setPuck(prevState => {
         return {
           ...prevState,
-          velocity: { x: prevState.velocity.x, y: Math.abs(prevState.velocity.y) }
+          velocity: {
+            x: prevState.velocity.x,
+            y: Math.abs(prevState.velocity.y)
+          }
         };
       });
     }
