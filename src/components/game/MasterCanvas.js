@@ -6,17 +6,11 @@ import {
   CANVAS_WIDTH,
   CANVAS_HEIGHT,
   RIM_WIDTH,
-  STRIKER_RADIUS,
-  INITIAL_PUCK_STATE,
-  INITIAL_STRIKER1_STATE,
-  INITIAL_STRIKER2_STATE
+  STRIKER_RADIUS
 } from "./gameConstants";
 
-const Canvas = ({ role }) => {
+const MasterCanvas = ({ puck, setPuck, striker1, setStriker1, striker2 }) => {
   const [onStriker, setOnStriker] = useState(false);
-  const [striker1, setStriker1] = useState(INITIAL_STRIKER1_STATE);
-  const [striker2, setStriker2] = useState(INITIAL_STRIKER2_STATE);
-  const [puck, setPuck] = useState(INITIAL_PUCK_STATE);
 
   const gameCanvas = useRef(null);
   const ctx = useRef(null);
@@ -51,7 +45,8 @@ const Canvas = ({ role }) => {
     return (
       Math.sqrt(
         (pos.x - striker1.centerX) ** 2 + (pos.y - striker1.centerY) ** 2
-      ) <= (striker1.radius + RIM_WIDTH)
+      ) <=
+      striker1.radius + RIM_WIDTH
     );
   };
 
@@ -84,14 +79,12 @@ const Canvas = ({ role }) => {
   return (
     <div className="flex flex-col justify-center" style={{ height: 240 }}>
       <div>
-        {role === "master" ? (
-          <GameEngine
-            puck={puck}
-            setPuck={setPuck}
-            striker1={striker1}
-            setStriker1={setStriker1}
-          />
-        ) : null}
+        <GameEngine
+          puck={puck}
+          setPuck={setPuck}
+          striker1={striker1}
+          setStriker1={setStriker1}
+        />
       </div>
       <canvas
         className="myCanvas"
@@ -104,4 +97,4 @@ const Canvas = ({ role }) => {
   );
 };
 
-export default Canvas;
+export default MasterCanvas;
