@@ -51,7 +51,7 @@ const Canvas = ({ role }) => {
     return (
       Math.sqrt(
         (pos.x - striker1.centerX) ** 2 + (pos.y - striker1.centerY) ** 2
-      ) <= striker1.radius
+      ) <= (striker1.radius + RIM_WIDTH)
     );
   };
 
