@@ -5,7 +5,7 @@ import {
   BOARD_LINE_WIDTH,
 } from "./gameConstants";
 
-export const initBoard = (ctx, striker1, puck) => {
+export const initBoard = (ctx, striker1, striker2, puck) => {
   // The board
   ctx.current.beginPath();
   ctx.current.lineWidth = RIM_WIDTH;
@@ -75,7 +75,7 @@ export const initBoard = (ctx, striker1, puck) => {
   ctx.current.stroke();
   ctx.current.closePath();
 
-  // The striker
+  // Striker1
   ctx.current.beginPath();
   ctx.current.lineWidth = RIM_WIDTH;
   ctx.current.strokeStyle = "black";
@@ -84,6 +84,23 @@ export const initBoard = (ctx, striker1, puck) => {
     striker1.centerX,
     striker1.centerY,
     striker1.radius,
+    0,
+    2 * Math.PI
+  );
+  ctx.current.stroke();
+  ctx.current.fill();
+  ctx.current.closePath();
+
+  // Striker2
+
+  ctx.current.beginPath();
+  ctx.current.lineWidth = RIM_WIDTH;
+  ctx.current.strokeStyle = "black";
+  ctx.current.fillStyle = "grey";
+  ctx.current.arc(
+    striker2.centerX,
+    striker2.centerY,
+    striker2.radius,
     0,
     2 * Math.PI
   );

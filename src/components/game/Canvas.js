@@ -8,12 +8,14 @@ import {
   RIM_WIDTH,
   STRIKER_RADIUS,
   INITIAL_PUCK_STATE,
-  INITIAL_STRIKER1_STATE
+  INITIAL_STRIKER1_STATE,
+  INITIAL_STRIKER2_STATE
 } from "./gameConstants";
 
-const Canvas = ({role}) => {
+const Canvas = ({ role }) => {
   const [onStriker, setOnStriker] = useState(false);
   const [striker1, setStriker1] = useState(INITIAL_STRIKER1_STATE);
+  const [striker2, setStriker2] = useState(INITIAL_STRIKER2_STATE);
   const [puck, setPuck] = useState(INITIAL_PUCK_STATE);
 
   const gameCanvas = useRef(null);
@@ -23,7 +25,7 @@ const Canvas = ({role}) => {
     gameCanvas.current.width = CANVAS_WIDTH;
     gameCanvas.current.height = CANVAS_HEIGHT;
     ctx.current = gameCanvas.current.getContext("2d");
-    initBoard(ctx, striker1, puck);
+    initBoard(ctx, striker1, striker2, puck);
   });
 
   const getMousePos = e => {
