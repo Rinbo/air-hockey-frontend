@@ -4,7 +4,8 @@ const UserContext = React.createContext("user");
 
 const initialState = {
   name: "Robin",
-  game: "Robins Game"
+  game: "Robins Game",
+  role: "slave"
 };
 
 const reducer = (state, action ) => {

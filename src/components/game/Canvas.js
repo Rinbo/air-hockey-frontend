@@ -11,7 +11,7 @@ import {
   INITIAL_STRIKER1_STATE
 } from "./gameConstants";
 
-const Canvas = () => {
+const Canvas = ({role}) => {
   const [onStriker, setOnStriker] = useState(false);
   const [striker1, setStriker1] = useState(INITIAL_STRIKER1_STATE);
   const [puck, setPuck] = useState(INITIAL_PUCK_STATE);
@@ -74,7 +74,7 @@ const Canvas = () => {
       return {
         ...prevState,
         centerX: withinXBounds(pos.x),
-        centerY: withinYBounds(pos.y),        
+        centerY: withinYBounds(pos.y)
       };
     });
   };
@@ -82,12 +82,14 @@ const Canvas = () => {
   return (
     <div className="flex flex-col justify-center" style={{ height: 240 }}>
       <div>
-        <GameEngine
-          puck={puck}
-          setPuck={setPuck}
-          striker1={striker1}
-          setStriker1={setStriker1}
-        />
+        {role === "master" ? (
+          <GameEngine
+            puck={puck}
+            setPuck={setPuck}
+            striker1={striker1}
+            setStriker1={setStriker1}
+          />
+        ) : null}
       </div>
       <canvas
         className="myCanvas"

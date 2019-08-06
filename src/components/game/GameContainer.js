@@ -4,7 +4,7 @@ import Canvas from "./Canvas";
 import history from "../../history";
 
 const GameContainer = () => {
-  const { game, name } = useContext(UserContext);
+  const { game, name, role } = useContext(UserContext);
 
   useEffect(() => {
     if (name === "" || game === "") history.push(`${process.env.PUBLIC_URL}/`);
@@ -15,7 +15,7 @@ const GameContainer = () => {
       <div>
         This is game: {game}, created by {name}
       </div>      
-      <Canvas />
+      <Canvas role={role} />
     </div>
   );
 };

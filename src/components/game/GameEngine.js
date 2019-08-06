@@ -30,12 +30,6 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
     }, 1000);
   };
 
-  const outsideGoalPosts = puck => {
-    return (
-      puck.centerX < CANVAS_WIDTH * 0.3 || puck.centerX > CANVAS_WIDTH * 0.7
-    );
-  };
-
   const checkForCollision = (striker, puck) => {
     if (calculateDistance(striker, puck) <= STRIKER_RADIUS + PUCK_RADIUS) {
       // If striker is moving -> transfer its velocity to the puck
@@ -75,7 +69,7 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
       setSleep(true);
       setTimeout(() => {
         setSleep(false);
-      }, 400);
+      }, 200);
     }
   };
 
@@ -199,6 +193,11 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
     }
 
     if (!sleep) checkForCollision(striker1, puck);
+  };
+  const outsideGoalPosts = puck => {
+    return (
+      puck.centerX < CANVAS_WIDTH * 0.3 || puck.centerX > CANVAS_WIDTH * 0.7
+    );
   };
 
   return <div className="bson-flex" />;
