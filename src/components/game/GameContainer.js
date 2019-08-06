@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../contexts/UserContext";
 import MasterCanvas from "./MasterCanvas";
+import SlaveCanvas from "./SlaveCanvas";
 import history from "../../history";
 import {
   INITIAL_PUCK_STATE,
@@ -24,13 +25,22 @@ const GameContainer = () => {
       <div>
         This is game: {game}, created by {name}
       </div>
-      <MasterCanvas
-        puck={puck}
-        setPuck={setPuck}
-        striker1={striker1}
-        setStriker1={setStriker1}
-        striker2={striker2}
-      />
+      {role === "master" ? (
+        <MasterCanvas
+          puck={puck}
+          setPuck={setPuck}
+          striker1={striker1}
+          setStriker1={setStriker1}
+          striker2={striker2}
+        />
+      ) : (
+        <SlaveCanvas
+          puck={puck}
+          striker1={striker1}
+          setStriker2={setStriker2}
+          striker2={striker2}
+        />
+      )}
     </div>
   );
 };

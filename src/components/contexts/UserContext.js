@@ -5,7 +5,7 @@ const UserContext = React.createContext("user");
 const initialState = {
   name: "Robin",
   game: "Robins Game",
-  role: "master"
+  role: "slave"
 };
 
 const reducer = (state, action ) => {
