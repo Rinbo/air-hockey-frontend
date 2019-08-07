@@ -9,7 +9,15 @@ import {
   STRIKER_RADIUS
 } from "./gameConstants";
 
-const MasterCanvas = ({ puck, setPuck, striker1, setStriker1, striker2 }) => {
+const MasterCanvas = ({
+  puck,
+  setPuck,
+  striker1,
+  setStriker1,
+  striker2,
+  clock,
+  setClock
+}) => {
   const [onStriker, setOnStriker] = useState(false);
 
   const gameCanvas = useRef(null);
@@ -64,19 +72,34 @@ const MasterCanvas = ({ puck, setPuck, striker1, setStriker1, striker2 }) => {
     return y;
   };
 
+  const capSpeed = velocity => {
+    if (velocity >= 3.5) return 3.5;
+    if (velocity < -3.5) return -3.5;
+    return velocity;
+  };
+
   const move = e => {
     if (!onStriker) return;
     const pos = getMousePos(e);
+
+    // Note to self: When stopping movement, the move() function doesn't get called again (one last time to reset speed to zero)
+    // I have to investigate another eventHandler that sets velocity to zero when mouse stops moving but still pressing down
     setStriker1(prevState => {
       return {
         ...prevState,
         centerX: withinXBounds(pos.x),
-        centerY: withinYBounds(pos.y)
-        // Velocity will have to be se here
+        centerY: withinYBounds(pos.y),
+        velocity: {
+          x: capSpeed(prevState.centerX - prevState.deltaX),
+          y: capSpeed(prevState.centerY - prevState.deltaY)
+        },
+        deltaX: prevState.centerX,
+        deltaY: prevState.centerY
       };
     });
+    console.log(clock);
+    console.log(striker1.velocity);
   };
-
   return (
     <div className="flex flex-col justify-center" style={{ height: 240 }}>
       <div>
@@ -86,6 +109,8 @@ const MasterCanvas = ({ puck, setPuck, striker1, setStriker1, striker2 }) => {
           striker1={striker1}
           setStriker1={setStriker1}
           striker2={striker2}
+          clock={clock}
+          setClock={setClock}
         />
       </div>
       <canvas

@@ -11,6 +11,7 @@ import {
 
 const GameContainer = () => {
   const { game, name, role } = useContext(UserContext);
+  const [clock, setClock] = useState(0);
 
   const [striker1, setStriker1] = useState(INITIAL_STRIKER1_STATE);
   const [striker2, setStriker2] = useState(INITIAL_STRIKER2_STATE);
@@ -32,6 +33,8 @@ const GameContainer = () => {
           striker1={striker1}
           setStriker1={setStriker1}
           striker2={striker2}
+          clock={clock}
+          setClock={setClock}
         />
       ) : (
         <SlaveCanvas
@@ -39,6 +42,8 @@ const GameContainer = () => {
           striker1={striker1}
           setStriker2={setStriker2}
           striker2={striker2}
+          clock={clock}
+          setClock={setClock}
         />
       )}
     </div>

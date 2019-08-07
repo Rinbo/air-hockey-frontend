@@ -11,8 +11,7 @@ import {
   CLOCK_INTERVAL
 } from "./gameConstants";
 
-const GameEngine = ({ puck, setPuck, striker1, setStriker1, striker2 }) => {
-  const [clock, setClock] = useState(0);
+const GameEngine = ({ puck, setPuck, striker1, setStriker1, striker2, clock, setClock }) => {
   const [active, setActive] = useState(true);
   const [sleep, setSleep] = useState(false);
 
@@ -33,7 +32,7 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1, striker2 }) => {
   const checkForCollision = (striker, puck) => {
     if (calculateDistance(striker, puck) <= STRIKER_RADIUS + PUCK_RADIUS) {
       // If striker is moving -> transfer its velocity to the puck
-      if (striker.velocity.x > 0 || striker.velocity.y > 0) {
+      if (striker.velocity.x !== 0 || striker.velocity.y !== 0) {
         setPuck(prevState => {
           return {
             ...prevState,
@@ -73,12 +72,6 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1, striker2 }) => {
     }
   };
 
-  const capSpeed = velocity => {
-    if (velocity >= 3.5) return 3.5;
-    if (velocity < -3.5) return -3.5;
-    return velocity;
-  };
-
   const friction = () => {
     return 1 / ((100000 + clock) / 100000);
   };
@@ -92,24 +85,6 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1, striker2 }) => {
 
   const animatePuck = () => {
     if (!active) return;
-
-    // Dynamically set the velocity of the striker
-    setStriker1(prevState => {
-      return {
-        ...prevState,
-        velocity: {
-          x: capSpeed(
-            Math.round(prevState.centerX) - Math.round(prevState.deltaX)
-          ),
-          y: capSpeed(
-            Math.round(prevState.centerY) - Math.round(prevState.deltaY)
-          )
-        },
-        deltaX: prevState.centerX,
-        deltaY: prevState.centerY
-      };
-    });
-
     // Render the pucks movement
     // @TODO add friction to eventually bring the pucks speed down to zero
     setPuck(prevState => {
