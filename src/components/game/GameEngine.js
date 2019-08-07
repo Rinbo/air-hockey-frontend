@@ -11,7 +11,7 @@ import {
   CLOCK_INTERVAL
 } from "./gameConstants";
 
-const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
+const GameEngine = ({ puck, setPuck, striker1, setStriker1, striker2 }) => {
   const [clock, setClock] = useState(0);
   const [active, setActive] = useState(true);
   const [sleep, setSleep] = useState(false);
@@ -192,7 +192,10 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1 }) => {
       resetBoard();
     }
 
-    if (!sleep) checkForCollision(striker1, puck);
+    if (!sleep) {
+      checkForCollision(striker1, puck);
+      checkForCollision(striker2, puck);
+    }
   };
   const outsideGoalPosts = puck => {
     return (
