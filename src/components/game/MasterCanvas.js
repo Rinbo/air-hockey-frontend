@@ -72,6 +72,7 @@ const MasterCanvas = ({ puck, setPuck, striker1, setStriker1, striker2 }) => {
         ...prevState,
         centerX: withinXBounds(pos.x),
         centerY: withinYBounds(pos.y)
+        // Velocity will have to be se here
       };
     });
   };
@@ -84,6 +85,7 @@ const MasterCanvas = ({ puck, setPuck, striker1, setStriker1, striker2 }) => {
           setPuck={setPuck}
           striker1={striker1}
           setStriker1={setStriker1}
+          striker2={striker2}
         />
       </div>
       <canvas

@@ -33,7 +33,7 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1, striker2 }) => {
   const checkForCollision = (striker, puck) => {
     if (calculateDistance(striker, puck) <= STRIKER_RADIUS + PUCK_RADIUS) {
       // If striker is moving -> transfer its velocity to the puck
-      if (striker1.velocity.x > 0 || striker1.velocity.y > 0) {
+      if (striker.velocity.x > 0 || striker.velocity.y > 0) {
         setPuck(prevState => {
           return {
             ...prevState,
