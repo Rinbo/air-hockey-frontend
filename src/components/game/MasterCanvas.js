@@ -6,18 +6,11 @@ import {
   CANVAS_WIDTH,
   CANVAS_HEIGHT,
   RIM_WIDTH,
-  STRIKER_RADIUS
+  STRIKER_RADIUS,
+  SPEED_LIMIT
 } from "./gameConstants";
 
-const MasterCanvas = ({
-  puck,
-  setPuck,
-  striker1,
-  setStriker1,
-  striker2,
-  clock,
-  setClock
-}) => {
+const MasterCanvas = ({ puck, setPuck, striker1, setStriker1, striker2 }) => {
   const [onStriker, setOnStriker] = useState(false);
 
   const gameCanvas = useRef(null);
@@ -47,8 +40,10 @@ const MasterCanvas = ({
 
   const finishedPosition = () => {
     setOnStriker(false);
+    setStriker1(prevState => {
+      return { ...prevState, velocity: { x: 0, y: 0 } };
+    });
   };
-
   const checkIfInCircle = pos => {
     return (
       Math.sqrt(
@@ -73,8 +68,8 @@ const MasterCanvas = ({
   };
 
   const capSpeed = velocity => {
-    if (velocity >= 3.5) return 3.5;
-    if (velocity < -3.5) return -3.5;
+    if (velocity >= SPEED_LIMIT) return SPEED_LIMIT;
+    if (velocity < -SPEED_LIMIT) return -SPEED_LIMIT;
     return velocity;
   };
 
@@ -90,16 +85,17 @@ const MasterCanvas = ({
         centerX: withinXBounds(pos.x),
         centerY: withinYBounds(pos.y),
         velocity: {
-          x: capSpeed(prevState.centerX - prevState.deltaX),
-          y: capSpeed(prevState.centerY - prevState.deltaY)
-        },
-        deltaX: prevState.centerX,
-        deltaY: prevState.centerY
+          x: capSpeed(pos.x - prevState.centerX),
+          y: capSpeed(pos.y - prevState.centerY)
+        }
       };
     });
-    console.log(clock);
-    console.log(striker1.velocity);
+    return () =>
+      setStriker1(prevState => {
+        return { ...prevState, velocity: { x: 0, y: 0 } };
+      });
   };
+
   return (
     <div className="flex flex-col justify-center" style={{ height: 240 }}>
       <div>
@@ -109,8 +105,6 @@ const MasterCanvas = ({
           striker1={striker1}
           setStriker1={setStriker1}
           striker2={striker2}
-          clock={clock}
-          setClock={setClock}
         />
       </div>
       <canvas

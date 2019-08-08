@@ -8,14 +8,7 @@ import {
   STRIKER_RADIUS
 } from "./gameConstants";
 
-const SlaveCanvas = ({
-  puck,
-  striker1,
-  setStriker2,
-  striker2,
-  clock,
-  setClock
-}) => {
+const SlaveCanvas = ({ puck, striker1, setStriker2, striker2 }) => {
   const [onStriker, setOnStriker] = useState(false);
 
   const gameCanvas = useRef(null);
@@ -45,6 +38,9 @@ const SlaveCanvas = ({
 
   const finishedPosition = () => {
     setOnStriker(false);
+    setStriker2(prevState => {
+      return { ...prevState, velocity: { x: 0, y: 0 } };
+    });
   };
 
   const checkIfInCircle = pos => {
@@ -81,6 +77,10 @@ const SlaveCanvas = ({
         centerY: withinYBounds(pos.y)
       };
     });
+    return () =>
+      setStriker2(prevState => {
+        return { ...prevState, velocity: { x: 0, y: 0 } };
+      });
   };
 
   return (

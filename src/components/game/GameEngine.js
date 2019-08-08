@@ -11,9 +11,10 @@ import {
   CLOCK_INTERVAL
 } from "./gameConstants";
 
-const GameEngine = ({ puck, setPuck, striker1, setStriker1, striker2, clock, setClock }) => {
+const GameEngine = ({ puck, setPuck, striker1, setStriker1, striker2 }) => {
   const [active, setActive] = useState(true);
   const [sleep, setSleep] = useState(false);
+  const [clock, setClock] = useState(0);
 
   useInterval(() => {
     animatePuck();
@@ -37,8 +38,8 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1, striker2, clock, set
           return {
             ...prevState,
             velocity: {
-              x: striker1.velocity.x,
-              y: striker1.velocity.y
+              x: striker.velocity.x,
+              y: striker.velocity.y
             }
           };
         });
@@ -68,7 +69,7 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1, striker2, clock, set
       setSleep(true);
       setTimeout(() => {
         setSleep(false);
-      }, 200);
+      }, 400);
     }
   };
 

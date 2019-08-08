@@ -17,9 +17,7 @@ export const INITIAL_STRIKER1_STATE = {
   centerX: 150,
   centerY: 50,
   radius: STRIKER_RADIUS,
-  velocity: { x: 0, y: 0 },
-  deltaX: 150,
-  deltaY: 50
+  velocity: { x: 0, y: 0 }
 };
 
 export const INITIAL_STRIKER2_STATE = {
@@ -29,6 +27,7 @@ export const INITIAL_STRIKER2_STATE = {
   velocity: { x: 0, y: 0 }
 };
 
-export const CLOCK_INTERVAL = 10;
+export const CLOCK_INTERVAL = 1;
+export const SPEED_LIMIT = 2.5;
 
 export const PUCK_STD_V = 4;
