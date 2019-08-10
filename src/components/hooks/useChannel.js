@@ -3,7 +3,7 @@ import SocketContext from "../contexts/SocketContext";
 
 const useChannel = (channelTopic, name, reducer, initialState) => {
   const socket = useContext(SocketContext);
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [gameState, dispatch] = useReducer(reducer, initialState);
   const [broadcast, setBroadcast] = useState(mustJoinChannelWarning);
   const [channelObject, setChannelObject] = useState(null);
 
@@ -21,7 +21,7 @@ const useChannel = (channelTopic, name, reducer, initialState) => {
     [channelTopic]
   );
 
-  return [state, broadcast, channelObject];
+  return [gameState, broadcast, channelObject];
 };
 
 const joinChannel = (

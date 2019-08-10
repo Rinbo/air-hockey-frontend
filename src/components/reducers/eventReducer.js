@@ -1,4 +1,10 @@
-const eventReducer = (state, { event, payload }) => {
+export const INITIAL_STATE = {
+  message: "",
+  status: {},
+  subscribers: {}
+};
+
+export const eventReducer = (state, { event, payload }) => {
   switch (event) {
     case "phx_reply":
       return {
@@ -21,5 +27,3 @@ const eventReducer = (state, { event, payload }) => {
       return state;
   }
 };
-
-export default eventReducer;

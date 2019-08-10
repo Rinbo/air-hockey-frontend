@@ -10,7 +10,7 @@ import "./css/modal.css";
 const AppWrapper = () => {
   return (
     <UserProvider>
-      <SocketProvider>
+      <SocketProvider wsUrl="ws://localhost:4000/socket" options={{}}>
         <App />
       </SocketProvider>
     </UserProvider>
