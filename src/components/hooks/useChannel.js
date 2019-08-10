@@ -1,5 +1,5 @@
 import { useContext, useReducer, useEffect, useState } from "react";
-import SocketContext from "../socket/SocketContext";
+import SocketContext from "../contexts/SocketContext";
 
 const useChannel = (channelTopic, name, reducer, initialState) => {
   const socket = useContext(SocketContext);

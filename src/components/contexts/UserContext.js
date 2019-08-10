@@ -1,6 +1,6 @@
-import React, { useReducer } from "react";
+import React, { useReducer, createContext } from "react";
 
-const UserContext = React.createContext("user");
+const UserContext = createContext("user");
 
 const initialState = {
   name: "Robin",
@@ -8,8 +8,7 @@ const initialState = {
   role: "master"
 };
 
-const reducer = (state, action ) => {
-
+const reducer = (state, action) => {
   switch (action.type) {
     case "user":
       return { ...state, name: action.payload };
