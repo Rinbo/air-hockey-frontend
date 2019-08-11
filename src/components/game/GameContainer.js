@@ -45,6 +45,8 @@ const GameContainer = () => {
           striker1={striker1}
           setStriker1={setStriker1}
           striker2={striker2}
+          broadcast={broadcast}
+          gameState={gameState}
         />
       ) : (
         <SlaveCanvas
@@ -52,6 +54,8 @@ const GameContainer = () => {
           striker1={striker1}
           setStriker2={setStriker2}
           striker2={striker2}
+          broadcast={broadcast}
+          gameState={gameState}
         />
       )}
     </div>

@@ -1,5 +1,5 @@
 export const INITIAL_STATE = {
-  message: "",
+  message: "Welcome, waiting for another player to join...",
   status: {},
   subscribers: {},
   role: "",

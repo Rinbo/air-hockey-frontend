@@ -6,9 +6,9 @@ const useChannel = (channelTopic, name, reducer, initialState) => {
   const [gameState, dispatch] = useReducer(reducer, initialState);
   const [broadcast, setBroadcast] = useState(mustJoinChannelWarning);
 
-  // eslint-disable-next-line
   useEffect(
     () => joinChannel(socket, channelTopic, name, dispatch, setBroadcast),
+    // eslint-disable-next-line
     [channelTopic]
   );
 

@@ -8,7 +8,14 @@ import {
   STRIKER_RADIUS
 } from "./gameConstants";
 
-const SlaveCanvas = ({ puck, striker1, setStriker2, striker2 }) => {
+const SlaveCanvas = ({
+  puck,
+  striker1,
+  setStriker2,
+  striker2,
+  broadcast,
+  gameState
+}) => {
   const [onStriker, setOnStriker] = useState(false);
 
   const gameCanvas = useRef(null);

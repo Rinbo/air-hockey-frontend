@@ -10,7 +10,15 @@ import {
   SPEED_LIMIT
 } from "./gameConstants";
 
-const MasterCanvas = ({ puck, setPuck, striker1, setStriker1, striker2 }) => {
+const MasterCanvas = ({
+  puck,
+  setPuck,
+  striker1,
+  setStriker1,
+  striker2,
+  broadcast,
+  gameState
+}) => {
   const [onStriker, setOnStriker] = useState(false);
 
   const gameCanvas = useRef(null);
