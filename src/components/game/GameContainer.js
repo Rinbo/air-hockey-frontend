@@ -19,7 +19,7 @@ const GameContainer = () => {
   const [striker2, setStriker2] = useState(INITIAL_STRIKER2_STATE);
   const [puck, setPuck] = useState(INITIAL_PUCK_STATE);
 
-  const [gameState, broadcast] = useChannel(
+  const [state, broadcast] = useChannel(
     `game:${gameName}`,
     name,
     eventReducer,
@@ -31,14 +31,14 @@ const GameContainer = () => {
       history.push(`${process.env.PUBLIC_URL}/`);
   }, [name, gameName]);
 
-  if (!gameState.active) return <WaitingRoom message={gameState.message} />;
+  if (!state.active) return <WaitingRoom message={state.message} />;
 
   return (
     <div className="bson-flex">
       <div>
         This is game: {gameName}, created by {name}
       </div>
-      {gameState.role === "master" ? (
+      {state.role === "master" ? (
         <MasterCanvas
           puck={puck}
           setPuck={setPuck}
@@ -46,7 +46,7 @@ const GameContainer = () => {
           setStriker1={setStriker1}
           striker2={striker2}
           broadcast={broadcast}
-          gameState={gameState}
+          state={state}
         />
       ) : (
         <SlaveCanvas
@@ -55,7 +55,7 @@ const GameContainer = () => {
           setStriker2={setStriker2}
           striker2={striker2}
           broadcast={broadcast}
-          gameState={gameState}
+          state={state}
         />
       )}
     </div>

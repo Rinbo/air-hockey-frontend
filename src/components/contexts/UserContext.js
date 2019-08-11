@@ -3,9 +3,8 @@ import React, { useReducer, createContext } from "react";
 const UserContext = createContext("user");
 
 const initialState = {
-  name: "Robin",
-  gameName: "Robins Game",
-  role: "master"
+  name: "",
+  gameName: ""
 };
 
 const reducer = (state, action) => {
@@ -13,7 +12,7 @@ const reducer = (state, action) => {
     case "user":
       return { ...state, name: action.payload };
     case "game":
-      return { ...state, game: action.payload };
+      return { ...state, gameName: action.payload };
     default:
       return { ...state };
   }

@@ -1,22 +1,30 @@
 import React, { useContext, useEffect, useState } from "react";
 import history from "../../history";
 import UserContext from "../contexts/UserContext";
+import useChannel from "../hooks/useChannel";
+import { lobbyReducer, INITIAL_STATE } from "../reducers/lobbyReducer";
 
 const Lobby = () => {
-  const { name, game, setState } = useContext(UserContext);
+  const { name, gameName, setState } = useContext(UserContext);
   const [error, setError] = useState(false);
+
+  const [state, broadcast] = useChannel(
+    "lobby:main",
+    name,
+    lobbyReducer,
+    INITIAL_STATE
+  );
 
   useEffect(() => {
     if (name === "") history.push(`${process.env.PUBLIC_URL}/`);
   }, [name]);
 
-
   const onSubmit = () => {
-    if (game.length < 3) {
+    if (gameName.length < 3) {
       setError(true);
     } else {
       setError(false);
-      history.push(`${process.env.PUBLIC_URL}/game/${game}`);
+      history.push(`${process.env.PUBLIC_URL}/game/${gameName}`);
     }
   };
 
@@ -32,7 +40,7 @@ const Lobby = () => {
         <label>Game name</label>
         <input
           style={{ borderColor: error ? "red" : "" }}
-          value={game}
+          value={gameName}
           onChange={e => onChange(e)}
         />
         <div style={{ color: "red", fontSize: 10 }}>

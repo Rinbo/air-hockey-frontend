@@ -14,7 +14,7 @@ const SlaveCanvas = ({
   setStriker2,
   striker2,
   broadcast,
-  gameState
+  state
 }) => {
   const [onStriker, setOnStriker] = useState(false);
 

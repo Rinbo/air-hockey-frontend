@@ -3,7 +3,7 @@ import SocketContext from "../contexts/SocketContext";
 
 const useChannel = (channelTopic, name, reducer, initialState) => {
   const socket = useContext(SocketContext);
-  const [gameState, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
   const [broadcast, setBroadcast] = useState(mustJoinChannelWarning);
 
   useEffect(
@@ -12,12 +12,12 @@ const useChannel = (channelTopic, name, reducer, initialState) => {
     [channelTopic]
   );
 
-  return [gameState, broadcast];
+  return [state, broadcast];
 };
 
 const joinChannel = (socket, channelTopic, name, dispatch, setBroadcast) => {
   const channel = socket.channel(channelTopic, {
-    screen_name: name
+    player_name: name
   });
   channel.onMessage = (event, payload) => {
     dispatch({ event, payload });

@@ -17,7 +17,7 @@ const MasterCanvas = ({
   setStriker1,
   striker2,
   broadcast,
-  gameState
+  state
 }) => {
   const [onStriker, setOnStriker] = useState(false);
 
