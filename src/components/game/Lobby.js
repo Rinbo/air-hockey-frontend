@@ -9,7 +9,7 @@ const Lobby = () => {
   const [error, setError] = useState(false);
 
   const [state, broadcast] = useChannel(
-    "lobby:main",
+    "game:lobby",
     name,
     lobbyReducer,
     INITIAL_STATE
@@ -52,6 +52,7 @@ const Lobby = () => {
       </div>
       <div>
         <h5>Join an existing game</h5>
+        <button onClick={() => broadcast("ping", {})}>Ping</button>
       </div>
     </div>
   );
