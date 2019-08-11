@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../contexts/UserContext";
 import MasterCanvas from "./MasterCanvas";
 import SlaveCanvas from "./SlaveCanvas";
+import WaitingRoom from "./WaitingRoom";
 import history from "../../history";
 import useChannel from "../hooks/useChannel";
 import { eventReducer, INITIAL_STATE } from "../reducers/eventReducer";
@@ -12,41 +13,32 @@ import {
 } from "./gameConstants";
 
 const GameContainer = () => {
-  const { game, name, role } = useContext(UserContext);
+  const { gameName, name, role } = useContext(UserContext);
 
   const [striker1, setStriker1] = useState(INITIAL_STRIKER1_STATE);
   const [striker2, setStriker2] = useState(INITIAL_STRIKER2_STATE);
   const [puck, setPuck] = useState(INITIAL_PUCK_STATE);
 
-  const [gameState, broadcast, channelObject] = useChannel(
-    `game:${channelName}`,
+  const [gameState, broadcast] = useChannel(
+    `game:${gameName}`,
     name,
     eventReducer,
     INITIAL_STATE
   );
 
-  const leaveChannel = () => {
-    channelObject
-      .leave()
-      .receive("ok", ({ messages }) =>
-        console.log("successfully left channel", messages || "")
-      )
-      .receive("error", ({ reason }) =>
-        console.error("failed to leave channel", reason)
-      );
-    history.push(`${process.env.PUBLIC_URL}/`);
-  };
-
   useEffect(() => {
-    if (name === "" || game === "") history.push(`${process.env.PUBLIC_URL}/`);
-  }, [name, game]);
+    if (name === "" || gameName === "")
+      history.push(`${process.env.PUBLIC_URL}/`);
+  }, [name, gameName]);
+
+  if (!gameState.active) return <WaitingRoom message={gameState.message} />;
 
   return (
     <div className="bson-flex">
       <div>
-        This is game: {game}, created by {name}
+        This is game: {gameName}, created by {name}
       </div>
-      {role === "master" ? (
+      {gameState.role === "master" ? (
         <MasterCanvas
           puck={puck}
           setPuck={setPuck}

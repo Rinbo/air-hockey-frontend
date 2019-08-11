@@ -4,7 +4,7 @@ const UserContext = createContext("user");
 
 const initialState = {
   name: "Robin",
-  game: "Robins Game",
+  gameName: "Robins Game",
   role: "master"
 };
 

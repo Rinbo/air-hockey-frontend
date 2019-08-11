@@ -1,7 +1,9 @@
 export const INITIAL_STATE = {
   message: "",
   status: {},
-  subscribers: {}
+  subscribers: {},
+  role: "",
+  active: false
 };
 
 export const eventReducer = (state, { event, payload }) => {

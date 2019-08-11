@@ -5,33 +5,17 @@ const useChannel = (channelTopic, name, reducer, initialState) => {
   const socket = useContext(SocketContext);
   const [gameState, dispatch] = useReducer(reducer, initialState);
   const [broadcast, setBroadcast] = useState(mustJoinChannelWarning);
-  const [channelObject, setChannelObject] = useState(null);
 
   // eslint-disable-next-line
   useEffect(
-    () =>
-      joinChannel(
-        socket,
-        channelTopic,
-        name,
-        dispatch,
-        setBroadcast,
-        setChannelObject
-      ),
+    () => joinChannel(socket, channelTopic, name, dispatch, setBroadcast),
     [channelTopic]
   );
 
-  return [gameState, broadcast, channelObject];
+  return [gameState, broadcast];
 };
 
-const joinChannel = (
-  socket,
-  channelTopic,
-  name,
-  dispatch,
-  setBroadcast,
-  setChannelObject
-) => {
+const joinChannel = (socket, channelTopic, name, dispatch, setBroadcast) => {
   const channel = socket.channel(channelTopic, {
     screen_name: name
   });
@@ -50,7 +34,6 @@ const joinChannel = (
       dispatch({ event: "error", payload: { message: reason } });
     });
 
-  setChannelObject(channel);
   setBroadcast(() => channel.push.bind(channel));
   return () => {
     channel.leave();
