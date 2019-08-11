@@ -13,7 +13,7 @@ import {
 } from "./gameConstants";
 
 const GameContainer = () => {
-  const { gameName, name, role } = useContext(UserContext);
+  const { gameName, name } = useContext(UserContext);
 
   const [striker1, setStriker1] = useState(INITIAL_STRIKER1_STATE);
   const [striker2, setStriker2] = useState(INITIAL_STRIKER2_STATE);
