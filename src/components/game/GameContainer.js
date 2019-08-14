@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../contexts/UserContext";
 import MasterCanvas from "./MasterCanvas";
 import SlaveCanvas from "./SlaveCanvas";
-import WaitingRoom from "./WaitingRoom";
 import history from "../../history";
 import useChannel from "../hooks/useChannel";
 import { eventReducer, INITIAL_STATE } from "../reducers/eventReducer";
@@ -32,7 +31,7 @@ const GameContainer = () => {
   }, [name, gameName]);
 
   if (!state.active)
-    return <button onClick={() => broadcast("ping", {})}>Ping</button>; //<WaitingRoom message={state.message} />;
+    return <button onClick={() => broadcast("ping", {})}>Waiting for opponent to join...</button>; //<WaitingRoom message={state.message} />;
 
   return (
     <div className="bson-flex">

@@ -14,7 +14,7 @@ export const lobbyReducer = (state, { event, payload }) => {
         joined: true
       };
     case "ok":
-      return { ...state, message: payload.response.message, joined: true };
+      return { ...state, message: payload.response.message};
     case "active_games":
       console.log(payload);
       return { ...state, activeGames: payload.games };
