@@ -31,7 +31,8 @@ const GameContainer = () => {
       history.push(`${process.env.PUBLIC_URL}/`);
   }, [name, gameName]);
 
-  if (!state.active) return <WaitingRoom message={state.message} />;
+  if (!state.active)
+    return <button onClick={() => broadcast("ping", {})}>Ping</button>; //<WaitingRoom message={state.message} />;
 
   return (
     <div className="bson-flex">

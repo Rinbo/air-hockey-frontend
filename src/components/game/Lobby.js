@@ -28,6 +28,14 @@ const Lobby = () => {
     }
   };
 
+  const listActiveGames = () => {
+    return state.activeGames.map(e => {
+      return <li>{e}</li>;
+    });
+  };
+
+  if (state.joined) broadcast("get_active_games");
+
   const onChange = e => {
     setState({ type: "game", payload: e.target.value });
   };
@@ -52,7 +60,7 @@ const Lobby = () => {
       </div>
       <div>
         <h5>Join an existing game</h5>
-        <button onClick={() => broadcast("ping", {})}>Ping</button>
+        <ul>{listActiveGames()}</ul>
       </div>
     </div>
   );
