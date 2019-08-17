@@ -35,7 +35,7 @@ const GiveName = ({ setShowModal }) => {
           style={{ borderColor: error ? "red" : "" }}
           onChange={e => setState({ type: "user", payload: e.target.value })}
         />
-        <div style={{ color: "red", fontSize: 10 }}>
+        <div style={{ color: "red", fontSize: 10, marginTop: 5, marginBottom: 10 }}>
           {error ? "Name must be atleast 3 characters long" : null}
         </div>
         <button className="bson-button" onClick={() => onSubmit()}>

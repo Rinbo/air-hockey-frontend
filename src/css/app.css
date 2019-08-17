@@ -30,6 +30,22 @@ a,
   text-decoration: none;
 }
 
+table {
+  width: 100%;
+}
+
+th,
+td {
+  height: 30px;
+  width: 100px;
+  padding: 15px, 15px;
+  text-align: left;
+}
+
+.left-column {
+  text-align: right !important;
+}
+
 a:hover {
   color: darkgreen;
 }
