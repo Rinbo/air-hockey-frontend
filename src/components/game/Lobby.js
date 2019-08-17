@@ -31,7 +31,7 @@ const Lobby = () => {
 
   const listActiveGames = () => {
     return state.activeGames.map(e => {
-      return <li key={e}>{e}</li>;
+      return <li key={Object.keys(e)}>{Object.keys(e)} - {Object.values(e)}</li>;
     });
   };
 
