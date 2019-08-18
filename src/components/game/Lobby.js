@@ -19,7 +19,8 @@ const Lobby = () => {
   useEffect(() => {
     if (name === "") history.push(`${process.env.PUBLIC_URL}/`);
     if (state.joined) broadcast("get_active_games");
-  }, [name, state.joined, broadcast]);
+    // eslint-disable-next-line
+  }, [name, state.joined]);
 
   const onSubmit = () => {
     if (gameName.length < 3) {
@@ -72,7 +73,9 @@ const Lobby = () => {
           value={gameName}
           onChange={e => onChange(e)}
         />
-        <div style={{ color: "red", fontSize: 10, marginTop: 5, marginBottom: 10 }}>
+        <div
+          style={{ color: "red", fontSize: 10, marginTop: 5, marginBottom: 10 }}
+        >
           {error ? "Game name must be atleast 3 characters long" : null}
         </div>
         <button className="bson-button" onClick={() => onSubmit()}>

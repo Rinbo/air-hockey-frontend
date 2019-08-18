@@ -31,7 +31,7 @@ const GameContainer = () => {
   }, [name, gameName]);
 
   if (!state.active)
-    return <button onClick={() => broadcast("ping", {})}>Waiting for opponent to join...</button>; //<WaitingRoom message={state.message} />;
+    return <button onClick={() => broadcast("ping", {})}>Waiting for opponent to join...{state.message}</button>; //<WaitingRoom message={state.message} />;
 
   return (
     <div className="bson-flex">

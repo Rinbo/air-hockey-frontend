@@ -16,14 +16,15 @@ export const eventReducer = (state, { event, payload }) => {
     case "ok":
       return { ...state, message: payload.response.message };
     case "game_started":
-      return { ...state, message: "Game successfully initialized" };
-    case "player_added":
-      return { ...state, message: payload.message };
+      console.log(payload, "activate game");
+      return { ...state, active: payload.message };
+    case "player_joined":
+      return { ...state, role: payload.message };
     case "subscribers":
       return { ...state, subscribers: payload };
     case "error":
       console.log(event);
-      console.log(payload);
+      console.log(payload, "error payload");
       return { ...state, message: payload.message };
     default:
       return state;
