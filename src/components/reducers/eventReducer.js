@@ -1,5 +1,5 @@
 export const INITIAL_STATE = {
-  message: "Welcome, waiting for another player to join...",
+  message: "",
   status: {},
   subscribers: {},
   role: "",
@@ -11,15 +11,16 @@ export const eventReducer = (state, { event, payload }) => {
     case "phx_reply":
       return {
         ...state,
-        message: payload.response.message || "Connection established"
+        message: payload.response.message
       };
     case "ok":
       return { ...state, message: payload.response.message };
     case "game_started":
-      console.log(payload, "activate game");
       return { ...state, active: payload.message };
     case "player_joined":
       return { ...state, role: payload.message };
+    case "player_left":
+      return { ...state, playerLeft: true };
     case "subscribers":
       return { ...state, subscribers: payload };
     case "error":

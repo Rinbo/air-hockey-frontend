@@ -5,20 +5,39 @@ const useChannel = (channelTopic, name, reducer, initialState) => {
   const socket = useContext(SocketContext);
   const [state, dispatch] = useReducer(reducer, initialState);
   const [broadcast, setBroadcast] = useState(mustJoinChannelWarning);
+  const [channelObject, setChannelObject] = useState("");
 
   useEffect(
-    () => joinChannel(socket, channelTopic, name, dispatch, setBroadcast),
+    () =>
+      joinChannel(
+        socket,
+        channelTopic,
+        name,
+        dispatch,
+        setBroadcast,
+        setChannelObject
+      ),
     // eslint-disable-next-line
     [channelTopic]
   );
 
-  return [state, broadcast];
+  return [state, broadcast, channelObject];
 };
 
-const joinChannel = (socket, channelTopic, name, dispatch, setBroadcast) => {
+const joinChannel = (
+  socket,
+  channelTopic,
+  name,
+  dispatch,
+  setBroadcast,
+  setChannelObject
+) => {
   const channel = socket.channel(channelTopic, {
     player_name: name
   });
+
+  setChannelObject(channel);
+
   channel.onMessage = (event, payload) => {
     dispatch({ event, payload });
     return payload;
@@ -36,7 +55,15 @@ const joinChannel = (socket, channelTopic, name, dispatch, setBroadcast) => {
 
   setBroadcast(() => channel.push.bind(channel));
   return () => {
-    channel.leave();
+    channel.push("leave", { reason: "Player left" });
+    channel
+      .leave()
+      .receive("ok", ({ messages }) =>
+        console.log("successfully left channel", messages || "")
+      )
+      .receive("error", ({ reason }) =>
+        console.error("failed to leave channel", reason)
+      );
   };
 };
 

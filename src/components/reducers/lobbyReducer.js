@@ -2,7 +2,8 @@ export const INITIAL_STATE = {
   message: "Welcome, waiting for another player to join...",
   subscribers: {},
   activeGames: [],
-  joined: false
+  joined: false,
+  playerLeft: false
 };
 
 export const lobbyReducer = (state, { event, payload }) => {
@@ -10,11 +11,8 @@ export const lobbyReducer = (state, { event, payload }) => {
     case "phx_reply":
       return {
         ...state,
-        message: payload.response.message || "Connection established",
         joined: true
       };
-    case "ok":
-      return { ...state, message: payload.response.message};
     case "active_games":
       console.log(payload);
       return { ...state, activeGames: payload.games };

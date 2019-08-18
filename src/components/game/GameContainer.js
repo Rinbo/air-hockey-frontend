@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../contexts/UserContext";
 import MasterCanvas from "./MasterCanvas";
 import SlaveCanvas from "./SlaveCanvas";
+import WaitingRoom from "./WaitingRoom";
 import history from "../../history";
 import useChannel from "../hooks/useChannel";
 import { eventReducer, INITIAL_STATE } from "../reducers/eventReducer";
@@ -28,16 +29,15 @@ const GameContainer = () => {
   useEffect(() => {
     if (name === "" || gameName === "")
       history.push(`${process.env.PUBLIC_URL}/`);
+
+    // Here is where the board updates will be made everytime the channel state is changed
   }, [name, gameName]);
 
-  if (!state.active)
-    return <button onClick={() => broadcast("ping", {})}>Waiting for opponent to join...{state.message}</button>; //<WaitingRoom message={state.message} />;
-
+  if (!state.active) return <WaitingRoom message={state.message} />;
+  if (state.playerLeft) return <div>Your opponent left the game.</div>;
   return (
     <div className="bson-flex">
-      <div>
-        This is game: {gameName}, created by {name}
-      </div>
+      <div>Game: {gameName}</div>
       {state.role === "master" ? (
         <MasterCanvas
           puck={puck}

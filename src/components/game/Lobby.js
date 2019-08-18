@@ -18,7 +18,8 @@ const Lobby = () => {
 
   useEffect(() => {
     if (name === "") history.push(`${process.env.PUBLIC_URL}/`);
-    if (state.joined) broadcast("get_active_games");
+    if (state.joined) broadcast("get_active_games");    
+    return () => console.log("Leaving lobby")
     // eslint-disable-next-line
   }, [name, state.joined]);
 
