@@ -16,8 +16,7 @@ const MasterCanvas = ({
   striker1,
   setStriker1,
   striker2,
-  broadcast,
-  state
+  broadcast
 }) => {
   const [onStriker, setOnStriker] = useState(false);
 
@@ -98,6 +97,7 @@ const MasterCanvas = ({
         }
       };
     });
+    broadcast("player1_update", { striker1, puck });
     return () =>
       setStriker1(prevState => {
         return { ...prevState, velocity: { x: 0, y: 0 } };

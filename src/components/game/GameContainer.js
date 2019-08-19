@@ -29,12 +29,24 @@ const GameContainer = () => {
   useEffect(() => {
     if (name === "" || gameName === "")
       history.push(`${process.env.PUBLIC_URL}/`);
-
-    // Here is where the board updates will be made everytime the channel state is changed
   }, [name, gameName]);
 
+  useEffect(()=> {
+    setStriker1(state.striker1)
+  },[state.striker1])
+
+  useEffect(()=> {
+    setStriker2(state.striker2)
+  },[state.striker2])
+
+  useEffect(()=> {
+    setPuck(state.puck)
+  },[state.puck])
+
   if (!state.active) return <WaitingRoom message={state.message} />;
+  
   if (state.playerLeft) return <div>Your opponent left the game.</div>;
+  
   return (
     <div className="bson-flex">
       <div>Game: {gameName}</div>

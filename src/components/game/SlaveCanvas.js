@@ -26,7 +26,7 @@ const SlaveCanvas = ({
     gameCanvas.current.height = CANVAS_HEIGHT;
     ctx.current = gameCanvas.current.getContext("2d");
     initBoard(ctx, striker1, striker2, puck);
-  });
+  }, []);
 
   const getMousePos = e => {
     const rect = gameCanvas.current.getBoundingClientRect();
@@ -84,6 +84,9 @@ const SlaveCanvas = ({
         centerY: withinYBounds(pos.y)
       };
     });
+
+    broadcast("player2_update", { striker2 });
+
     return () =>
       setStriker2(prevState => {
         return { ...prevState, velocity: { x: 0, y: 0 } };

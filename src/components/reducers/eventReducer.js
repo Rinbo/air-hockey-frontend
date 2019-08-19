@@ -1,9 +1,18 @@
+import {
+  INITIAL_STRIKER1_STATE,
+  INITIAL_STRIKER2_STATE,
+  INITIAL_PUCK_STATE
+} from "../game/gameConstants";
+
 export const INITIAL_STATE = {
   message: "",
   status: {},
   subscribers: {},
   role: "",
-  active: false
+  active: false,
+  striker1: INITIAL_STRIKER1_STATE,
+  striker2: INITIAL_STRIKER2_STATE,
+  puck: INITIAL_PUCK_STATE
 };
 
 export const eventReducer = (state, { event, payload }) => {
@@ -21,6 +30,10 @@ export const eventReducer = (state, { event, payload }) => {
       return { ...state, role: payload.message };
     case "player_left":
       return { ...state, playerLeft: true };
+    case "player2_update":
+      return { ...state, striker2: payload.player2 };
+    case "player1_update":
+      return { ...state, striker1: payload.striker1, puck: payload.puck };
     case "subscribers":
       return { ...state, subscribers: payload };
     case "error":
