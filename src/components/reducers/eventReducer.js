@@ -31,8 +31,10 @@ export const eventReducer = (state, { event, payload }) => {
     case "player_left":
       return { ...state, playerLeft: true };
     case "player2_update":
-      return { ...state, striker2: payload.player2 };
+      console.log(payload, "player2_update")
+      return { ...state, striker2: payload.striker2 };
     case "player1_update":
+      console.log(payload, "player1_update")
       return { ...state, striker1: payload.striker1, puck: payload.puck };
     case "subscribers":
       return { ...state, subscribers: payload };

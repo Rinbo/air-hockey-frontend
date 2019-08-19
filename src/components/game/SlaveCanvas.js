@@ -8,14 +8,7 @@ import {
   STRIKER_RADIUS
 } from "./gameConstants";
 
-const SlaveCanvas = ({
-  puck,
-  striker1,
-  setStriker2,
-  striker2,
-  broadcast,
-  state
-}) => {
+const SlaveCanvas = ({ puck, striker1, setStriker2, striker2, broadcast }) => {
   const [onStriker, setOnStriker] = useState(false);
 
   const gameCanvas = useRef(null);
@@ -26,7 +19,7 @@ const SlaveCanvas = ({
     gameCanvas.current.height = CANVAS_HEIGHT;
     ctx.current = gameCanvas.current.getContext("2d");
     initBoard(ctx, striker1, striker2, puck);
-  }, []);
+  });
 
   const getMousePos = e => {
     const rect = gameCanvas.current.getBoundingClientRect();

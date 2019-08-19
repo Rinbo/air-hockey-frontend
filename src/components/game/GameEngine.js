@@ -11,7 +11,7 @@ import {
   CLOCK_INTERVAL
 } from "./gameConstants";
 
-const GameEngine = ({ puck, setPuck, striker1, setStriker1, striker2 }) => {
+const GameEngine = ({ puck, setPuck, striker1, setStriker1, striker2, broadcast }) => {
   const [active, setActive] = useState(true);
   const [sleep, setSleep] = useState(false);
   const [clock, setClock] = useState(0);
@@ -172,6 +172,8 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1, striker2 }) => {
       checkForCollision(striker1, puck);
       checkForCollision(striker2, puck);
     }
+
+    broadcast("player1_update", { striker1, puck });
   };
   const outsideGoalPosts = puck => {
     return (

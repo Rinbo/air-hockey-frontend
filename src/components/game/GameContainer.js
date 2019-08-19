@@ -31,22 +31,22 @@ const GameContainer = () => {
       history.push(`${process.env.PUBLIC_URL}/`);
   }, [name, gameName]);
 
-  useEffect(()=> {
-    setStriker1(state.striker1)
-  },[state.striker1])
+  useEffect(() => {
+    setStriker1(state.striker1);
+  }, [state.striker1]);
 
-  useEffect(()=> {
-    setStriker2(state.striker2)
-  },[state.striker2])
+  useEffect(() => {
+    setStriker2(state.striker2);
+  }, [state.striker2]);
 
-  useEffect(()=> {
-    setPuck(state.puck)
-  },[state.puck])
+  useEffect(() => {
+    setPuck(state.puck);
+  }, [state.puck]);
 
   if (!state.active) return <WaitingRoom message={state.message} />;
-  
+
   if (state.playerLeft) return <div>Your opponent left the game.</div>;
-  
+
   return (
     <div className="bson-flex">
       <div>Game: {gameName}</div>
