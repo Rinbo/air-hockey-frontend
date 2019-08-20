@@ -8,7 +8,14 @@ import {
   STRIKER_RADIUS
 } from "./gameConstants";
 
-const SlaveCanvas = ({ puck, striker1, setStriker2, striker2, broadcast }) => {
+const SlaveCanvas = ({
+  puck,
+  striker1,
+  setStriker2,
+  striker2,
+  broadcast,
+  clock
+}) => {
   const [onStriker, setOnStriker] = useState(false);
 
   const gameCanvas = useRef(null);
@@ -20,6 +27,13 @@ const SlaveCanvas = ({ puck, striker1, setStriker2, striker2, broadcast }) => {
     ctx.current = gameCanvas.current.getContext("2d");
     initBoard(ctx, striker1, striker2, puck);
   });
+
+  useEffect(() => {
+    if (clock % 30 === 0) {
+      broadcast("player2_update", { striker2 });
+    }
+    // eslint-disable-next-line
+  }, [clock, striker2]);
 
   const getMousePos = e => {
     const rect = gameCanvas.current.getBoundingClientRect();
@@ -77,8 +91,6 @@ const SlaveCanvas = ({ puck, striker1, setStriker2, striker2, broadcast }) => {
         centerY: withinYBounds(pos.y)
       };
     });
-
-    broadcast("player2_update", { striker2 });
 
     return () =>
       setStriker2(prevState => {

@@ -18,6 +18,7 @@ const GameContainer = () => {
   const [striker1, setStriker1] = useState(INITIAL_STRIKER1_STATE);
   const [striker2, setStriker2] = useState(INITIAL_STRIKER2_STATE);
   const [puck, setPuck] = useState(INITIAL_PUCK_STATE);
+  const [clock, setClock] = useState(0);
 
   const [state, broadcast] = useChannel(
     `game:${gameName}`,
@@ -33,15 +34,12 @@ const GameContainer = () => {
 
   useEffect(() => {
     setStriker1(state.striker1);
-  }, [state.striker1]);
+    setPuck(state.puck);
+  }, [state.striker1, state.puck]);
 
   useEffect(() => {
     setStriker2(state.striker2);
   }, [state.striker2]);
-
-  useEffect(() => {
-    setPuck(state.puck);
-  }, [state.puck]);
 
   if (!state.active) return <WaitingRoom message={state.message} />;
 
@@ -59,6 +57,8 @@ const GameContainer = () => {
           striker2={striker2}
           broadcast={broadcast}
           state={state}
+          setClock={setClock}
+          clock={clock}
         />
       ) : (
         <SlaveCanvas
@@ -67,7 +67,7 @@ const GameContainer = () => {
           setStriker2={setStriker2}
           striker2={striker2}
           broadcast={broadcast}
-          state={state}
+          clock={clock}
         />
       )}
     </div>

@@ -17,12 +17,13 @@ const GameEngine = ({
   striker1,
   setStriker1,
   striker2,
-  broadcast
+  broadcast,
+  setClock,
+  clock
 }) => {
   const [active, setActive] = useState(true);
   const [sleep, setSleep] = useState(false);
   const [friction, setFriction] = useState(0);
-  const [clock, setClock] = useState(0);
 
   useInterval(() => {
     animatePuck();
@@ -38,7 +39,6 @@ const GameEngine = ({
       setStriker1(INITIAL_STRIKER1_STATE);
     }, 1000);
   };
-
   const checkForCollision = (striker, puck) => {
     if (calculateDistance(striker, puck) <= STRIKER_RADIUS + PUCK_RADIUS) {
       // If striker is moving -> transfer its velocity to the puck
