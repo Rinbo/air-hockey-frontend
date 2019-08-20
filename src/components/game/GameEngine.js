@@ -11,14 +11,23 @@ import {
   CLOCK_INTERVAL
 } from "./gameConstants";
 
-const GameEngine = ({ puck, setPuck, striker1, setStriker1, striker2, broadcast }) => {
+const GameEngine = ({
+  puck,
+  setPuck,
+  striker1,
+  setStriker1,
+  striker2,
+  broadcast
+}) => {
   const [active, setActive] = useState(true);
   const [sleep, setSleep] = useState(false);
+  const [friction, setFriction] = useState(0);
   const [clock, setClock] = useState(0);
 
   useInterval(() => {
     animatePuck();
     setClock(prevTick => prevTick + CLOCK_INTERVAL);
+    setFriction(prevTick => prevTick + CLOCK_INTERVAL);
   }, CLOCK_INTERVAL);
 
   const resetBoard = () => {
@@ -43,8 +52,8 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1, striker2, broadcast 
             }
           };
         });
-        //Resets clock for friction calculation
-        setClock(0);
+        //Resets friction for friction calculation
+        setFriction(0);
       } else {
         // When striker is not moving , if puck hits upper and lower quadrant of striker
         // only reverse y-component of velocity
@@ -73,8 +82,8 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1, striker2, broadcast 
     }
   };
 
-  const friction = () => {
-    return 1 / ((100000 + clock) / 100000);
+  const frictionFactor = () => {
+    return 1 / ((100000 + friction) / 100000);
   };
   // Diagonal distance between center of striker and center of puck
   const calculateDistance = (striker, puck) => {
@@ -94,8 +103,8 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1, striker2, broadcast 
         centerX: prevState.centerX + prevState.velocity.x,
         centerY: prevState.centerY + prevState.velocity.y,
         velocity: {
-          x: prevState.velocity.x * friction(),
-          y: prevState.velocity.y * friction()
+          x: prevState.velocity.x * frictionFactor(),
+          y: prevState.velocity.y * frictionFactor()
         }
       };
     });
@@ -172,8 +181,7 @@ const GameEngine = ({ puck, setPuck, striker1, setStriker1, striker2, broadcast 
       checkForCollision(striker1, puck);
       checkForCollision(striker2, puck);
     }
-
-    broadcast("player1_update", { striker1, puck });
+    if (clock % 30 === 0) broadcast("player1_update", { striker1, puck });
   };
   const outsideGoalPosts = puck => {
     return (
