@@ -58,7 +58,6 @@ const GameContainer = () => {
           setStriker1={setStriker1}
           striker2={striker2}
           broadcast={broadcast}
-          state={state}
           setClock={setClock}
           clock={clock}
         />

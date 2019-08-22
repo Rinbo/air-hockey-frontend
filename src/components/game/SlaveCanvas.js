@@ -5,7 +5,8 @@ import {
   CANVAS_WIDTH,
   CANVAS_HEIGHT,
   RIM_WIDTH,
-  STRIKER_RADIUS
+  STRIKER_RADIUS,
+  SPEED_LIMIT
 } from "./gameConstants";
 
 const SlaveCanvas = ({
@@ -81,6 +82,12 @@ const SlaveCanvas = ({
     return y;
   };
 
+  const capSpeed = velocity => {
+    if (velocity >= SPEED_LIMIT) return SPEED_LIMIT;
+    if (velocity < -SPEED_LIMIT) return -SPEED_LIMIT;
+    return velocity;
+  };
+
   const move = e => {
     if (!onStriker) return;
     const pos = getMousePos(e);
@@ -88,7 +95,11 @@ const SlaveCanvas = ({
       return {
         ...prevState,
         centerX: withinXBounds(pos.x),
-        centerY: withinYBounds(pos.y)
+        centerY: withinYBounds(pos.y),
+        velocity: {
+          x: capSpeed(pos.x - prevState.centerX),
+          y: capSpeed(pos.y - prevState.centerY)
+        }
       };
     });
 

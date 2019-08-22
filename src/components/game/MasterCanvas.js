@@ -32,6 +32,13 @@ const MasterCanvas = ({
     initBoard(ctx, striker1, striker2, puck);
   });
 
+  useEffect(() => {
+    if (clock % 30 === 0) {
+      broadcast("player1_update", { striker1, puck });
+    }
+    // eslint-disable-next-line
+  }, [clock, striker1, puck]);
+
   const getMousePos = e => {
     const rect = gameCanvas.current.getBoundingClientRect();
 
@@ -111,9 +118,7 @@ const MasterCanvas = ({
           striker1={striker1}
           setStriker1={setStriker1}
           striker2={striker2}
-          broadcast={broadcast}
           setClock={setClock}
-          clock={clock}
         />
       </div>
       <canvas

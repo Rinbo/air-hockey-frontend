@@ -17,9 +17,7 @@ const GameEngine = ({
   striker1,
   setStriker1,
   striker2,
-  broadcast,
-  setClock,
-  clock
+  setClock
 }) => {
   const [active, setActive] = useState(true);
   const [sleep, setSleep] = useState(false);
@@ -95,8 +93,8 @@ const GameEngine = ({
 
   const animatePuck = () => {
     if (!active) return;
+
     // Render the pucks movement
-    // @TODO add friction to eventually bring the pucks speed down to zero
     setPuck(prevState => {
       return {
         ...prevState,
@@ -181,7 +179,6 @@ const GameEngine = ({
       checkForCollision(striker1, puck);
       checkForCollision(striker2, puck);
     }
-    if (clock % 30 === 0) broadcast("player1_update", { striker1, puck });
   };
   const outsideGoalPosts = puck => {
     return (
