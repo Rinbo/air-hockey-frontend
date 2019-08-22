@@ -33,13 +33,15 @@ const GameContainer = () => {
   }, [name, gameName]);
 
   useEffect(() => {
-    setStriker1(state.striker1);
-    setPuck(state.puck);
-  }, [state.striker1, state.puck]);
+    if (state.role === "slave") {
+      setStriker1(state.striker1);
+      setPuck(state.puck);
+    }
+  }, [state.striker1, state.puck, state.role]);
 
   useEffect(() => {
-    setStriker2(state.striker2);
-  }, [state.striker2]);
+    if (state.role === "master") setStriker2(state.striker2);
+  }, [state.striker2, state.role]);
 
   if (!state.active) return <WaitingRoom message={state.message} />;
 
