@@ -33,11 +33,9 @@ const MasterCanvas = ({
   });
 
   useEffect(() => {
-    if (clock % 30 === 0) {
-      broadcast("player1_update", { striker1, puck });
-    }
+    broadcast("player1_update", { striker1, puck });
     // eslint-disable-next-line
-  }, [clock, striker1, puck]);
+  }, [striker1, puck]);
 
   const getMousePos = e => {
     const rect = gameCanvas.current.getBoundingClientRect();

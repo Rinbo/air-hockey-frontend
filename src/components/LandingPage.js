@@ -1,10 +1,19 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Modal from "./utility/Modal";
 import UserContext from "../components/contexts/UserContext";
 import history from "../history";
 
 const LandingPage = () => {
   const [showModal, setShowModal] = useState(false);
+  const [localName, setLocalName] = useState("");
+  const { name, setState } = useContext(UserContext);
+
+  useEffect(() => {
+    if (name !== "") {
+      history.push(`${process.env.PUBLIC_URL}/lobby`);
+    }
+  }, [name]);
+
   return (
     <div className="bson-flex">
       <h3>Borjessons Air Hockey</h3>
@@ -14,13 +23,19 @@ const LandingPage = () => {
       >
         Start Playing
       </button>
-      {showModal ? <GiveName setShowModal={setShowModal} /> : null}
+      {showModal ? (
+        <GiveName
+          setShowModal={setShowModal}
+          localName={localName}
+          setLocalName={setLocalName}
+          setState={setState}
+        />
+      ) : null}
     </div>
   );
 };
 
-const GiveName = ({ setShowModal }) => {
-  const { name, setState } = useContext(UserContext);
+const GiveName = ({ setShowModal, localName, setLocalName, setState }) => {
   const [error, setError] = useState(false);
 
   const renderContent = () => {
@@ -31,11 +46,13 @@ const GiveName = ({ setShowModal }) => {
     return (
       <>
         <input
-          value={name}
+          value={localName}
           style={{ borderColor: error ? "red" : "" }}
-          onChange={e => setState({ type: "user", payload: e.target.value })}
+          onChange={e => setLocalName(e.target.value)}
         />
-        <div style={{ color: "red", fontSize: 10, marginTop: 5, marginBottom: 10 }}>
+        <div
+          style={{ color: "red", fontSize: 10, marginTop: 5, marginBottom: 10 }}
+        >
           {error ? "Name must be atleast 3 characters long" : null}
         </div>
         <button className="bson-button" onClick={() => onSubmit()}>
@@ -46,10 +63,12 @@ const GiveName = ({ setShowModal }) => {
   };
 
   const onSubmit = () => {
-    if (name.length < 3) {
+    if (localName.length < 3) {
       setError(true);
     } else {
       setError(false);
+      localStorage.setItem("playerName", localName);
+      setState({ type: "user", payload: localName });
       history.push(`${process.env.PUBLIC_URL}/lobby`);
     }
   };

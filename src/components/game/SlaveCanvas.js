@@ -30,11 +30,9 @@ const SlaveCanvas = ({
   });
 
   useEffect(() => {
-    if (clock % 30 === 0) {
-      broadcast("player2_update", { striker2 });
-    }
+    broadcast("player2_update", { striker2 });
     // eslint-disable-next-line
-  }, [clock, striker2]);
+  }, [striker2]);
 
   const getMousePos = e => {
     const rect = gameCanvas.current.getBoundingClientRect();

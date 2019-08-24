@@ -6,7 +6,8 @@ import { lobbyReducer, INITIAL_STATE } from "../reducers/lobbyReducer";
 import { Link } from "react-router-dom";
 
 const Lobby = () => {
-  const { name, gameName, setState } = useContext(UserContext);
+  const { name, setState } = useContext(UserContext);
+  const [localGameName, setLocalGameName] = useState("");
   const [error, setError] = useState(false);
 
   const [state, broadcast] = useChannel(
@@ -18,17 +19,18 @@ const Lobby = () => {
 
   useEffect(() => {
     if (name === "") history.push(`${process.env.PUBLIC_URL}/`);
-    if (state.joined) broadcast("get_active_games");    
-    return () => console.log("Leaving lobby")
+    if (state.joined) broadcast("get_active_games");
+    return () => console.log("Leaving lobby");
     // eslint-disable-next-line
   }, [name, state.joined]);
 
   const onSubmit = () => {
-    if (gameName.length < 3) {
+    if (localGameName.length < 3) {
       setError(true);
     } else {
       setError(false);
-      history.push(`${process.env.PUBLIC_URL}/game/${gameName}`);
+      setState({ type: "game", payload: localGameName });
+      history.push(`${process.env.PUBLIC_URL}/game/${localGameName}`);
     }
   };
 
@@ -60,7 +62,7 @@ const Lobby = () => {
   };
 
   const onChange = e => {
-    setState({ type: "game", payload: e.target.value });
+    setLocalGameName(e.target.value);
   };
 
   return (
@@ -71,7 +73,7 @@ const Lobby = () => {
         <label>Game name</label>
         <input
           style={{ borderColor: error ? "red" : "" }}
-          value={gameName}
+          value={localGameName}
           onChange={e => onChange(e)}
         />
         <div

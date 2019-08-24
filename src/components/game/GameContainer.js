@@ -45,7 +45,7 @@ const GameContainer = () => {
 
   if (!state.active) return <WaitingRoom message={state.message} />;
 
-  if (state.playerLeft) return <div>Your opponent left the game.</div>;
+  if (state.playerLeft) history.push(`${process.env.PUBLIC_URL}/`);
 
   return (
     <div className="bson-flex">

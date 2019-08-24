@@ -1,4 +1,4 @@
-import React, { useReducer, createContext } from "react";
+import React, { useReducer, createContext, useEffect } from "react";
 
 const UserContext = createContext("user");
 
@@ -20,6 +20,11 @@ const reducer = (state, action) => {
 
 export const UserProvider = props => {
   const [state, setState] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    const name = localStorage.getItem("playerName") || "";
+    setState({ type: "user", payload: name });
+  }, []);
 
   return (
     <UserContext.Provider value={{ ...state, setState }}>
