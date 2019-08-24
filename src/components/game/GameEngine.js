@@ -19,7 +19,9 @@ const GameEngine = ({
   striker1,
   setStriker1,
   striker2,
-  setStriker2
+  setStriker2,
+  broadcast,
+  state
 }) => {
   const [active, setActive] = useState(true);
   const [sleep, setSleep] = useState(false);
@@ -34,9 +36,17 @@ const GameEngine = ({
     setActive(false);
     setTimeout(() => {
       if (scorer === "MASTER_SCORED") {
+        broadcast("someone_scored", {
+          score: { ...state.score, player1: state.score.player1 + 1 },
+          striker2: INITIAL_STRIKER2_STATE
+        });
         setPuck(INITIAL_PUCK_STATE_BOTTOM);
       } else {
-        setPuck(INITIAL_PUCK_STATE_TOP)
+        broadcast("someone_scored", {
+          score: { ...state.score, player2: state.score.player2 + 1 },
+          striker2: INITIAL_STRIKER2_STATE
+        });
+        setPuck(INITIAL_PUCK_STATE_TOP);
       }
 
       setStriker1(INITIAL_STRIKER1_STATE);

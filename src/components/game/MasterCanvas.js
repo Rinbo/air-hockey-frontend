@@ -17,7 +17,8 @@ const MasterCanvas = ({
   setStriker1,
   striker2,
   setStriker2,
-  broadcast
+  broadcast,
+  state
 }) => {
   const [onStriker, setOnStriker] = useState(false);
 
@@ -115,6 +116,8 @@ const MasterCanvas = ({
           setStriker1={setStriker1}
           striker2={striker2}
           setStriker2={setStriker2}
+          broadcast={broadcast}
+          state={state}
         />
       </div>
       <canvas
