@@ -45,13 +45,14 @@ const GameContainer = () => {
 
   if (!state.active) return <WaitingRoom message={state.message} />;
 
-  if (state.playerLeft) history.push(`${process.env.PUBLIC_URL}/`);
+  if (state.playerLeft) history.push(`${process.env.PUBLIC_URL}/lobby`);
 
   return (
     <div className="bson-flex">
       <div>Game: {gameName}</div>
       <div>Player1: {state.subscribers.player1}</div>
       <div>Player2: {state.subscribers.player2}</div>
+      <div>Status: {state.playerLeft ? "Left" : "Here"}</div>
       {state.role === "master" ? (
         <MasterCanvas
           puck={puck}

@@ -54,7 +54,7 @@ const joinChannel = (
     });
 
   setBroadcast(() => channel.push.bind(channel));
-  return () => {
+  return () => {    
     channel.push("leave", { reason: "Player left" });
     channel
       .leave()

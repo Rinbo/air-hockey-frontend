@@ -2,8 +2,7 @@ export const INITIAL_STATE = {
   message: "Welcome, waiting for another player to join...",
   subscribers: {},
   activeGames: [],
-  joined: false,
-  playerLeft: false
+  joined: false  
 };
 
 export const lobbyReducer = (state, { event, payload }) => {
@@ -14,7 +13,6 @@ export const lobbyReducer = (state, { event, payload }) => {
         joined: true
       };
     case "active_games":
-      console.log(payload);
       return { ...state, activeGames: payload.games };
     case "subscribers":
       return { ...state, subscribers: payload };
