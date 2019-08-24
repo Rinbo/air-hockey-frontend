@@ -9,7 +9,6 @@ import {
   STRIKER_RADIUS,
   PUCK_RADIUS,
   INITIAL_STRIKER1_STATE,
-  INITIAL_STRIKER2_STATE,
   CLOCK_INTERVAL
 } from "./gameConstants";
 
@@ -19,7 +18,6 @@ const GameEngine = ({
   striker1,
   setStriker1,
   striker2,
-  setStriker2,
   broadcast,
   state
 }) => {
@@ -37,20 +35,16 @@ const GameEngine = ({
     setTimeout(() => {
       if (scorer === "MASTER_SCORED") {
         broadcast("someone_scored", {
-          score: { ...state.score, player1: state.score.player1 + 1 },
-          striker2: INITIAL_STRIKER2_STATE
+          score: { ...state.score, player1: state.score.player1 + 1 }
         });
         setPuck(INITIAL_PUCK_STATE_BOTTOM);
       } else {
         broadcast("someone_scored", {
-          score: { ...state.score, player2: state.score.player2 + 1 },
-          striker2: INITIAL_STRIKER2_STATE
+          score: { ...state.score, player2: state.score.player2 + 1 }
         });
         setPuck(INITIAL_PUCK_STATE_TOP);
       }
-
       setStriker1(INITIAL_STRIKER1_STATE);
-      setStriker2(INITIAL_STRIKER2_STATE);
       setActive(true);
     }, 1000);
   };

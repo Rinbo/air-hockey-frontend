@@ -41,7 +41,7 @@ export const eventReducer = (state, { event, payload }) => {
         subscribers: payload.subscribers
       };
     case "update_score":
-      return { ...state, score: payload.score, striker2: payload.striker2 };
+      return { ...state, score: payload.score };
     case "player_joined":
       return { ...state, role: payload.message };
     case "player2_update":

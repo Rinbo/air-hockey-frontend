@@ -40,6 +40,10 @@ const GameContainer = () => {
   }, [state.striker1, state.puck, state.role]);
 
   useEffect(() => {
+    setStriker2(INITIAL_STRIKER2_STATE);
+  }, [state.score]);
+
+  useEffect(() => {
     if (state.role === "master") setStriker2(state.striker2);
   }, [state.striker2, state.role]);
 
@@ -50,8 +54,12 @@ const GameContainer = () => {
   return (
     <div className="bson-flex">
       <div>Game: {gameName}</div>
-      <div>Player1: {state.subscribers.player1} - Score: {state.score.player1}</div>
-      <div>Player2: {state.subscribers.player2} - Score: {state.score.player2}</div>
+      <div>
+        Player1: {state.subscribers.player1} - Score: {state.score.player1}
+      </div>
+      <div>
+        Player2: {state.subscribers.player2} - Score: {state.score.player2}
+      </div>
       <div>Status: {state.playerLeft ? "Left" : "Here"}</div>
       {state.role === "master" ? (
         <MasterCanvas
@@ -60,7 +68,6 @@ const GameContainer = () => {
           striker1={striker1}
           setStriker1={setStriker1}
           striker2={striker2}
-          setStriker2={setStriker2}
           broadcast={broadcast}
           state={state}
         />
