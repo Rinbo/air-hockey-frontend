@@ -6,12 +6,20 @@ export const BOARD_LINE_WIDTH = 2;
 export const PUCK_RADIUS = 10;
 export const PADDING = RIM_WIDTH / 2;
 
-export const INITIAL_PUCK_STATE = {
+export const INITIAL_PUCK_STATE_TOP = {
   centerX: 150,
   centerY: 150,
   radius: PUCK_RADIUS,
   velocity: { x: 0, y: 0 }
 };
+
+export const INITIAL_PUCK_STATE_BOTTOM = {
+  centerX: 150,
+  centerY: 350,
+  radius: PUCK_RADIUS,
+  velocity: { x: 0, y: 0 }
+};
+
 
 export const INITIAL_STRIKER1_STATE = {
   centerX: 150,
@@ -28,6 +36,6 @@ export const INITIAL_STRIKER2_STATE = {
 };
 
 export const CLOCK_INTERVAL = 30;
-export const SPEED_LIMIT = 25;
+export const SPEED_LIMIT = 20;
 
 export const PUCK_STD_V = 4;

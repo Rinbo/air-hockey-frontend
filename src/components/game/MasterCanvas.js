@@ -16,9 +16,8 @@ const MasterCanvas = ({
   striker1,
   setStriker1,
   striker2,
-  broadcast,
-  setClock,
-  clock
+  setStriker2,
+  broadcast
 }) => {
   const [onStriker, setOnStriker] = useState(false);
 
@@ -34,8 +33,7 @@ const MasterCanvas = ({
 
   useEffect(() => {
     broadcast("player1_update", { striker1, puck });
-    // eslint-disable-next-line
-  }, [striker1, puck]);
+  }, [striker1, puck, broadcast]);
 
   const getMousePos = e => {
     const rect = gameCanvas.current.getBoundingClientRect();
@@ -116,7 +114,7 @@ const MasterCanvas = ({
           striker1={striker1}
           setStriker1={setStriker1}
           striker2={striker2}
-          setClock={setClock}
+          setStriker2={setStriker2}
         />
       </div>
       <canvas

@@ -4,10 +4,12 @@ import {
   CANVAS_WIDTH,
   CANVAS_HEIGHT,
   PADDING,
-  INITIAL_PUCK_STATE,
+  INITIAL_PUCK_STATE_TOP,
+  INITIAL_PUCK_STATE_BOTTOM,
   STRIKER_RADIUS,
   PUCK_RADIUS,
   INITIAL_STRIKER1_STATE,
+  INITIAL_STRIKER2_STATE,
   CLOCK_INTERVAL
 } from "./gameConstants";
 
@@ -17,7 +19,7 @@ const GameEngine = ({
   striker1,
   setStriker1,
   striker2,
-  setClock
+  setStriker2
 }) => {
   const [active, setActive] = useState(true);
   const [sleep, setSleep] = useState(false);
@@ -25,16 +27,21 @@ const GameEngine = ({
 
   useInterval(() => {
     animatePuck();
-    setClock(prevTick => prevTick + CLOCK_INTERVAL);
     setFriction(prevTick => prevTick + CLOCK_INTERVAL);
   }, CLOCK_INTERVAL);
 
-  const resetBoard = () => {
+  const resetBoard = scorer => {
     setActive(false);
     setTimeout(() => {
-      setActive(true);
-      setPuck(INITIAL_PUCK_STATE);
+      if (scorer === "MASTER_SCORED") {
+        setPuck(INITIAL_PUCK_STATE_BOTTOM);
+      } else {
+        setPuck(INITIAL_PUCK_STATE_TOP)
+      }
+
       setStriker1(INITIAL_STRIKER1_STATE);
+      setStriker2(INITIAL_STRIKER2_STATE);
+      setActive(true);
     }, 1000);
   };
   const checkForCollision = (striker, puck) => {
@@ -168,11 +175,12 @@ const GameEngine = ({
     }
 
     // If it passes through goal posts, reset board
-    if (
-      puck.centerY >= CANVAS_HEIGHT + puck.radius ||
-      puck.centerY <= -puck.radius * 2
-    ) {
-      resetBoard();
+    if (puck.centerY >= CANVAS_HEIGHT + puck.radius) {
+      // Master player scored
+
+      resetBoard("MASTER_SCORED");
+    } else if (puck.centerY <= -puck.radius * 2) {
+      resetBoard("SLAVE_SCORED");
     }
 
     if (!sleep) {

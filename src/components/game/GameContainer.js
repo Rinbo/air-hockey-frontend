@@ -7,7 +7,7 @@ import history from "../../history";
 import useChannel from "../hooks/useChannel";
 import { eventReducer, INITIAL_STATE } from "../reducers/eventReducer";
 import {
-  INITIAL_PUCK_STATE,
+  INITIAL_PUCK_STATE_TOP,
   INITIAL_STRIKER1_STATE,
   INITIAL_STRIKER2_STATE
 } from "./gameConstants";
@@ -17,8 +17,7 @@ const GameContainer = () => {
 
   const [striker1, setStriker1] = useState(INITIAL_STRIKER1_STATE);
   const [striker2, setStriker2] = useState(INITIAL_STRIKER2_STATE);
-  const [puck, setPuck] = useState(INITIAL_PUCK_STATE);
-  const [clock, setClock] = useState(0);
+  const [puck, setPuck] = useState(INITIAL_PUCK_STATE_TOP);
 
   const [state, broadcast] = useChannel(
     `game:${gameName}`,
@@ -28,8 +27,9 @@ const GameContainer = () => {
   );
 
   useEffect(() => {
-    if (name === "" || gameName === "")
+    if (name === "" || gameName === "") {
       history.push(`${process.env.PUBLIC_URL}/`);
+    }
   }, [name, gameName]);
 
   useEffect(() => {
@@ -50,6 +50,8 @@ const GameContainer = () => {
   return (
     <div className="bson-flex">
       <div>Game: {gameName}</div>
+      <div>Player1: {state.subscribers.player1}</div>
+      <div>Player2: {state.subscribers.player2}</div>
       {state.role === "master" ? (
         <MasterCanvas
           puck={puck}
@@ -57,9 +59,8 @@ const GameContainer = () => {
           striker1={striker1}
           setStriker1={setStriker1}
           striker2={striker2}
+          setStriker2={setStriker2}
           broadcast={broadcast}
-          setClock={setClock}
-          clock={clock}
         />
       ) : (
         <SlaveCanvas
@@ -68,7 +69,6 @@ const GameContainer = () => {
           setStriker2={setStriker2}
           striker2={striker2}
           broadcast={broadcast}
-          clock={clock}
         />
       )}
     </div>
