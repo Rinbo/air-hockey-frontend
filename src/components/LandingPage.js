@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import Modal from "./utility/Modal";
 import UserContext from "../components/contexts/UserContext";
 import history from "../history";
+import { USER } from "./types";
 
 const LandingPage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -68,7 +69,7 @@ const GiveName = ({ setShowModal, localName, setLocalName, setState }) => {
     } else {
       setError(false);
       localStorage.setItem("playerName", localName);
-      setState({ type: "user", payload: localName });
+      setState({ type: USER, payload: localName });
       history.push(`${process.env.PUBLIC_URL}/lobby`);
     }
   };

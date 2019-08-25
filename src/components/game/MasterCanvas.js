@@ -106,7 +106,7 @@ const MasterCanvas = ({
   };
 
   return (
-    <div className="flex flex-col justify-center" style={{ height: 240 }}>
+    <div className="flex flex-col justify-center" >
       <div>
         <GameEngine
           puck={puck}

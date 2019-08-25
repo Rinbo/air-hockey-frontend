@@ -129,3 +129,11 @@ a:hover {
   align-items: center;
   height: 100%;
 }
+
+.score-flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 280px;
+}

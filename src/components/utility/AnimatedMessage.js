@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 
-export const AnimatedMessage = ({ message, code, setState }) => {
+export const AnimatedMessage = ({ message, code, setState, delay }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setState({
         type: "FLASH_MESSAGE",
-        payload: { message: "", code: code }
+        payload: { message: "", code: 0, delay: 0 }
       });
-    }, 5000);
+    }, delay || 5000);
     return () => {
       clearTimeout(timer);
     };

@@ -11,9 +11,10 @@ import {
   INITIAL_STRIKER1_STATE,
   INITIAL_STRIKER2_STATE
 } from "./gameConstants";
+import { FLASH_MESSAGE } from "../types";
 
 const GameContainer = () => {
-  const { gameName, name } = useContext(UserContext);
+  const { gameName, name, setState } = useContext(UserContext);
 
   const [striker1, setStriker1] = useState(INITIAL_STRIKER1_STATE);
   const [striker2, setStriker2] = useState(INITIAL_STRIKER2_STATE);
@@ -49,37 +50,50 @@ const GameContainer = () => {
 
   if (!state.active) return <WaitingRoom message={state.message} />;
 
-  if (state.playerLeft) history.push(`${process.env.PUBLIC_URL}/lobby`);
+  if (state.playerLeft) {
+    history.push(`${process.env.PUBLIC_URL}/lobby`);
+    setState({
+      type: FLASH_MESSAGE,
+      payload: {
+        message: "Your opponent left the game. You have returned to the lobby",
+        code: 0,
+        delay: 5000
+      }
+    });
+  }
 
   return (
     <div className="bson-flex">
-      <div>Game: {gameName}</div>
-      <div>
-        Player1: {state.subscribers.player1} - Score: {state.score.player1}
+      <div>{gameName}</div>
+      <div className="score-flex">
+        <div>{state.subscribers.player1}</div>
+        <div> {state.score.player1}</div>
       </div>
       <div>
-        Player2: {state.subscribers.player2} - Score: {state.score.player2}
+        {state.role === "master" ? (
+          <MasterCanvas
+            puck={puck}
+            setPuck={setPuck}
+            striker1={striker1}
+            setStriker1={setStriker1}
+            striker2={striker2}
+            broadcast={broadcast}
+            state={state}
+          />
+        ) : (
+          <SlaveCanvas
+            puck={puck}
+            striker1={striker1}
+            setStriker2={setStriker2}
+            striker2={striker2}
+            broadcast={broadcast}
+          />
+        )}
       </div>
-      <div>Status: {state.playerLeft ? "Left" : "Here"}</div>
-      {state.role === "master" ? (
-        <MasterCanvas
-          puck={puck}
-          setPuck={setPuck}
-          striker1={striker1}
-          setStriker1={setStriker1}
-          striker2={striker2}
-          broadcast={broadcast}
-          state={state}
-        />
-      ) : (
-        <SlaveCanvas
-          puck={puck}
-          striker1={striker1}
-          setStriker2={setStriker2}
-          striker2={striker2}
-          broadcast={broadcast}
-        />
-      )}
+      <div className="score-flex">
+        <div>{state.subscribers.player2}</div>
+        <div>{state.score.player2}</div>
+      </div>
     </div>
   );
 };

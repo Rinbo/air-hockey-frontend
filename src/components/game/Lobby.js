@@ -4,6 +4,7 @@ import UserContext from "../contexts/UserContext";
 import useChannel from "../hooks/useChannel";
 import { lobbyReducer, INITIAL_STATE } from "../reducers/lobbyReducer";
 import { Link } from "react-router-dom";
+import { GAME, FLASH_MESSAGE } from "../types";
 
 const Lobby = () => {
   const { name, setState } = useContext(UserContext);
@@ -21,15 +22,14 @@ const Lobby = () => {
     if (name === "") history.push(`${process.env.PUBLIC_URL}/`);
     if (state.joined) broadcast("get_active_games");
     return () => console.log("Leaving lobby");
-    // eslint-disable-next-line
-  }, [name, state.joined]);
+  }, [name, state.joined, broadcast]);
 
   useEffect(() => {
     if (state.playerLeft) {
       broadcast("get_active_games", {});
       setState({
-        type: "FLASH_MESSAGE",
-        payload: { message: "A player left the lobby", code: 200 }
+        type: FLASH_MESSAGE,
+        payload: { message: "A player left the lobby", code: 200, delay: 1000 }
       });
     }
     // eslint-disable-next-line
@@ -40,7 +40,7 @@ const Lobby = () => {
       setError(true);
     } else {
       setError(false);
-      setState({ type: "game", payload: localGameName });
+      setState({ type: GAME, payload: localGameName });
       history.push(`${process.env.PUBLIC_URL}/game/${localGameName}`);
     }
   };
@@ -65,7 +65,7 @@ const Lobby = () => {
       <Link
         to={`${process.env.PUBLIC_URL}/game/${path}`}
         className="bson-button"
-        onClick={() => setState({ type: "game", payload: path })}
+        onClick={() => setState({ type: GAME, payload: path })}
       >
         Join
       </Link>

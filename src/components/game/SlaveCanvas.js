@@ -101,7 +101,7 @@ const SlaveCanvas = ({ puck, striker1, setStriker2, striker2, broadcast }) => {
   };
 
   return (
-    <div className="flex flex-col justify-center" style={{ height: 240 }}>
+    <div className="flex flex-col justify-center" >
       <canvas
         className="myCanvas"
         ref={gameCanvas}

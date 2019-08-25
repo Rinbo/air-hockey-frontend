@@ -17,6 +17,7 @@ const StatusMessage = () => {
     <AnimatedMessage
       message={announcement.message}
       code={announcement.code}
+      delay={announcement.delay}
       setState={setState}
     />
   );

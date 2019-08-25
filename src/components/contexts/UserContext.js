@@ -1,20 +1,21 @@
 import React, { useReducer, createContext, useEffect } from "react";
+import { USER, GAME, FLASH_MESSAGE } from "../types";
 
 const UserContext = createContext("user");
 
 const initialState = {
   name: "",
   gameName: "",
-  announcement: { message: "", code: 200 }
+  announcement: { message: "", code: 200, delay: 5000 }
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "user":
+    case USER:
       return { ...state, name: action.payload };
-    case "game":
+    case GAME:
       return { ...state, gameName: action.payload };
-    case "FLASH_MESSAGE":
+    case FLASH_MESSAGE:
       return { ...state, announcement: action.payload };
     default:
       return { ...state };
@@ -26,7 +27,7 @@ export const UserProvider = props => {
 
   useEffect(() => {
     const name = localStorage.getItem("playerName") || "";
-    setState({ type: "user", payload: name });
+    setState({ type: USER, payload: name });
   }, []);
 
   return (
