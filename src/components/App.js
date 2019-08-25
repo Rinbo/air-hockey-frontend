@@ -13,21 +13,13 @@ import Lobby from "./game/Lobby";
  * Furhermore, if using relative path (ie: https://rinbo.github.io/<relative-path>) change segmentCount to 1 in 404.html
  */
 
- // @TODO - Create a status log with all server messages that can be popped open for viewing
- // @TODO - Make a global flash message system
+// @TODO - Create a status log with all server messages that can be popped open for viewing
+// @TODO - Make a global flash message system
 
 const routes = () => (
   <Switch>
-    <Route
-      path={`${process.env.PUBLIC_URL}/`}
-      exact
-      render={props => <LandingPage props={props} />}
-    />
-    <Route
-      path={`${process.env.PUBLIC_URL}/lobby`}
-      exact
-      render={props => <Lobby props={props} />}
-    />
+    <Route path={`${process.env.PUBLIC_URL}/`} exact component={LandingPage} />
+    <Route path={`${process.env.PUBLIC_URL}/lobby`} exact component={Lobby} />
     <Route
       path={`${process.env.PUBLIC_URL}/game/:id`}
       exact

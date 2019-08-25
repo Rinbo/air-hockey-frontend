@@ -29,11 +29,11 @@ export const eventReducer = (state, { event, payload }) => {
       };
     case "ok":
       return { ...state, message: payload.response.message };
-    case "presence_diff":
-      return {
-        ...state,
-        playerLeft: !(Object.entries(payload.leaves).length === 0)
-      };
+      case "presence_diff":
+        return {
+          ...state,
+          playerLeft: !(Object.entries(payload.leaves).length === 0)
+        };
     case "game_started":
       return {
         ...state,

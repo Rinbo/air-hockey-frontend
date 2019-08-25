@@ -24,6 +24,12 @@ const Lobby = () => {
     // eslint-disable-next-line
   }, [name, state.joined]);
 
+  useEffect(() => {
+    if (state.playerLeft) {
+      broadcast("get_active_games", {});
+    }
+  }, [state.playerLeft, broadcast]);
+
   const onSubmit = () => {
     if (localGameName.length < 3) {
       setError(true);

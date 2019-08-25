@@ -9,8 +9,7 @@ export const SocketProvider = ({ wsUrl, options, children }) => {
 
   useEffect(() => {
     socket.connect();
-    // eslint-disable-next-line
-  }, [options, wsUrl]);
+  }, [socket]);
 
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
