@@ -4,7 +4,8 @@ const UserContext = createContext("user");
 
 const initialState = {
   name: "",
-  gameName: ""
+  gameName: "",
+  announcement: { message: "", code: 200 }
 };
 
 const reducer = (state, action) => {
@@ -13,6 +14,8 @@ const reducer = (state, action) => {
       return { ...state, name: action.payload };
     case "game":
       return { ...state, gameName: action.payload };
+    case "FLASH_MESSAGE":
+      return { ...state, announcement: action.payload };
     default:
       return { ...state };
   }

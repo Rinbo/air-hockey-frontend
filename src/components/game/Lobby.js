@@ -27,7 +27,12 @@ const Lobby = () => {
   useEffect(() => {
     if (state.playerLeft) {
       broadcast("get_active_games", {});
+      setState({
+        type: "FLASH_MESSAGE",
+        payload: { message: "A player left the lobby", code: 200 }
+      });
     }
+    // eslint-disable-next-line
   }, [state.playerLeft, broadcast]);
 
   const onSubmit = () => {

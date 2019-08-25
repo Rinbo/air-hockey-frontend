@@ -5,6 +5,7 @@ import GameContainer from "./game/GameContainer";
 import { Route, Router, Switch } from "react-router-dom";
 import history from "../history";
 import Lobby from "./game/Lobby";
+import StatusMessage from "./utility/StatusMessage";
 
 /**
  * Note to future self:
@@ -33,6 +34,7 @@ const App = () => {
     <div className="container">
       <Router history={history}>
         <Navbar />
+        <StatusMessage />
         {routes()}
       </Router>
     </div>
