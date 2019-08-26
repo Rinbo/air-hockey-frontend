@@ -3,6 +3,7 @@ import UserContext from "../contexts/UserContext";
 import MasterCanvas from "./MasterCanvas";
 import SlaveCanvas from "./SlaveCanvas";
 import WaitingRoom from "./WaitingRoom";
+import GameComplete from "./GameComplete";
 import history from "../../history";
 import useChannel from "../hooks/useChannel";
 import { eventReducer, INITIAL_STATE } from "../reducers/eventReducer";
@@ -12,6 +13,7 @@ import {
   INITIAL_STRIKER2_STATE
 } from "./gameConstants";
 import { FLASH_MESSAGE } from "../types";
+import { useInterval } from "../hooks/useInterval";
 
 const GameContainer = () => {
   const { gameName, name, setState } = useContext(UserContext);
@@ -19,6 +21,8 @@ const GameContainer = () => {
   const [striker1, setStriker1] = useState(INITIAL_STRIKER1_STATE);
   const [striker2, setStriker2] = useState(INITIAL_STRIKER2_STATE);
   const [puck, setPuck] = useState(INITIAL_PUCK_STATE_TOP);
+  const [gameComplete, setGameComplete] = useState(false);
+  const [clock, setClock] = useState(10);
 
   const [state, broadcast] = useChannel(
     `game:${gameName}`,
@@ -26,6 +30,11 @@ const GameContainer = () => {
     eventReducer,
     INITIAL_STATE
   );
+
+  useInterval(() => {
+    setClock(prevTick => prevTick - 1);
+    if (clock === 0) setGameComplete(true);
+  }, 1000);
 
   useEffect(() => {
     if (name === "" || gameName === "") {
@@ -49,6 +58,9 @@ const GameContainer = () => {
   }, [state.striker2, state.role]);
 
   if (!state.active) return <WaitingRoom message={state.message} />;
+
+  if (gameComplete)
+    return <GameComplete score={state.score} subscribers={state.subscribers} />;
 
   if (state.playerLeft) {
     history.push(`${process.env.PUBLIC_URL}/lobby`);

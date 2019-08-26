@@ -137,3 +137,13 @@ a:hover {
   justify-content: space-between;
   width: 280px;
 }
+
+.result-flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 200px;
+  text-align: center;
+  font-size: 20px;
+}
