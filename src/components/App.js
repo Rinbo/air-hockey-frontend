@@ -15,7 +15,7 @@ import StatusMessage from "./utility/StatusMessage";
  */
 
 // @TODO - Create a status log with all server messages that can be popped open for viewing
-// @TODO - Make a global flash message system
+// @TODO - Add Chat functionality
 
 const routes = () => (
   <Switch>

@@ -11,7 +11,7 @@ const StatusMessage = () => {
   }, [announcement.message]);
 
   if (showMessage === "") {
-    return null;
+    return <div style={{height: 20, margin:10}}></div>;
   }
   return (
     <AnimatedMessage

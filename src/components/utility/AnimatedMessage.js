@@ -18,11 +18,9 @@ export const AnimatedMessage = ({ message, code, setState, delay }) => {
       id="banner"
       style={{
         color: code === 200 ? "#21ba45" : "darkred",
-        margin: 10,
         textAlign: "center",
-        border: "1px solid black",
-        borderRadius: 5,
-        padding: 10
+        height: 20,
+        margin: 10
       }}
     >
       {message}
