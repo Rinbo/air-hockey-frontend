@@ -21,8 +21,7 @@ const GameContainer = () => {
   const [striker1, setStriker1] = useState(INITIAL_STRIKER1_STATE);
   const [striker2, setStriker2] = useState(INITIAL_STRIKER2_STATE);
   const [puck, setPuck] = useState(INITIAL_PUCK_STATE_TOP);
-  const [gameComplete, setGameComplete] = useState(false);
-  const [clock, setClock] = useState(10);
+  const [clock, setClock] = useState(124);
 
   const [state, broadcast] = useChannel(
     `game:${gameName}`,
@@ -33,12 +32,11 @@ const GameContainer = () => {
 
   useInterval(() => {
     setClock(prevTick => prevTick - 1);
-    if (clock === 0) setGameComplete(true);
   }, 1000);
 
   useEffect(() => {
     if (name === "" || gameName === "") {
-      history.push(`${process.env.PUBLIC_URL}/`);
+      history.push(`${process.env.PUBLIC_URL}/lobby`);
     }
   }, [name, gameName]);
 
@@ -57,10 +55,34 @@ const GameContainer = () => {
     if (state.role === "master") setStriker2(state.striker2);
   }, [state.striker2, state.role]);
 
+  const showTime = () => {
+    const min = Math.floor(clock / 60);
+    const sec = clock - min * 60;
+    return (
+      <div>
+        {min}:{sec < 10 ? "0" : ""}
+        {sec}
+      </div>
+    );
+  };
+
   if (!state.active) return <WaitingRoom message={state.message} />;
 
-  if (gameComplete)
+  if (state.playerLeft) {
+    history.push(`${process.env.PUBLIC_URL}/lobby`);
+    setState({
+      type: FLASH_MESSAGE,
+      payload: {
+        message: "Your opponent left the game. You have returned to the lobby",
+        code: 0,
+        delay: 5000
+      }
+    });
+  }
+
+  if (state.gameComplete) {
     return <GameComplete score={state.score} subscribers={state.subscribers} />;
+  }
 
   if (state.playerLeft) {
     history.push(`${process.env.PUBLIC_URL}/lobby`);
@@ -77,6 +99,7 @@ const GameContainer = () => {
   return (
     <div className="bson-flex">
       <div>{gameName}</div>
+      {showTime()}
       <div className="score-flex">
         <div>{state.subscribers.player1}</div>
         <div> {state.score.player1}</div>
@@ -91,6 +114,7 @@ const GameContainer = () => {
             striker2={striker2}
             broadcast={broadcast}
             state={state}
+            clock={clock}
           />
         ) : (
           <SlaveCanvas

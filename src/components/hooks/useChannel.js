@@ -37,7 +37,7 @@ const joinChannel = (
   });
 
   setChannelObject(channel);
-
+  
   channel.onMessage = (event, payload) => {
     dispatch({ event, payload });
     return payload;

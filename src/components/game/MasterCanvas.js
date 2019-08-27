@@ -17,7 +17,8 @@ const MasterCanvas = ({
   setStriker1,
   striker2,
   broadcast,
-  state
+  state,
+  clock
 }) => {
   const [onStriker, setOnStriker] = useState(false);
 
@@ -34,6 +35,12 @@ const MasterCanvas = ({
   useEffect(() => {
     broadcast("player1_update", { striker1, puck });
   }, [striker1, puck, broadcast]);
+
+  useEffect(() => {
+    if (clock === 0) {
+      broadcast("game_complete", {});
+    }
+  }, [clock, broadcast]);
 
   const getMousePos = e => {
     const rect = gameCanvas.current.getBoundingClientRect();
@@ -106,7 +113,7 @@ const MasterCanvas = ({
   };
 
   return (
-    <div className="flex flex-col justify-center" >
+    <div className="flex flex-col justify-center">
       <div>
         <GameEngine
           puck={puck}

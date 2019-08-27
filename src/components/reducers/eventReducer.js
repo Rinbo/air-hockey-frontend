@@ -13,6 +13,7 @@ export const INITIAL_STATE = {
     player2: ""
   },
   score: { player1: 0, player2: 0 },
+  gameComplete: false,
   role: "",
   active: false,
   striker1: INITIAL_STRIKER1_STATE,
@@ -29,11 +30,11 @@ export const eventReducer = (state, { event, payload }) => {
       };
     case "ok":
       return { ...state, message: payload.response.message };
-      case "presence_diff":
-        return {
-          ...state,
-          playerLeft: !(Object.entries(payload.leaves).length === 0)
-        };
+    case "presence_diff":
+      return {
+        ...state,
+        playerLeft: !(Object.entries(payload.leaves).length === 0)
+      };
     case "game_started":
       return {
         ...state,
@@ -48,6 +49,8 @@ export const eventReducer = (state, { event, payload }) => {
       return { ...state, striker2: payload.striker2 };
     case "player1_update":
       return { ...state, striker1: payload.striker1, puck: payload.puck };
+    case "game_complete":
+      return { ...state, gameComplete: true };
     case "subscribers":
       return { ...state, subscribers: payload };
     case "error":
