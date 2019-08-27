@@ -21,7 +21,9 @@ const GameContainer = () => {
   const [striker1, setStriker1] = useState(INITIAL_STRIKER1_STATE);
   const [striker2, setStriker2] = useState(INITIAL_STRIKER2_STATE);
   const [puck, setPuck] = useState(INITIAL_PUCK_STATE_TOP);
-  const [clock, setClock] = useState(124);
+  const [clock, setClock] = useState(120);
+  const [begin, setBegin] = useState(false);
+  const [countdown, setCountdown] = useState(3);
 
   const [state, broadcast] = useChannel(
     `game:${gameName}`,
@@ -31,14 +33,23 @@ const GameContainer = () => {
   );
 
   useInterval(() => {
-    setClock(prevTick => prevTick - 1);
+    setCountdown(prevTick => prevTick - 1);   
+  }, 1000);
+
+  useInterval(() => {
+    if (begin) setClock(prevTick => prevTick - 1);
   }, 1000);
 
   useEffect(() => {
     if (name === "" || gameName === "") {
       history.push(`${process.env.PUBLIC_URL}/lobby`);
     }
-  }, [name, gameName]);
+    if (state.active) {
+      setTimeout(() => {
+        setBegin(true);
+      }, 3000);
+    }
+  }, [name, gameName, state.active]);
 
   useEffect(() => {
     if (state.role === "slave") {
@@ -98,6 +109,7 @@ const GameContainer = () => {
 
   return (
     <div className="bson-flex">
+      <h1>{countdown >= 0 ? countdown : ""}</h1>
       <div>{gameName}</div>
       {showTime()}
       <div className="score-flex">
