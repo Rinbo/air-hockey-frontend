@@ -18,7 +18,8 @@ export const INITIAL_STATE = {
   active: false,
   striker1: INITIAL_STRIKER1_STATE,
   striker2: INITIAL_STRIKER2_STATE,
-  puck: INITIAL_PUCK_STATE_TOP
+  puck: INITIAL_PUCK_STATE_TOP,
+  incomingMessage: {}
 };
 
 export const eventReducer = (state, { event, payload }) => {
@@ -51,6 +52,15 @@ export const eventReducer = (state, { event, payload }) => {
       return { ...state, striker1: payload.striker1, puck: payload.puck };
     case "game_complete":
       return { ...state, gameComplete: true };
+    case "incoming_chat_message":
+      return {
+        ...state,
+        incomingMessage: {
+          name: payload.name,
+          text: payload.incoming_message,
+          timeStamp: payload.timestamp
+        }
+      };
     case "subscribers":
       return { ...state, subscribers: payload };
     case "error":

@@ -26,7 +26,7 @@ const GameContainer = () => {
   const [begin, setBegin] = useState(false);
   const [countdown, setCountdown] = useState(3);
 
-  const [state, broadcast] = useChannel(
+  const [state, broadcast, dispatch] = useChannel(
     `game:${gameName}`,
     name,
     eventReducer,
@@ -145,8 +145,9 @@ const GameContainer = () => {
       </div>
       <ChatWindow
         broadcast={broadcast}
-        name={state.name}
-        incomingMessage={{}}
+        name={name}
+        incomingMessage={state.incomingMessage}
+        dispatch={dispatch}
       />
     </div>
   );

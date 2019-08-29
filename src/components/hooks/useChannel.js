@@ -5,7 +5,6 @@ const useChannel = (channelTopic, name, reducer, initialState) => {
   const socket = useContext(SocketContext);
   const [state, dispatch] = useReducer(reducer, initialState);
   const [broadcast, setBroadcast] = useState(mustJoinChannelWarning);
-  const [channelObject, setChannelObject] = useState("");
 
   useEffect(
     () =>
@@ -15,13 +14,12 @@ const useChannel = (channelTopic, name, reducer, initialState) => {
         name,
         dispatch,
         setBroadcast,
-        setChannelObject
       ),
     // eslint-disable-next-line
     [channelTopic]
   );
 
-  return [state, broadcast, channelObject];
+  return [state, broadcast, dispatch];
 };
 
 const joinChannel = (
@@ -30,14 +28,11 @@ const joinChannel = (
   name,
   dispatch,
   setBroadcast,
-  setChannelObject
 ) => {
   const channel = socket.channel(channelTopic, {
     player_name: name
   });
 
-  setChannelObject(channel);
-  
   channel.onMessage = (event, payload) => {
     dispatch({ event, payload });
     return payload;
@@ -54,7 +49,7 @@ const joinChannel = (
     });
 
   setBroadcast(() => channel.push.bind(channel));
-  return () => {    
+  return () => {
     channel.push("leave", { reason: "Player left" });
     channel
       .leave()

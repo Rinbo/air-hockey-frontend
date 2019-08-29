@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
 
-const ChatWindow = ({ broadcast, name, incomingMessage }) => {
-  const [state, setState] = useState([
-    { subscriber: "Robin", text: "Hello all!" }
-  ]);
+const ChatWindow = ({ broadcast, name, incomingMessage, dispatch }) => {
+  const [state, setState] = useState([]);
   const [newMessage, setNewMessage] = useState("");
 
   useEffect(() => {
-    if (Object.values(incomingMessage).length !== 0)
-      setState(prevState => [...prevState, incomingMessage]);
-  }, [incomingMessage]);
+    if (Object.values(incomingMessage).length !== 0) {
+      setState(prevState => {
+        const oldArray = prevState;
+        oldArray.push(incomingMessage);
+        return oldArray;
+      });
+      dispatch({ type: "incoming_chat_message", payload: {} });
+    }
+  }, [incomingMessage, dispatch]);
 
   const onSubmit = () => {
     broadcast("chat_message_out", { name, newMessage });
@@ -18,9 +22,10 @@ const ChatWindow = ({ broadcast, name, incomingMessage }) => {
 
   const renderMessage = () => {
     return state.map(message => {
+      console.log(typeof parseInt(message.timeStamp));
       return (
-        <div key={state.length}>
-          {message.subscriber}: {message.text}
+        <div key={message.timeStamp}>
+          {message.name} ({message.timeStamp}): {message.text}
         </div>
       );
     });
