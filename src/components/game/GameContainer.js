@@ -14,6 +14,7 @@ import {
 } from "./gameConstants";
 import { FLASH_MESSAGE } from "../types";
 import { useInterval } from "../hooks/useInterval";
+import ChatWindow from "./ChatWindow";
 
 const GameContainer = () => {
   const { gameName, name, setState } = useContext(UserContext);
@@ -33,7 +34,7 @@ const GameContainer = () => {
   );
 
   useInterval(() => {
-    setCountdown(prevTick => prevTick - 1);   
+    setCountdown(prevTick => prevTick - 1);
   }, 1000);
 
   useInterval(() => {
@@ -142,6 +143,11 @@ const GameContainer = () => {
         <div>{state.subscribers.player2}</div>
         <div>{state.score.player2}</div>
       </div>
+      <ChatWindow
+        broadcast={broadcast}
+        name={state.name}
+        incomingMessage={{}}
+      />
     </div>
   );
 };
