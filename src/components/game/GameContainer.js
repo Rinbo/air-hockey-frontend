@@ -12,7 +12,7 @@ import {
   INITIAL_STRIKER1_STATE,
   INITIAL_STRIKER2_STATE
 } from "./gameConstants";
-import { FLASH_MESSAGE } from "../types";
+import { FLASH_MESSAGE, UPDATE_CHAT_HISTORY } from "../types";
 import { useInterval } from "../hooks/useInterval";
 import ChatWindow from "./ChatWindow";
 
@@ -50,7 +50,8 @@ const GameContainer = () => {
         setBegin(true);
       }, 3000);
     }
-  }, [name, gameName, state.active]);
+    return () => setState({type: UPDATE_CHAT_HISTORY, payload: []});
+  }, [name, gameName, state.active, setState]);
 
   useEffect(() => {
     if (state.role === "master") setStriker2(state.striker2);
@@ -80,23 +81,11 @@ const GameContainer = () => {
 
   if (!state.active) return <WaitingRoom message={state.message} />;
 
-  if (state.playerLeft) {
-    history.push(`${process.env.PUBLIC_URL}/lobby`);
-    setState({
-      type: FLASH_MESSAGE,
-      payload: {
-        message: "Your opponent left the game. You have returned to the lobby",
-        code: 0,
-        delay: 5000
-      }
-    });
-  }
-
   if (state.gameComplete) {
     return <GameComplete score={state.score} subscribers={state.subscribers} />;
   }
 
-  if (state.playerLeft) {
+  /* if (state.playerLeft) {
     history.push(`${process.env.PUBLIC_URL}/lobby`);
     setState({
       type: FLASH_MESSAGE,
@@ -106,7 +95,7 @@ const GameContainer = () => {
         delay: 5000
       }
     });
-  }
+  } */
 
   return (
     <div className="bson-flex">

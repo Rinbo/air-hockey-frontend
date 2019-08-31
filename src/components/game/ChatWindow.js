@@ -23,15 +23,19 @@ const ChatWindow = ({ broadcast, name, incomingMessage, dispatch }) => {
 
   const renderMessage = () => {
     return chatHistory.map(message => {
-     /*  var time = new Date().getTime();
-      var date = new Date(time);
-      alert(date.toString()); */
       return (
         <div key={message.timeStamp}>
-          {message.name} ({message.timeStamp}): {message.text}
+          {message.name} ({parseTime(message.timeStamp)}): {message.text}
         </div>
       );
     });
+  };
+
+  const parseTime = seconds => {
+    const date = new Date(parseInt(seconds) * 1000);
+    const hour = date.getHours();
+    const minutes = date.getMinutes();
+    return `${hour}:${minutes}`;
   };
 
   return (
