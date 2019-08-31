@@ -53,6 +53,10 @@ const GameContainer = () => {
   }, [name, gameName, state.active]);
 
   useEffect(() => {
+    if (state.role === "master") setStriker2(state.striker2);
+  }, [state.striker2, state.role]);
+
+  useEffect(() => {
     if (state.role === "slave") {
       setStriker1(state.striker1);
       setPuck(state.puck);
@@ -62,10 +66,6 @@ const GameContainer = () => {
   useEffect(() => {
     setStriker2(INITIAL_STRIKER2_STATE);
   }, [state.score]);
-
-  useEffect(() => {
-    if (state.role === "master") setStriker2(state.striker2);
-  }, [state.striker2, state.role]);
 
   const showTime = () => {
     const min = Math.floor(clock / 60);

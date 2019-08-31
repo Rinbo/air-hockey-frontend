@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import UserContext from "../contexts/UserContext";
+import { UPDATE_CHAT_HISTORY } from "../types";
 
 const ChatWindow = ({ broadcast, name, incomingMessage, dispatch }) => {
-  const [state, setState] = useState([]);
+  const { chatHistory, setState } = useContext(UserContext);
   const [newMessage, setNewMessage] = useState("");
 
   useEffect(() => {
     if (Object.values(incomingMessage).length !== 0) {
-      setState(prevState => {
-        const oldArray = prevState;
-        oldArray.push(incomingMessage);
-        return oldArray;
-      });
+      const newChatHistory = chatHistory;
+      newChatHistory.push(incomingMessage);
+      setState({ type: UPDATE_CHAT_HISTORY, payload: newChatHistory });
       dispatch({ type: "incoming_chat_message", payload: {} });
     }
-  }, [incomingMessage, dispatch]);
+    // eslint-disable-next-line
+  }, [incomingMessage]);
 
   const onSubmit = () => {
     broadcast("chat_message_out", { name, newMessage });
@@ -21,8 +22,10 @@ const ChatWindow = ({ broadcast, name, incomingMessage, dispatch }) => {
   };
 
   const renderMessage = () => {
-    return state.map(message => {
-      console.log(typeof parseInt(message.timeStamp));
+    return chatHistory.map(message => {
+     /*  var time = new Date().getTime();
+      var date = new Date(time);
+      alert(date.toString()); */
       return (
         <div key={message.timeStamp}>
           {message.name} ({message.timeStamp}): {message.text}
