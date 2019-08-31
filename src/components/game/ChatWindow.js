@@ -24,8 +24,11 @@ const ChatWindow = ({ broadcast, name, incomingMessage, dispatch }) => {
   const renderMessage = () => {
     return chatHistory.map(message => {
       return (
-        <div key={message.timeStamp}>
-          {message.name} ({parseTime(message.timeStamp)}): {message.text}
+        <div key={message.timeStamp} className="chat-flex">
+          <div style={{ width: "35%" }}>
+            {message.name} ({parseTime(message.timeStamp)}):
+          </div>
+          <div style={{ width: "65%" }}>{message.text}</div>
         </div>
       );
     });
@@ -39,7 +42,7 @@ const ChatWindow = ({ broadcast, name, incomingMessage, dispatch }) => {
   };
 
   return (
-    <div>
+    <div className="chat-window">
       <div>{renderMessage()}</div>
       <div>
         <input
