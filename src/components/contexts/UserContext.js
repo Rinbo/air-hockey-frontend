@@ -28,10 +28,10 @@ const reducer = (state, action) => {
 export const UserProvider = props => {
   const [state, setState] = useReducer(reducer, initialState);
 
- /*  useEffect(() => {
+  useEffect(() => {
     const name = localStorage.getItem("playerName") || "";
     setState({ type: USER, payload: name });
-  }, []); */
+  }, []);
 
   return (
     <UserContext.Provider value={{ ...state, setState }}>

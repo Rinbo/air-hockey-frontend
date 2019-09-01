@@ -12,7 +12,7 @@ import {
   INITIAL_STRIKER1_STATE,
   INITIAL_STRIKER2_STATE
 } from "./gameConstants";
-import { FLASH_MESSAGE, UPDATE_CHAT_HISTORY } from "../types";
+import { UPDATE_CHAT_HISTORY } from "../types";
 import { useInterval } from "../hooks/useInterval";
 import ChatWindow from "./ChatWindow";
 
@@ -44,21 +44,21 @@ const GameContainer = () => {
   useEffect(() => {
     if (name === "" || gameName === "") {
       history.push(`${process.env.PUBLIC_URL}/lobby`);
-    }    
+    }
     return () => setState({ type: UPDATE_CHAT_HISTORY, payload: [] });
   }, [name, gameName, setState]);
 
   useEffect(() => {
     if (state.gameSet) broadcast("start_game", {});
-  },[state.gameSet]);
+  }, [state.gameSet, broadcast]);
 
-  useEffect(()=> {
+  useEffect(() => {
     if (state.active) {
       setTimeout(() => {
         setBegin(true);
       }, 3000);
     }
-  }, [state.active]) 
+  }, [state.active]);
 
   useEffect(() => {
     if (state.role === "master") setStriker2(state.striker2);
@@ -86,13 +86,7 @@ const GameContainer = () => {
     );
   };
 
-  if (!state.active) return <WaitingRoom message={state.message} />;
-
-  if (state.gameComplete) {
-    return <GameComplete score={state.score} subscribers={state.subscribers} />;
-  }
-
-  /* if (state.playerLeft) {
+  /*   if (state.playerLeft) {
     history.push(`${process.env.PUBLIC_URL}/lobby`);
     setState({
       type: FLASH_MESSAGE,
@@ -103,6 +97,12 @@ const GameContainer = () => {
       }
     });
   } */
+
+  if (!state.active) return <WaitingRoom message={state.message} />;
+
+  if (state.gameComplete) {
+    return <GameComplete score={state.score} subscribers={state.subscribers} />;
+  }
 
   return (
     <div className="bson-flex">
