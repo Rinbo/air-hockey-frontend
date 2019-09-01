@@ -44,14 +44,21 @@ const GameContainer = () => {
   useEffect(() => {
     if (name === "" || gameName === "") {
       history.push(`${process.env.PUBLIC_URL}/lobby`);
-    }
+    }    
+    return () => setState({ type: UPDATE_CHAT_HISTORY, payload: [] });
+  }, [name, gameName, setState]);
+
+  useEffect(() => {
+    if (state.gameSet) broadcast("start_game", {});
+  },[state.gameSet]);
+
+  useEffect(()=> {
     if (state.active) {
       setTimeout(() => {
         setBegin(true);
       }, 3000);
     }
-    return () => setState({type: UPDATE_CHAT_HISTORY, payload: []});
-  }, [name, gameName, state.active, setState]);
+  }, [state.active]) 
 
   useEffect(() => {
     if (state.role === "master") setStriker2(state.striker2);

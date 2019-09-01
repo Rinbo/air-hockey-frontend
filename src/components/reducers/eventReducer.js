@@ -13,6 +13,7 @@ export const INITIAL_STATE = {
     player2: ""
   },
   score: { player1: 0, player2: 0 },
+  gameSet: false,
   gameComplete: false,
   role: "",
   active: false,
@@ -52,6 +53,8 @@ export const eventReducer = (state, { event, payload }) => {
       return { ...state, striker1: payload.striker1, puck: payload.puck };
     case "game_complete":
       return { ...state, gameComplete: true };
+    case "game_set":
+      return { ...state, gameSet: true };
     case "incoming_chat_message":
       return {
         ...state,
