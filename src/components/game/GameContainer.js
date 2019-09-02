@@ -12,7 +12,7 @@ import {
   INITIAL_STRIKER1_STATE,
   INITIAL_STRIKER2_STATE
 } from "./gameConstants";
-import { UPDATE_CHAT_HISTORY } from "../types";
+import { FLASH_MESSAGE, UPDATE_CHAT_HISTORY } from "../types";
 import { useInterval } from "../hooks/useInterval";
 import ChatWindow from "./ChatWindow";
 
@@ -86,7 +86,20 @@ const GameContainer = () => {
     );
   };
 
-  /*   if (state.playerLeft) {
+  if (!state.active)
+    return (
+      <WaitingRoom
+        message={state.message}
+        player1={state.readyPlayer1}
+        player2={state.readyPlayer2}
+      />
+    );
+
+  if (state.gameComplete) {
+    return <GameComplete score={state.score} subscribers={state.subscribers} />;
+  }
+
+  if (state.playerLeft) {
     history.push(`${process.env.PUBLIC_URL}/lobby`);
     setState({
       type: FLASH_MESSAGE,
@@ -96,12 +109,6 @@ const GameContainer = () => {
         delay: 5000
       }
     });
-  } */
-
-  if (!state.active) return <WaitingRoom message={state.message} />;
-
-  if (state.gameComplete) {
-    return <GameComplete score={state.score} subscribers={state.subscribers} />;
   }
 
   return (
