@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useInterval } from "../hooks/useInterval";
 import { Link } from "react-router-dom";
 
-const WaitingRoom = ({ message, channelCount }) => {
+const WaitingRoom = ({ message, channelCount, role, broadcast }) => {
   const [counter, setCounter] = useState(1);
+  const [ready, setReady] = useState(false);
 
   useInterval(() => {
     if (counter === 4) {
@@ -43,7 +44,7 @@ const WaitingRoom = ({ message, channelCount }) => {
     return (
       <div className="bson-flex">
         <div>Something went wrong. Plese return to the lobby and try again</div>
-        <div>{renderReturnButton()}</div>
+        {renderReturnButton()}
       </div>
     );
   };
@@ -59,14 +60,31 @@ const WaitingRoom = ({ message, channelCount }) => {
   const renderOnePlayer = () => {
     return (
       <div className="bson-flex">
-        <div style={{width: "100%"}}>{renderWaitingMessage()}</div>
+        <div style={{ width: "100%" }}>{renderWaitingMessage()}</div>
         <div>{message}</div>
       </div>
     );
   };
 
   const renderPreChat = () => {
-    return null;
+    return (
+      <div className="bson-flex">
+        <div> Ok, are you ready to begin?</div>
+        <button
+          className={ready ? "bson-button-disabled m-n" : "bson-button m-n"}
+          onClick={signalReady}
+          disabled={ready}
+        >
+          {ready ? "Waiting for opponent" : "Ready"}
+        </button>
+      </div>
+    );
+  };
+
+  const signalReady = () => {
+    setReady(true);
+    if (role==="master") broadcast("player1_ready", {})
+    if (role==="slave") broadcast("player2_ready", {})
   };
 
   if (message === "unauthorized") return renderUnauthorized();

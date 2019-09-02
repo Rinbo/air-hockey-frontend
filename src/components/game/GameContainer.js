@@ -15,6 +15,7 @@ import {
 import { FLASH_MESSAGE, UPDATE_CHAT_HISTORY } from "../types";
 import { useInterval } from "../hooks/useInterval";
 import ChatWindow from "./ChatWindow";
+import Countdown from "./Countdown";
 
 const GameContainer = () => {
   const { gameName, name, setState } = useContext(UserContext);
@@ -24,7 +25,7 @@ const GameContainer = () => {
   const [puck, setPuck] = useState(INITIAL_PUCK_STATE_TOP);
   const [clock, setClock] = useState(120);
   const [begin, setBegin] = useState(false);
-  const [countdown, setCountdown] = useState(3);
+  const [startCountDown, setStartCountdown] = useState(false);
 
   const [state, broadcast, dispatch] = useChannel(
     `game:${gameName}`,
@@ -32,10 +33,6 @@ const GameContainer = () => {
     eventReducer,
     INITIAL_STATE
   );
-
-  useInterval(() => {
-    setCountdown(prevTick => prevTick - 1);
-  }, 1000);
 
   useInterval(() => {
     if (begin) setClock(prevTick => prevTick - 1);
@@ -49,16 +46,12 @@ const GameContainer = () => {
   }, [name, gameName, setState]);
 
   useEffect(() => {
-    if (state.gameSet) broadcast("start_game", {});
-  }, [state.gameSet, broadcast]);
+    if (state.readyPlayer1 && state.readyPlayer2) setStartCountdown(true);
+  }, [state.readyPlayer1, state.readyPlayer2, broadcast]);
 
   useEffect(() => {
-    if (state.active) {
-      setTimeout(() => {
-        setBegin(true);
-      }, 3000);
-    }
-  }, [state.active]);
+    if (begin) broadcast("start_game", {});
+  }, [begin, broadcast]);
 
   useEffect(() => {
     if (state.role === "master") setStriker2(state.striker2);
@@ -86,9 +79,19 @@ const GameContainer = () => {
     );
   };
 
-  if (!state.active)
+  if (!(state.readyPlayer1 && state.readyPlayer2))
     return (
-      <WaitingRoom message={state.message} channelCount={state.channelCount} />
+      <WaitingRoom
+        message={state.message}
+        channelCount={state.channelCount}
+        role={state.role}
+        broadcast={broadcast}
+      />
+    );
+
+  if (startCountDown)
+    return (
+      <Countdown setBegin={setBegin} setStartCountdown={setStartCountdown} />
     );
 
   if (state.gameComplete) {
@@ -109,7 +112,6 @@ const GameContainer = () => {
 
   return (
     <div className="bson-flex">
-      <h1>{countdown >= 0 ? countdown : ""}</h1>
       <div>{gameName}</div>
       {showTime()}
       <div className="score-flex">

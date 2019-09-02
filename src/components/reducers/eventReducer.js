@@ -12,9 +12,10 @@ export const INITIAL_STATE = {
     player1: "",
     player2: ""
   },
+  readyPlayer1: false,
+  readyPlayer2: false,
   channelCount: 0,
   score: { player1: 0, player2: 0 },
-  gameSet: false,
   gameComplete: false,
   role: "",
   active: false,
@@ -34,15 +35,10 @@ export const eventReducer = (state, { event, payload }) => {
     case "ok":
       return { ...state, message: payload.response.message };
     case "presence_diff":
-      const someoneJoined = Object.entries(payload.joins).length > 0;
       const someoneLeft = Object.entries(payload.leaves).length > 0;
-      let change = 0;
-      if (someoneJoined) change = 1;
-      if (someoneLeft) change = -1;
       return {
         ...state,
-        playerLeft: someoneLeft,
-        channelCount: state.channelCount + change
+        playerLeft: someoneLeft
       };
     case "game_started":
       return {
@@ -52,16 +48,23 @@ export const eventReducer = (state, { event, payload }) => {
       };
     case "update_score":
       return { ...state, score: payload.score };
+    case "set_role":
+      return { ...state, role: payload.role };
     case "player_joined":
-      return { ...state, role: payload.message };
+      return {
+        ...state,
+        channelCount: payload.count
+      };
+    case "player1_ready":
+      return { ...state, readyPlayer1: payload.ready };
+    case "player2_ready":
+      return { ...state, readyPlayer2: payload.ready };
     case "player2_update":
       return { ...state, striker2: payload.striker2 };
     case "player1_update":
       return { ...state, striker1: payload.striker1, puck: payload.puck };
     case "game_complete":
       return { ...state, gameComplete: true };
-    case "game_set":
-      return { ...state, gameSet: true };
     case "incoming_chat_message":
       return {
         ...state,

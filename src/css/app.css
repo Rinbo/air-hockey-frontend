@@ -113,6 +113,15 @@ a:hover {
   color: black;
 }
 
+.bson-button-disabled {
+  background-color: black;
+  border: 1.5px solid black;
+  border-radius: 5px;
+  padding: 4px 10px;
+  color: whitesmoke;
+  transition: 1s;
+}
+
 .btn-large {
   font-size: 22px !important;
   padding: 6px 12px !important;

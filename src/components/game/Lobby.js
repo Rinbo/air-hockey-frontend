@@ -92,7 +92,7 @@ const Lobby = () => {
         >
           {error ? "Game name must be atleast 3 characters long" : null}
         </div>
-        <button className="bson-button" onClick={() => onSubmit()}>
+        <button className="bson-button" onClick={() => onSubmit()} >
           Create
         </button>
       </div>
