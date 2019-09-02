@@ -13,7 +13,6 @@ export const lobbyReducer = (state, { event, payload }) => {
         joined: true
       };
     case "active_games":
-      console.log(payload.games)
       return { ...state, activeGames: payload.games, playerLeft: false };
     case "presence_diff":
       return {

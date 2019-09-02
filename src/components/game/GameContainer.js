@@ -79,6 +79,18 @@ const GameContainer = () => {
     );
   };
 
+  if (state.playerLeft) {
+    history.push(`${process.env.PUBLIC_URL}/lobby`);
+    setState({
+      type: FLASH_MESSAGE,
+      payload: {
+        message: "Your opponent left the game. You have returned to the lobby",
+        code: 0,
+        delay: 5000
+      }
+    });
+  }
+
   if (!(state.readyPlayer1 && state.readyPlayer2))
     return (
       <WaitingRoom
@@ -96,18 +108,6 @@ const GameContainer = () => {
 
   if (state.gameComplete) {
     return <GameComplete score={state.score} subscribers={state.subscribers} />;
-  }
-
-  if (state.playerLeft) {
-    history.push(`${process.env.PUBLIC_URL}/lobby`);
-    setState({
-      type: FLASH_MESSAGE,
-      payload: {
-        message: "Your opponent left the game. You have returned to the lobby",
-        code: 0,
-        delay: 5000
-      }
-    });
   }
 
   return (
