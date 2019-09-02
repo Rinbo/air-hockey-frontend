@@ -88,11 +88,7 @@ const GameContainer = () => {
 
   if (!state.active)
     return (
-      <WaitingRoom
-        message={state.message}
-        player1={state.readyPlayer1}
-        player2={state.readyPlayer2}
-      />
+      <WaitingRoom message={state.message} channelCount={state.channelCount} />
     );
 
   if (state.gameComplete) {

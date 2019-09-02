@@ -12,6 +12,7 @@ export const INITIAL_STATE = {
     player1: "",
     player2: ""
   },
+  channelCount: 0,
   score: { player1: 0, player2: 0 },
   gameSet: false,
   gameComplete: false,
@@ -33,9 +34,15 @@ export const eventReducer = (state, { event, payload }) => {
     case "ok":
       return { ...state, message: payload.response.message };
     case "presence_diff":
+      const someoneJoined = Object.entries(payload.joins).length > 0;
+      const someoneLeft = Object.entries(payload.leaves).length > 0;
+      let change = 0;
+      if (someoneJoined) change = 1;
+      if (someoneLeft) change = -1;
       return {
         ...state,
-        playerLeft: !(Object.entries(payload.leaves).length === 0)
+        playerLeft: someoneLeft,
+        channelCount: state.channelCount + change
       };
     case "game_started":
       return {

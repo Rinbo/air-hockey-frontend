@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { useInterval } from "../hooks/useInterval";
 import { Link } from "react-router-dom";
 
-const WaitingRoom = ({ message, player1, player2 }) => {
-  const [counter, setCounter] = useState(0);
+const WaitingRoom = ({ message, channelCount }) => {
+  const [counter, setCounter] = useState(1);
 
   useInterval(() => {
     if (counter === 4) {
-      setCounter(0);
+      setCounter(1);
     } else {
       setCounter(prevTick => prevTick + 1);
     }
-  }, 1000);
+  }, 500);
 
   const renderWaitingMessage = () => {
     const displayMessage = "Waiting for another player to join";
@@ -34,22 +34,32 @@ const WaitingRoom = ({ message, player1, player2 }) => {
           This game has already started. Please create a new one of join one
           that is not in progress
         </div>
-        <div>
-          <Link
-            className="bson-button m-n"
-            to={`${process.env.PUBLIC_URL}/lobby`}
-          >
-            Back to Lobby
-          </Link>
-        </div>
+        <div>{renderReturnButton()}</div>
       </div>
+    );
+  };
+
+  const renderError = () => {
+    return (
+      <div className="bson-flex">
+        <div>Something went wrong. Plese return to the lobby and try again</div>
+        <div>{renderReturnButton()}</div>
+      </div>
+    );
+  };
+
+  const renderReturnButton = () => {
+    return (
+      <Link className="bson-button m-n" to={`${process.env.PUBLIC_URL}/lobby`}>
+        Back to Lobby
+      </Link>
     );
   };
 
   const renderOnePlayer = () => {
     return (
       <div className="bson-flex">
-        <div>{renderWaitingMessage}</div>
+        <div style={{width: "100%"}}>{renderWaitingMessage()}</div>
         <div>{message}</div>
       </div>
     );
@@ -61,9 +71,11 @@ const WaitingRoom = ({ message, player1, player2 }) => {
 
   if (message === "unauthorized") return renderUnauthorized();
 
-  if (!player2) return renderOnePlayer();
+  if (channelCount === 1) return renderOnePlayer();
 
-  return renderPreChat();
+  if (channelCount === 2) return renderPreChat();
+
+  return renderError();
 };
 
 export default WaitingRoom;
