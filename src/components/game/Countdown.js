@@ -15,7 +15,11 @@ const Countdown = ({ setBegin, setStartCountdown }) => {
     setCountdown(prevTick => prevTick - 1);
   }, 1000);
 
-  return <div>{countdown}</div>;
+  return (
+    <div className="countdown-wrapper">
+      <div className="countdown">{countdown}</div>;
+    </div>
+  );
 };
 
 export default Countdown;

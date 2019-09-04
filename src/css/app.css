@@ -168,3 +168,33 @@ a:hover {
 .chat-window {
   margin-top: 30px;
 }
+
+.countdown-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.countdown {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+  left: 50%;
+  top: 50%;
+  transition: 1s;
+  animation-name: countdown-animation;
+  animation-duration: 1s;
+  animation-iteration-count: 3;
+  animation-timing-function: ease-in;
+}
+
+@keyframes countdown-animation {
+  from {
+    font-size: 20rem;
+  }
+  to {
+    background-color: 0.1rem;
+  }
+}
