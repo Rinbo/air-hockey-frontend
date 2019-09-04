@@ -1,8 +1,17 @@
 import React, { useState } from "react";
+import ChatWindow from "./ChatWindow";
 import { useInterval } from "../hooks/useInterval";
 import { Link } from "react-router-dom";
 
-const WaitingRoom = ({ message, channelCount, role, broadcast }) => {
+const WaitingRoom = ({
+  message,
+  channelCount,
+  role,
+  broadcast,
+  name,
+  incomingMessage,
+  dispatch
+}) => {
   const [counter, setCounter] = useState(1);
   const [ready, setReady] = useState(false);
 
@@ -77,14 +86,20 @@ const WaitingRoom = ({ message, channelCount, role, broadcast }) => {
         >
           {ready ? "Waiting for opponent" : "Ready"}
         </button>
+        <ChatWindow
+          broadcast={broadcast}
+          name={name}
+          incomingMessage={incomingMessage}
+          dispatch={dispatch}
+        />
       </div>
     );
   };
 
   const signalReady = () => {
     setReady(true);
-    if (role==="master") broadcast("player1_ready", {})
-    if (role==="slave") broadcast("player2_ready", {})
+    if (role === "master") broadcast("player1_ready", {});
+    if (role === "slave") broadcast("player2_ready", {});
   };
 
   if (message === "unauthorized") return renderUnauthorized();

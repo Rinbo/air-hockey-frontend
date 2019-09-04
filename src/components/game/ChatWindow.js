@@ -13,6 +13,7 @@ const ChatWindow = ({ broadcast, name, incomingMessage, dispatch }) => {
       setState({ type: UPDATE_CHAT_HISTORY, payload: newChatHistory });
       dispatch({ type: "incoming_chat_message", payload: {} });
     }
+    return () => dispatch({ type: "incoming_chat_message", payload: {} });
     // eslint-disable-next-line
   }, [incomingMessage]);
 

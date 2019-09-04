@@ -98,6 +98,9 @@ const GameContainer = () => {
         channelCount={state.channelCount}
         role={state.role}
         broadcast={broadcast}
+        name={name}
+        incomingMessage={state.incomingMessage}
+        dispatch={dispatch}
       />
     );
 
