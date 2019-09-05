@@ -9,8 +9,7 @@ const WaitingRoom = ({
   role,
   broadcast,
   name,
-  incomingMessage,
-  dispatch
+  chatHistory
 }) => {
   const [counter, setCounter] = useState(1);
   const [ready, setReady] = useState(false);
@@ -89,8 +88,7 @@ const WaitingRoom = ({
         <ChatWindow
           broadcast={broadcast}
           name={name}
-          incomingMessage={incomingMessage}
-          dispatch={dispatch}
+          chatHistory={chatHistory}
         />
       </div>
     );

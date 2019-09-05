@@ -4,6 +4,8 @@ import {
   INITIAL_PUCK_STATE_TOP
 } from "../game/gameConstants";
 
+import { UPDATE_CHAT_HISTORY } from "../types";
+
 export const INITIAL_STATE = {
   message: "",
   status: {},
@@ -14,6 +16,7 @@ export const INITIAL_STATE = {
   },
   readyPlayer1: false,
   readyPlayer2: false,
+  chatHistory: [],
   channelCount: 0,
   score: { player1: 0, player2: 0 },
   gameComplete: false,
@@ -21,8 +24,7 @@ export const INITIAL_STATE = {
   active: false,
   striker1: INITIAL_STRIKER1_STATE,
   striker2: INITIAL_STRIKER2_STATE,
-  puck: INITIAL_PUCK_STATE_TOP,
-  incomingMessage: {}
+  puck: INITIAL_PUCK_STATE_TOP
 };
 
 export const eventReducer = (state, { event, payload }) => {
@@ -66,14 +68,9 @@ export const eventReducer = (state, { event, payload }) => {
     case "game_complete":
       return { ...state, gameComplete: true };
     case "incoming_chat_message":
-      return {
-        ...state,
-        incomingMessage: {
-          name: payload.name,
-          text: payload.incoming_message,
-          timeStamp: payload.timestamp
-        }
-      };
+      return { ...state, chatHistory: [...state.chatHistory, payload] };
+    case UPDATE_CHAT_HISTORY:
+      return { ...state, chatHistory: payload };
     case "subscribers":
       return { ...state, subscribers: payload };
     case "error":

@@ -42,8 +42,8 @@ const GameContainer = () => {
     if (name === "" || gameName === "") {
       history.push(`${process.env.PUBLIC_URL}/lobby`);
     }
-    return () => setState({ type: UPDATE_CHAT_HISTORY, payload: [] });
-  }, [name, gameName, setState]);
+    return () => dispatch({ type: UPDATE_CHAT_HISTORY, payload: [] });
+  }, [name, gameName, dispatch]);
 
   useEffect(() => {
     if (state.readyPlayer1 && state.readyPlayer2) setStartCountdown(true);
@@ -99,8 +99,7 @@ const GameContainer = () => {
         role={state.role}
         broadcast={broadcast}
         name={name}
-        incomingMessage={state.incomingMessage}
-        dispatch={dispatch}
+        chatHistory={state.chatHistory}
       />
     );
 
@@ -150,8 +149,7 @@ const GameContainer = () => {
       <ChatWindow
         broadcast={broadcast}
         name={name}
-        incomingMessage={state.incomingMessage}
-        dispatch={dispatch}
+        chatHistory={state.chatHistory}
       />
     </div>
   );

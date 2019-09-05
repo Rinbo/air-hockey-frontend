@@ -1,21 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
-import UserContext from "../contexts/UserContext";
-import { UPDATE_CHAT_HISTORY } from "../types";
+import React, { useState } from "react";
 
-const ChatWindow = ({ broadcast, name, incomingMessage, dispatch }) => {
-  const { chatHistory, setState } = useContext(UserContext);
+const ChatWindow = ({ broadcast, name, chatHistory }) => {
   const [newMessage, setNewMessage] = useState("");
-
-  useEffect(() => {
-    if (Object.values(incomingMessage).length !== 0) {
-      const newChatHistory = chatHistory;
-      newChatHistory.push(incomingMessage);
-      setState({ type: UPDATE_CHAT_HISTORY, payload: newChatHistory });
-      dispatch({ type: "incoming_chat_message", payload: {} });
-    }
-    return () => dispatch({ type: "incoming_chat_message", payload: {} });
-    // eslint-disable-next-line
-  }, [incomingMessage]);
 
   const onSubmit = () => {
     broadcast("chat_message_out", { name, newMessage });
@@ -25,11 +11,11 @@ const ChatWindow = ({ broadcast, name, incomingMessage, dispatch }) => {
   const renderMessage = () => {
     return chatHistory.map(message => {
       return (
-        <div key={message.timeStamp} className="chat-flex">
+        <div key={message.timestamp} className="chat-flex">
           <div style={{ width: "35%" }}>
-            {message.name} ({parseTime(message.timeStamp)}):
+            {message.name} ({parseTime(message.timestamp)}):
           </div>
-          <div style={{ width: "65%" }}>{message.text}</div>
+          <div style={{ width: "65%" }}>{message.incoming_message}</div>
         </div>
       );
     });
