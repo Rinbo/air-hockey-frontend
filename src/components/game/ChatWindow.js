@@ -8,6 +8,10 @@ const ChatWindow = ({ broadcast, name, chatHistory }) => {
     messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
   }, [chatHistory]);
 
+  const handleOnKeyDown = e => {
+    if (e.key === "Enter") onSubmit();
+  };
+
   const onSubmit = () => {
     broadcast("chat_message_out", { name, newMessage });
     setNewMessage("");
@@ -41,6 +45,7 @@ const ChatWindow = ({ broadcast, name, chatHistory }) => {
           value={newMessage}
           placeholder="Write something..."
           onChange={e => setNewMessage(e.target.value)}
+          onKeyDown={e => handleOnKeyDown(e)}
         />
         <button className="bson-button m-n" onClick={onSubmit}>
           Send
