@@ -38,6 +38,8 @@ const ChatWindow = ({ broadcast, name, chatHistory }) => {
   };
 
   return (
+    <>
+    Game Chat
     <div className="chat-window">
       <div className="chat-wrapper">{renderMessage()}</div>
       <div className="chat-input">
@@ -52,6 +54,7 @@ const ChatWindow = ({ broadcast, name, chatHistory }) => {
         </button>
       </div>
     </div>
+    </>
   );
 };
 

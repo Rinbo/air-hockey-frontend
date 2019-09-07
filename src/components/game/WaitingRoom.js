@@ -9,7 +9,10 @@ const WaitingRoom = ({
   role,
   broadcast,
   name,
-  chatHistory
+  chatHistory,
+  subscribers,
+  readyPlayer1,
+  readyPlayer2
 }) => {
   const [counter, setCounter] = useState(1);
   const [ready, setReady] = useState(false);
@@ -48,6 +51,14 @@ const WaitingRoom = ({
     );
   };
 
+  const renderNotificationMessage = () => {
+    if (
+      (role === "master" && readyPlayer2) ||
+      (role === "slave" && readyPlayer1)
+    )
+      return <div style={{ color: "green" }}>Your opponent is ready</div>;
+  };
+
   const renderError = () => {
     return (
       <div className="bson-flex">
@@ -76,20 +87,32 @@ const WaitingRoom = ({
 
   const renderPreChat = () => {
     return (
-      <div className="bson-flex">
-        <div> Ok, are you ready to begin?</div>
-        <button
-          className={ready ? "bson-button-disabled m-n" : "bson-button m-n"}
-          onClick={signalReady}
-          disabled={ready}
-        >
-          {ready ? "Waiting for opponent" : "Ready"}
-        </button>
-        <ChatWindow
-          broadcast={broadcast}
-          name={name}
-          chatHistory={chatHistory}
-        />
+      <div className="waiting-room-flex">
+        <div className="content">
+          <div className="bson-flex">
+            <h2>
+              {subscribers.player1} vs {subscribers.player2}
+            </h2>
+            <div>
+              Welcome! Press the Ready-button when you want to begin the game
+            </div>
+            <button
+              className={ready ? "bson-button-disabled m-n" : "bson-button m-n"}
+              onClick={signalReady}
+              disabled={ready}
+            >
+              {ready ? "Waiting for opponent" : "Ready"}
+            </button>
+            {renderNotificationMessage()}
+          </div>
+        </div>
+        <div className="chat-box">
+          <ChatWindow
+            broadcast={broadcast}
+            name={name}
+            chatHistory={chatHistory}
+          />
+        </div>
       </div>
     );
   };

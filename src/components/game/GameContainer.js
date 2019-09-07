@@ -100,6 +100,9 @@ const GameContainer = () => {
         broadcast={broadcast}
         name={name}
         chatHistory={state.chatHistory}
+        subscribers={state.subscribers}
+        readyPlayer1={state.readyPlayer1}
+        readyPlayer2={state.readyPlayer2}
       />
     );
 

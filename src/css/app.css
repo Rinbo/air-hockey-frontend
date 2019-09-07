@@ -3,11 +3,6 @@ body {
   font-size: 1.25rem;
 }
 
-canvas {
-  margin: 20px;
-  padding: 0;
-}
-
 input,
 select {
   width: 100%;
@@ -139,6 +134,23 @@ a:hover {
   height: 100%;
 }
 
+.waiting-room-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 75vh;
+}
+
+.chat-box {
+  flex-grow: 4;
+  width:100%;
+}
+
+.content {
+  flex-grow: 1;
+}
+
 .score-flex {
   display: flex;
   flex-direction: row;
@@ -164,20 +176,18 @@ a:hover {
   justify-content: flex-start;
   flex-wrap: wrap;
   width: 100%;
-  margin-bottom: 6px; 
+  margin-bottom: 6px;
 }
 
 .chat-window {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  margin-top: 30px;
-  width: 100%;
+  margin: 10px auto;
   border: 1px solid black;
   border-radius: 5px;
   padding: 15px;
-  height: 30vh;
- 
+  height: 50vh;
 }
 
 .chat-wrapper {
@@ -194,15 +204,15 @@ a:hover {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f1;
 }
- 
+
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #888;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: #555;
 }
 
 .countdown-wrapper {

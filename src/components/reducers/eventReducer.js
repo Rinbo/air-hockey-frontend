@@ -45,8 +45,7 @@ export const eventReducer = (state, { event, payload }) => {
     case "game_started":
       return {
         ...state,
-        active: payload.message,
-        subscribers: payload.subscribers
+        active: payload.message
       };
     case "update_score":
       return { ...state, score: payload.score };
@@ -55,7 +54,8 @@ export const eventReducer = (state, { event, payload }) => {
     case "player_joined":
       return {
         ...state,
-        channelCount: payload.count
+        channelCount: payload.count,
+        subscribers: payload.subscribers
       };
     case "player1_ready":
       return { ...state, readyPlayer1: payload.ready };
