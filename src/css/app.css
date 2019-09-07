@@ -162,11 +162,47 @@ a:hover {
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  width: 400px;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 6px; 
 }
 
 .chat-window {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   margin-top: 30px;
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 15px;
+  height: 30vh;
+ 
+}
+
+.chat-wrapper {
+  overflow-y: auto;
+}
+
+.chat-input {
+  display: flex;
+  flex-direction: row;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
 
 .countdown-wrapper {

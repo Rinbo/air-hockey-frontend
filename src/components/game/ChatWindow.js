@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const ChatWindow = ({ broadcast, name, chatHistory }) => {
   const [newMessage, setNewMessage] = useState("");
+
+  useEffect(() => {
+    const messageBody = document.querySelector(".chat-wrapper");
+    messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+  }, [chatHistory]);
 
   const onSubmit = () => {
     broadcast("chat_message_out", { name, newMessage });
@@ -12,17 +17,17 @@ const ChatWindow = ({ broadcast, name, chatHistory }) => {
     return chatHistory.map(message => {
       return (
         <div key={message.timestamp} className="chat-flex">
-          <div style={{ width: "35%" }}>
+          <div style={{}}>
             {message.name} ({parseTime(message.timestamp)}):
           </div>
-          <div style={{ width: "65%" }}>{message.incoming_message}</div>
+          <div style={{}}>{message.incoming_message}</div>
         </div>
       );
     });
   };
 
-  const parseTime = seconds => {
-    const date = new Date(parseInt(seconds) * 1000);
+  const parseTime = milliseconds => {
+    const date = new Date(parseInt(milliseconds));
     const hour = date.getHours();
     const minutes = date.getMinutes();
     return `${hour}:${minutes}`;
@@ -30,10 +35,11 @@ const ChatWindow = ({ broadcast, name, chatHistory }) => {
 
   return (
     <div className="chat-window">
-      <div>{renderMessage()}</div>
-      <div>
+      <div className="chat-wrapper">{renderMessage()}</div>
+      <div className="chat-input">
         <input
           value={newMessage}
+          placeholder="Write something..."
           onChange={e => setNewMessage(e.target.value)}
         />
         <button className="bson-button m-n" onClick={onSubmit}>

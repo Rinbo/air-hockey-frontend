@@ -39,7 +39,7 @@ const GameContainer = () => {
   }, 1000);
 
   useEffect(() => {
-    if (name === "" || gameName === "") {
+    if (name === "" /*|| gameName === "" */) {
       history.push(`${process.env.PUBLIC_URL}/lobby`);
     }
     return () => dispatch({ type: UPDATE_CHAT_HISTORY, payload: [] });
