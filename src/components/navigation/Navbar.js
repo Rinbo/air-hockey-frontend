@@ -42,7 +42,7 @@ const Navbar = () => {
       {renderSideNav()}
       <div id="hamburger">
         <button className="bson-button btn-large" onClick={openNav}>
-          Menu
+          >>
         </button>
       </div>
       <div id="navbar-top" className="nav-container">

@@ -144,8 +144,16 @@ const GameContainer = () => {
 
   return (
     <div className="bson-flex">
-      <div>{gameName}</div>
+      <div className="game-header-flex">
+        <div>{gameName}</div>
+        <div>
+          <button className="bson-button" onClick={() => setShowModal(true)}>
+            Chat
+          </button>
+        </div>
+      </div>
       {showTime()}
+
       <div className="score-flex">
         <div>{state.subscribers.player1}</div>
         <div> {state.score.player1}</div>
@@ -176,9 +184,6 @@ const GameContainer = () => {
         <div>{state.subscribers.player2}</div>
         <div>{state.score.player2}</div>
       </div>
-      <button className="bson-button mn" onClick={() => setShowModal(true)}>
-        Chat
-      </button>
       {renderChatModal()}
     </div>
   );

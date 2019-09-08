@@ -113,7 +113,7 @@ const MasterCanvas = ({
   };
 
   return (
-    <div className="flex flex-col justify-center">
+    <div>
       <div>
         <GameEngine
           puck={puck}
@@ -126,7 +126,6 @@ const MasterCanvas = ({
         />
       </div>
       <canvas
-        className="myCanvas"
         ref={gameCanvas}
         onMouseDown={e => startPosition(e)}
         onMouseUp={() => finishedPosition()}
