@@ -23,7 +23,7 @@ const GameContainer = () => {
   const [striker1, setStriker1] = useState(INITIAL_STRIKER1_STATE);
   const [striker2, setStriker2] = useState(INITIAL_STRIKER2_STATE);
   const [puck, setPuck] = useState(INITIAL_PUCK_STATE_TOP);
-  const [clock, setClock] = useState(120);
+  const [clock, setClock] = useState(5);
   const [begin, setBegin] = useState(false);
   const [startCountDown, setStartCountdown] = useState(false);
 
@@ -112,7 +112,16 @@ const GameContainer = () => {
     );
 
   if (state.gameComplete) {
-    return <GameComplete score={state.score} subscribers={state.subscribers} />;
+    return (
+      <div>
+        <GameComplete score={state.score} subscribers={state.subscribers} />
+        <ChatWindow
+          broadcast={broadcast}
+          name={name}
+          chatHistory={state.chatHistory}
+        />
+      </div>
+    );
   }
 
   return (

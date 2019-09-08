@@ -88,7 +88,7 @@ const WaitingRoom = ({
   const renderPreChat = () => {
     return (
       <div className="waiting-room-flex">
-        <div className="content">
+        <div className="contents">
           <div className="bson-flex">
             <h2>
               {subscribers.player1} vs {subscribers.player2}
