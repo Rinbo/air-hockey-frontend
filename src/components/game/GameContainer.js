@@ -16,6 +16,7 @@ import { FLASH_MESSAGE, UPDATE_CHAT_HISTORY } from "../types";
 import { useInterval } from "../hooks/useInterval";
 import ChatWindow from "./ChatWindow";
 import Countdown from "./Countdown";
+import ChatModal from "../utility/ChatModal";
 
 const GameContainer = () => {
   const { gameName, name, setState } = useContext(UserContext);
@@ -23,9 +24,10 @@ const GameContainer = () => {
   const [striker1, setStriker1] = useState(INITIAL_STRIKER1_STATE);
   const [striker2, setStriker2] = useState(INITIAL_STRIKER2_STATE);
   const [puck, setPuck] = useState(INITIAL_PUCK_STATE_TOP);
-  const [clock, setClock] = useState(5);
+  const [clock, setClock] = useState(120);
   const [begin, setBegin] = useState(false);
   const [startCountDown, setStartCountdown] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const [state, broadcast, dispatch] = useChannel(
     `game:${gameName}`,
@@ -39,7 +41,7 @@ const GameContainer = () => {
   }, 1000);
 
   useEffect(() => {
-    if (name === "" /*|| gameName === "" */) {
+    if (name === "" || gameName === "") {
       history.push(`${process.env.PUBLIC_URL}/lobby`);
     }
     return () => dispatch({ type: UPDATE_CHAT_HISTORY, payload: [] });
@@ -77,6 +79,22 @@ const GameContainer = () => {
         {sec}
       </div>
     );
+  };
+
+  const renderChatModal = () => {
+    if (showModal)
+      return (
+        <ChatModal
+          broadcast={broadcast}
+          name={name}
+          chatHistory={state.chatHistory}
+          onDismiss={() => dismiss()}
+        />
+      );
+  };
+
+  const dismiss = () => {
+    setShowModal(false);
   };
 
   if (state.playerLeft) {
@@ -158,11 +176,10 @@ const GameContainer = () => {
         <div>{state.subscribers.player2}</div>
         <div>{state.score.player2}</div>
       </div>
-      <ChatWindow
-        broadcast={broadcast}
-        name={name}
-        chatHistory={state.chatHistory}
-      />
+      <button className="bson-button mn" onClick={() => setShowModal(true)}>
+        Chat
+      </button>
+      {renderChatModal()}
     </div>
   );
 };
