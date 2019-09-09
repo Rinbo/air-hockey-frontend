@@ -24,7 +24,7 @@ const ChatWindow = ({ broadcast, name, chatHistory }) => {
           <div style={{}}>
             {message.name} ({parseTime(message.timestamp)}):
           </div>
-          <div style={{}}>{message.incoming_message}</div>
+          <div style={{}}>{" " + message.incoming_message}</div>
         </div>
       );
     });
@@ -39,21 +39,21 @@ const ChatWindow = ({ broadcast, name, chatHistory }) => {
 
   return (
     <>
-    Game Chat
-    <div className="chat-window">
-      <div className="chat-wrapper">{renderMessage()}</div>
-      <div className="chat-input">
-        <input
-          value={newMessage}
-          placeholder="Write something..."
-          onChange={e => setNewMessage(e.target.value)}
-          onKeyDown={e => handleOnKeyDown(e)}
-        />
-        <button className="bson-button m-n" onClick={onSubmit}>
-          Send
-        </button>
+      Game Chat
+      <div className="chat-window">
+        <div className="chat-wrapper">{renderMessage()}</div>
+        <div className="chat-input">
+          <input
+            value={newMessage}
+            placeholder="Write something..."
+            onChange={e => setNewMessage(e.target.value)}
+            onKeyDown={e => handleOnKeyDown(e)}
+          />
+          <button className="bson-button m-n" onClick={onSubmit}>
+            Send
+          </button>
+        </div>
       </div>
-    </div>
     </>
   );
 };

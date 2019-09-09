@@ -150,7 +150,9 @@ const GameContainer = () => {
         <div>
           <button
             className={
-              state.messageNotification && !showModal ? "" : "bson-button"
+              state.messageNotification && !showModal
+                ? "bson-notification-button"
+                : "bson-button"
             }
             onClick={() => setShowModal(true)}
           >
