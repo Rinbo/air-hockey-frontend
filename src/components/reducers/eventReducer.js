@@ -4,7 +4,7 @@ import {
   INITIAL_PUCK_STATE_TOP
 } from "../game/gameConstants";
 
-import { UPDATE_CHAT_HISTORY } from "../types";
+import { UPDATE_CHAT_HISTORY, NOTIFICATION_OFF } from "../types";
 
 export const INITIAL_STATE = {
   message: "",
@@ -18,6 +18,7 @@ export const INITIAL_STATE = {
   readyPlayer2: false,
   chatHistory: [],
   channelCount: 0,
+  messageNotification: false,
   score: { player1: 0, player2: 0 },
   gameComplete: false,
   role: "",
@@ -68,13 +69,17 @@ export const eventReducer = (state, { event, payload }) => {
     case "game_complete":
       return { ...state, gameComplete: true };
     case "incoming_chat_message":
-      return { ...state, chatHistory: [...state.chatHistory, payload] };
+      return {
+        ...state,
+        chatHistory: [...state.chatHistory, payload],
+        messageNotification: true
+      };
     case UPDATE_CHAT_HISTORY:
       return { ...state, chatHistory: payload };
-    case "subscribers":
-      return { ...state, subscribers: payload };
+    case NOTIFICATION_OFF:
+      debugger;
+      return { ...state, messageNotification: false };
     case "error":
-      console.log(event);
       console.log(payload, "error payload");
       return { ...state, message: payload.message };
     default:

@@ -12,7 +12,7 @@ import {
   INITIAL_STRIKER1_STATE,
   INITIAL_STRIKER2_STATE
 } from "./gameConstants";
-import { FLASH_MESSAGE, UPDATE_CHAT_HISTORY } from "../types";
+import { FLASH_MESSAGE, UPDATE_CHAT_HISTORY, NOTIFICATION_OFF } from "../types";
 import { useInterval } from "../hooks/useInterval";
 import ChatWindow from "./ChatWindow";
 import Countdown from "./Countdown";
@@ -94,6 +94,7 @@ const GameContainer = () => {
   };
 
   const dismiss = () => {
+    dispatch({ event: NOTIFICATION_OFF, payload: {} });
     setShowModal(false);
   };
 
@@ -147,7 +148,12 @@ const GameContainer = () => {
       <div className="game-header-flex">
         <div>{gameName}</div>
         <div>
-          <button className="bson-button" onClick={() => setShowModal(true)}>
+          <button
+            className={
+              state.messageNotification && !showModal ? "" : "bson-button"
+            }
+            onClick={() => setShowModal(true)}
+          >
             Chat
           </button>
         </div>
