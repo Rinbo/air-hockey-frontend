@@ -127,7 +127,7 @@ const GameContainer = () => {
 
   if (startCountDown)
     return (
-      <Countdown setBegin={setBegin} setStartCountdown={setStartCountdown} />
+      <Countdown setBegin={setBegin} setStartCountdown={setStartCountdown} dispatch={dispatch} />
     );
 
   if (state.gameComplete) {

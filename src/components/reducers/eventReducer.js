@@ -77,7 +77,6 @@ export const eventReducer = (state, { event, payload }) => {
     case UPDATE_CHAT_HISTORY:
       return { ...state, chatHistory: payload };
     case NOTIFICATION_OFF:
-      debugger;
       return { ...state, messageNotification: false };
     case "error":
       console.log(payload, "error payload");

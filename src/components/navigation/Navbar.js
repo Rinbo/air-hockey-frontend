@@ -4,7 +4,7 @@ import logo from "../../resources/b-hockey.png";
 
 const Navbar = () => {
   const openNav = () => {
-    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("mySidenav").style.width = "200px";
   };
 
   const closeNav = () => {
@@ -28,10 +28,12 @@ const Navbar = () => {
     return (
       <div className="side-container">
         <div>
-          <Link to={`${process.env.PUBLIC_URL}/`}>Home</Link>
-        </div>
-        <div>
-          <Link to={`${process.env.PUBLIC_URL}/lobby`}>Lobby</Link>
+          <Link
+            to={`${process.env.PUBLIC_URL}/lobby`}
+            onClick={() => closeNav()}
+          >
+            Lobby
+          </Link>
         </div>
       </div>
     );
@@ -52,9 +54,6 @@ const Navbar = () => {
           </Link>
         </div>
         <div>
-          <Link className="bson-button m-n" to={`${process.env.PUBLIC_URL}/`}>
-            Home
-          </Link>
           <Link
             className="bson-button m-n"
             to={`${process.env.PUBLIC_URL}/lobby`}

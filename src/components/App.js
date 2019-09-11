@@ -15,8 +15,6 @@ import StatusMessage from "./utility/StatusMessage";
  */
 
 // @TODO - Create a status log with all server messages that can be popped open for viewing
-// @TODO - Add Chat functionality - Evaluate chat history as part of global state instead of existing in it's own component
-// @TODO - Allow chat before and after game (and during?)
 
 const routes = () => (
   <Switch>

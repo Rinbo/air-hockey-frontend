@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useInterval } from "../hooks/useInterval";
+import { NOTIFICATION_OFF } from "../types";
 
-const Countdown = ({ setBegin, setStartCountdown }) => {
+const Countdown = ({ setBegin, setStartCountdown, dispatch }) => {
   const [countdown, setCountdown] = useState(3);
 
   useEffect(() => {
     if (countdown <= 0) {
       setBegin(true);
+      dispatch({ event: NOTIFICATION_OFF, payload: {} });
       setStartCountdown(false);
     }
-  }, [countdown, setBegin, setStartCountdown]);
+  }, [countdown, setBegin, setStartCountdown, dispatch]);
 
   useInterval(() => {
     setCountdown(prevTick => prevTick - 1);
