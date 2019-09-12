@@ -29,6 +29,16 @@ const routes = () => (
 );
 
 const App = () => {
+  document.addEventListener(
+    "touchmove",
+    e => {
+      if (e.target.className === "myCanvas") {
+        e.preventDefault();
+      }
+    },
+    { passive: false }
+  );
+
   return (
     <div className="container">
       <Router history={history}>

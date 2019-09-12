@@ -63,6 +63,30 @@ const MasterCanvas = ({
       return { ...prevState, velocity: { x: 0, y: 0 } };
     });
   };
+
+  const touchPosition = e => {
+    const touch = e.touches[0];
+    const mouseEvent = new MouseEvent("mousedown", {
+      clientX: touch.clientX,
+      clientY: touch.clientY
+    });
+    startPosition(mouseEvent);
+  };
+
+  const touchFinished = () => {
+    const mouseEvent = new MouseEvent("mouseup", {});
+    finishedPosition(mouseEvent);
+  };
+
+  const touchDraw = e => {
+    const touch = e.touches[0];
+    const mouseEvent = new MouseEvent("mousemove", {
+      clientX: touch.clientX,
+      clientY: touch.clientY
+    });
+    move(mouseEvent);
+  };
+
   const checkIfInCircle = pos => {
     return (
       Math.sqrt(
@@ -126,10 +150,14 @@ const MasterCanvas = ({
         />
       </div>
       <canvas
+        className="myCanvas"
         ref={gameCanvas}
         onMouseDown={e => startPosition(e)}
         onMouseUp={() => finishedPosition()}
         onMouseMove={e => move(e)}
+        onTouchStart={e => touchPosition(e)}
+        onTouchEnd={() => touchFinished()}
+        onTouchMove={e => touchDraw(e)}
       />
     </div>
   );

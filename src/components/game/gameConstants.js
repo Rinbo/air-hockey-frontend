@@ -35,7 +35,7 @@ export const INITIAL_STRIKER2_STATE = {
   velocity: { x: 0, y: 0 }
 };
 
-export const CLOCK_INTERVAL = 30;
-export const SPEED_LIMIT = 20;
+export const CLOCK_INTERVAL = 15;
+export const SPEED_LIMIT = 12;
 
 export const PUCK_STD_V = 4;

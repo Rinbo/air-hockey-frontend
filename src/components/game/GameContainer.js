@@ -103,7 +103,7 @@ const GameContainer = () => {
     setState({
       type: FLASH_MESSAGE,
       payload: {
-        message: "Your opponent left the game. You have returned to the lobby",
+        message: "Your opponent left the game channel. You have returned to the lobby",
         code: 0,
         delay: 5000
       }
