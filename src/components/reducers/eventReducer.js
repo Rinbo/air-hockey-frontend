@@ -32,11 +32,10 @@ export const eventReducer = (state, { event, payload }) => {
   switch (event) {
     case "phx_reply":
       return {
-        ...state,
-        message: payload.response.message
+        ...state
       };
     case "ok":
-      return { ...state, message: payload.response.message };
+      return { ...state };
     case "presence_diff":
       const someoneLeft = Object.entries(payload.leaves).length > 0;
       return {

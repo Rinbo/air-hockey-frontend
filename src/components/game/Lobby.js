@@ -78,7 +78,7 @@ const Lobby = () => {
 
   return (
     <div className="bson-flex">
-      <div>Welcome to the lobby, {name}</div>
+      <div style={{ marginTop: 5 }}>Welcome to the lobby, {name}</div>
       <h5>Create a game</h5>
       <div>
         <label>Game name</label>
@@ -92,7 +92,7 @@ const Lobby = () => {
         >
           {error ? "Game name must be atleast 3 characters long" : null}
         </div>
-        <button className="bson-button" onClick={() => onSubmit()} >
+        <button className="bson-button" onClick={() => onSubmit()}>
           Create
         </button>
       </div>

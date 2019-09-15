@@ -36,16 +36,25 @@ const GameContainer = () => {
     INITIAL_STATE
   );
 
-  useInterval(() => {
-    if (begin) setClock(prevTick => prevTick - 1);
-  }, 1000);
-
   useEffect(() => {
     if (name === "" || gameName === "") {
       history.push(`${process.env.PUBLIC_URL}/lobby`);
+      setState({
+        type: FLASH_MESSAGE,
+        payload: {
+          message:
+            "For security puposes pasting url directly into the address bar is disallowed",
+          code: 0,
+          delay: 5000
+        }
+      });
     }
     return () => dispatch({ type: UPDATE_CHAT_HISTORY, payload: [] });
-  }, [name, gameName, dispatch]);
+  }, [name, gameName, dispatch, setState]);
+
+  useInterval(() => {
+    if (begin) setClock(prevTick => prevTick - 1);
+  }, 1000);
 
   useEffect(() => {
     if (state.readyPlayer1 && state.readyPlayer2) setStartCountdown(true);
@@ -103,7 +112,8 @@ const GameContainer = () => {
     setState({
       type: FLASH_MESSAGE,
       payload: {
-        message: "Your opponent left the game channel. You have returned to the lobby",
+        message:
+          "Your opponent left the game channel. You have returned to the lobby",
         code: 0,
         delay: 5000
       }
@@ -127,7 +137,11 @@ const GameContainer = () => {
 
   if (startCountDown)
     return (
-      <Countdown setBegin={setBegin} setStartCountdown={setStartCountdown} dispatch={dispatch} />
+      <Countdown
+        setBegin={setBegin}
+        setStartCountdown={setStartCountdown}
+        dispatch={dispatch}
+      />
     );
 
   if (state.gameComplete) {
