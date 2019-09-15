@@ -21,8 +21,8 @@ const Lobby = () => {
   useEffect(() => {
     if (name === "") history.push("/");
     if (state.joined) broadcast("get_active_games");
-    return () => console.log("Leaving lobby");
-  }, [name, state.joined, broadcast]);
+    // eslint-disable-next-line
+  }, [name, state.joined]);
 
   useEffect(() => {
     if (state.playerLeft) {
