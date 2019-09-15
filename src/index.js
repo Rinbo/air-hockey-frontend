@@ -1,6 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";
+import {
+  PRODUCTION_BACKEND_URL,
+  LOCALHOST,
+  PRODUCTION_FRONTEND_URL,
+  NETLIFY_FRONTEND_URL
+} from "./urls";
 import { UserProvider } from "./components/contexts/UserContext";
 import { SocketProvider } from "./components/contexts/SocketContext";
 import "./css/app.css";
@@ -11,10 +17,13 @@ const AppWrapper = () => {
   let backendHost;
   const hostname = window && window.location && window.location.hostname;
 
-  if (hostname === process.env.REACT_APP_PRODUCTION_FRONTEND_URL) {
-    backendHost = process.env.REACT_APP_PRODUCTION_BACKEND_URL;
+  if (
+    hostname === PRODUCTION_FRONTEND_URL ||
+    hostname === NETLIFY_FRONTEND_URL
+  ) {
+    backendHost = PRODUCTION_BACKEND_URL;
   } else {
-    backendHost = process.env.REACT_APP_LOCALHOST;
+    backendHost = LOCALHOST;
   }
 
   return (
