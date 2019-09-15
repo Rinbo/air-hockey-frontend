@@ -11,7 +11,7 @@ const LandingPage = () => {
 
   useEffect(() => {
     if (name !== "") {
-      history.push(`${process.env.PUBLIC_URL}/lobby`);
+      history.push("/lobby");
     }
   }, [name]);
 
@@ -70,13 +70,13 @@ const GiveName = ({ setShowModal, localName, setLocalName, setState }) => {
       setError(false);
       localStorage.setItem("playerName", localName);
       setState({ type: USER, payload: localName });
-      history.push(`${process.env.PUBLIC_URL}/lobby`);
+      history.push("/lobby");
     }
   };
 
   const dismiss = () => {
     setShowModal(false);
-    history.push(`${process.env.PUBLIC_URL}/`);
+    history.push("/");
   };
 
   return (

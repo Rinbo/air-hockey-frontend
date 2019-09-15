@@ -18,10 +18,10 @@ import StatusMessage from "./utility/StatusMessage";
 
 const routes = () => (
   <Switch>
-    <Route path={`${process.env.PUBLIC_URL}/`} exact component={LandingPage} />
-    <Route path={`${process.env.PUBLIC_URL}/lobby`} exact component={Lobby} />
+    <Route path={"/"} exact component={LandingPage} />
+    <Route path={"/lobby"} exact component={Lobby} />
     <Route
-      path={`${process.env.PUBLIC_URL}/game/:id`}
+      path={"/game/:id"}
       exact
       render={props => <GameContainer props={props} />}
     />

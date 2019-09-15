@@ -38,7 +38,7 @@ const GameContainer = () => {
 
   useEffect(() => {
     if (name === "" || gameName === "") {
-      history.push(`${process.env.PUBLIC_URL}/lobby`);
+      history.push("/lobby");
       setState({
         type: FLASH_MESSAGE,
         payload: {
@@ -108,7 +108,7 @@ const GameContainer = () => {
   };
 
   if (state.playerLeft) {
-    history.push(`${process.env.PUBLIC_URL}/lobby`);
+    history.push("/lobby");
     setState({
       type: FLASH_MESSAGE,
       payload: {

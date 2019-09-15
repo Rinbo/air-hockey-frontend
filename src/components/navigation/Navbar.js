@@ -28,10 +28,7 @@ const Navbar = () => {
     return (
       <div className="side-container">
         <div>
-          <Link
-            to={`${process.env.PUBLIC_URL}/lobby`}
-            onClick={() => closeNav()}
-          >
+          <Link to="/lobby" onClick={() => closeNav()}>
             Lobby
           </Link>
         </div>
@@ -49,15 +46,12 @@ const Navbar = () => {
       </div>
       <div id="navbar-top" className="nav-container">
         <div>
-          <Link to={`${process.env.PUBLIC_URL}/`}>
+          <Link to="/">
             <img src={logo} style={{ width: 180 }} alt="logo" />
           </Link>
         </div>
         <div>
-          <Link
-            className="bson-button m-n"
-            to={`${process.env.PUBLIC_URL}/lobby`}
-          >
+          <Link className="bson-button m-n" to="/lobby">
             Lobby
           </Link>
         </div>

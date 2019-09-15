@@ -19,7 +19,7 @@ const Lobby = () => {
   );
 
   useEffect(() => {
-    if (name === "") history.push(`${process.env.PUBLIC_URL}/`);
+    if (name === "") history.push("/");
     if (state.joined) broadcast("get_active_games");
     return () => console.log("Leaving lobby");
   }, [name, state.joined, broadcast]);
@@ -41,7 +41,7 @@ const Lobby = () => {
     } else {
       setError(false);
       setState({ type: GAME, payload: localGameName });
-      history.push(`${process.env.PUBLIC_URL}/game/${localGameName}`);
+      history.push(`/game/${localGameName}`);
     }
   };
 
@@ -63,7 +63,7 @@ const Lobby = () => {
   const renderLink = path => {
     return (
       <Link
-        to={`${process.env.PUBLIC_URL}/game/${path}`}
+        to={`/game/${path}`}
         className="bson-button"
         onClick={() => setState({ type: GAME, payload: path })}
       >
@@ -78,7 +78,7 @@ const Lobby = () => {
 
   return (
     <div className="bson-flex">
-      <div style={{ marginTop: 15  }}>Welcome to the lobby, {name}</div>
+      <div style={{ marginTop: 15 }}>Welcome to the lobby, {name}</div>
       <h5>Create a game</h5>
       <div>
         <label>Game name</label>

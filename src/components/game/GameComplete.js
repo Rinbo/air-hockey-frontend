@@ -23,7 +23,7 @@ const GameComplete = ({ score, subscribers }) => {
         <div>{score.player1}</div>
         <div>{score.player2}</div>
       </div>
-      <Link to={`${process.env.PUBLIC_URL}/lobby`} className="bson-button m-l">
+      <Link to="/lobby" className="bson-button m-l">
         Back to Lobby
       </Link>
     </div>

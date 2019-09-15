@@ -70,7 +70,7 @@ const WaitingRoom = ({
 
   const renderReturnButton = () => {
     return (
-      <Link className="bson-button m-n" to={`${process.env.PUBLIC_URL}/lobby`}>
+      <Link className="bson-button m-n" to="/lobby">
         Back to Lobby
       </Link>
     );
