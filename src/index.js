@@ -11,9 +11,19 @@ import "./css/modal.css";
 // ws://localhost:4000/socket
 
 const AppWrapper = () => {
+
+  let backendHost;
+  const hostname = window && window.location && window.location.hostname;
+  
+  if (hostname === process.env.REACT_APP_PRODUCTION_FRONTEND_URL) {
+    backendHost = process.env.REACT_APP_PRODUCTION_BACKEND_URL;
+  } else {
+    backendHost = process.env.REACT_APP_LOCALHOST;
+  }
+
   return (
     <UserProvider>
-      <SocketProvider wsUrl=" ws://localhost:4000/socket" options={{}}>
+      <SocketProvider wsUrl={backendHost} options={{}}>
         <App />
       </SocketProvider>
     </UserProvider>
