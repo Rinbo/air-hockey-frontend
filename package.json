@@ -2,7 +2,7 @@
   "name": "air-hockey-frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://rinbo.github.io/air-hockey-frontend",
+  "homepage": "https://airhockey.borjessons.nu/",
   "dependencies": {
     "gh-pages": "^2.0.1",
     "phoenix": "^1.4.9",
