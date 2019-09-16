@@ -1,17 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";
+import { UserProvider } from "./components/contexts/UserContext";
+import { SocketProvider } from "./components/contexts/SocketContext";
+import "./css/app.css";
+import "./css/navigation.css";
+import "./css/modal.css";
 import {
   PRODUCTION_BACKEND_URL,
   LOCALHOST,
   PRODUCTION_FRONTEND_URL,
   NETLIFY_FRONTEND_URL
 } from "./urls";
-import { UserProvider } from "./components/contexts/UserContext";
-import { SocketProvider } from "./components/contexts/SocketContext";
-import "./css/app.css";
-import "./css/navigation.css";
-import "./css/modal.css";
 
 const AppWrapper = () => {
   let backendHost;

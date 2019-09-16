@@ -108,6 +108,10 @@ a:hover {
   color: black;
 }
 
+.std-width{
+  width: 200px !important;
+}
+
 .bson-notification-button {
   background-color: white;
   border: 1.5px solid green;

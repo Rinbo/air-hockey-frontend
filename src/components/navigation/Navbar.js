@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../resources/b-hockey.png";
+import history from "../../history";
+import UserContext from "../contexts/UserContext";
+import { USER } from "../types";
 
 const Navbar = () => {
+  const { setState } = useContext(UserContext);
   const openNav = () => {
     document.getElementById("mySidenav").style.width = "200px";
   };
@@ -24,6 +28,13 @@ const Navbar = () => {
     );
   };
 
+  const switchAndReturn = () => {
+    localStorage.removeItem("playerName");
+    setState({ type: USER, payload: "" });
+    closeNav();
+    history.push("/");
+  };
+
   const renderLinks = () => {
     return (
       <div className="side-container">
@@ -31,6 +42,7 @@ const Navbar = () => {
           <Link to="/lobby" onClick={() => closeNav()}>
             Lobby
           </Link>
+          <Link onClick={switchAndReturn}>Home</Link>
         </div>
       </div>
     );
@@ -53,6 +65,9 @@ const Navbar = () => {
         <div>
           <Link className="bson-button m-n" to="/lobby">
             Lobby
+          </Link>
+          <Link className="bson-button m-n" onClick={switchAndReturn}>
+            Home
           </Link>
         </div>
       </div>

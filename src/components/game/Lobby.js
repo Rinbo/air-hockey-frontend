@@ -19,7 +19,13 @@ const Lobby = () => {
   );
 
   useEffect(() => {
-    if (name === "") history.push("/");
+    if (name === "") {
+      setState({
+        type: FLASH_MESSAGE,
+        payload: { message: "Please provide a name", code: 0, delay: 2500 }
+      });
+      history.push("/");
+    }
     if (state.joined) broadcast("get_active_games");
     // eslint-disable-next-line
   }, [name, state.joined]);
