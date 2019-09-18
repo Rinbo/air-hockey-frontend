@@ -4,7 +4,7 @@ import { USER, GAME, FLASH_MESSAGE } from "../types";
 const UserContext = createContext("user");
 
 const initialState = {
-  name: "",
+  name: "initialRender",
   gameName: "",
   announcement: { message: "", code: 200, delay: 5000 }
 };

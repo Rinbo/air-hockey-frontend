@@ -19,7 +19,7 @@ const Lobby = () => {
   );
 
   useEffect(() => {
-    if (name === "") {
+    if (name === "" && name !== "initialRender") {
       setState({
         type: FLASH_MESSAGE,
         payload: { message: "Please provide a name", code: 0, delay: 2500 }

@@ -175,7 +175,7 @@ const GameContainer = () => {
         </div>
       </div>
       {showTime()}
-
+          
       <div className="score-flex">
         <div>{state.subscribers.player1}</div>
         <div> {state.score.player1}</div>

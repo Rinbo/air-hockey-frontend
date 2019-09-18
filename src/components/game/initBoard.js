@@ -2,7 +2,7 @@ import {
   CANVAS_WIDTH,
   CANVAS_HEIGHT,
   RIM_WIDTH,
-  BOARD_LINE_WIDTH,
+  BOARD_LINE_WIDTH
 } from "./gameConstants";
 
 export const initBoard = (ctx, striker1, striker2, puck) => {
@@ -108,17 +108,10 @@ export const initBoard = (ctx, striker1, striker2, puck) => {
   ctx.current.fill();
   ctx.current.closePath();
 
-   // The Puck
-   ctx.current.beginPath();
-   ctx.current.fillStyle = "black";
-   ctx.current.arc(
-     puck.centerX,
-     puck.centerY,
-     puck.radius,
-     0,
-     2 * Math.PI
-   );
-   ctx.current.fill();
-   ctx.current.closePath();
-  
+  // The Puck
+  ctx.current.beginPath();
+  ctx.current.fillStyle = "black";
+  ctx.current.arc(puck.centerX, puck.centerY, puck.radius, 0, 2 * Math.PI);
+  ctx.current.fill();
+  ctx.current.closePath();
 };

@@ -42,7 +42,7 @@ const Navbar = () => {
           <Link to="/lobby" onClick={() => closeNav()}>
             Lobby
           </Link>
-          <Link onClick={switchAndReturn}>Home</Link>
+          <Link to="#" onClick={switchAndReturn}>Home</Link>
         </div>
       </div>
     );
@@ -66,7 +66,7 @@ const Navbar = () => {
           <Link className="bson-button m-n" to="/lobby">
             Lobby
           </Link>
-          <Link className="bson-button m-n" onClick={switchAndReturn}>
+          <Link className="bson-button m-n" to="#" onClick={switchAndReturn}>
             Home
           </Link>
         </div>

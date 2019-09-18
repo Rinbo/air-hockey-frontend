@@ -28,7 +28,7 @@ const MasterCanvas = ({
   useEffect(() => {
     gameCanvas.current.width = CANVAS_WIDTH;
     gameCanvas.current.height = CANVAS_HEIGHT;
-    ctx.current = gameCanvas.current.getContext("2d");
+    ctx.current = gameCanvas.current.getContext("2d");    
     initBoard(ctx, striker1, striker2, puck);
   });
 
