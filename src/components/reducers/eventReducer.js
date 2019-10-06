@@ -56,7 +56,7 @@ export const eventReducer = (state, { event, payload }) => {
         ...state,
         channelCount: payload.count,
         subscribers: payload.subscribers
-      };
+      };    
     case "player1_ready":
       return { ...state, readyPlayer1: payload.ready };
     case "player2_ready":
